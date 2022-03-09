@@ -25,6 +25,9 @@ dependencies {
     implementation 'org.springframework.bootw:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    //spring elasticsearch
+    implementation group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '4.1.10'
+
     //apache-commons工具包
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
