@@ -2,6 +2,7 @@ package org.rock.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 启动程序
@@ -9,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Author ayl
  * @Date 2022-03-09
  */
+//开启定时任务
+@EnableScheduling
 @SpringBootApplication
 public class MainApplication {
 
