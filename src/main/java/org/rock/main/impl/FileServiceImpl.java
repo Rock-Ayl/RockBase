@@ -9,7 +9,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.rock.main.controller.FileController;
 import org.rock.main.elasticsearch.ElasticSearchTemplate;
 import org.rock.main.pojo.es.FileIndex;
 import org.rock.main.serivce.FileService;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Autowired
     private ElasticSearchTemplate elasticSearchTemplate;

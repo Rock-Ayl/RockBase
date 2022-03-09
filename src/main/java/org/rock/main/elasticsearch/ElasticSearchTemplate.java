@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ElasticSearchTemplate {
 
-    RestHighLevelClient client;
+    //连接
+    private RestHighLevelClient client;
 
     @Value("${elastic.host.url:}")
     private String elasticHost;

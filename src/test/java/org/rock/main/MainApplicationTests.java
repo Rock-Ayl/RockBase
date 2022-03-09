@@ -9,12 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MainApplicationTests {
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @Test
     void test() {
         FileService.FileIndexSearchResult result = fileService.search();
-        System.out.println(123);
+        System.out.println();
     }
 
 }

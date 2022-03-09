@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
     @Autowired
-    FileService fileService;
+    private FileService fileService;
 
     @PostMapping(value = "/uploadFile", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
     public String uploadFile(@RequestParam("file") MultipartFile file) {
