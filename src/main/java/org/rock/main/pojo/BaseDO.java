@@ -2,19 +2,17 @@ package org.rock.main.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Date;
 
 /**
- * 所有DB的基底
+ * DB的基底(mysql mongo elasticsearch)
  *
  * @Author ayl
  * @Date 2022-03-09
  */
 @Getter
 @Setter
-@ToString
 public class BaseDO {
 
     //唯一id

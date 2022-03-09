@@ -1,6 +1,6 @@
 package org.rock.main.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import org.rock.main.common.JsonResponse;
 import org.rock.main.constant.HttpConst;
 import org.rock.main.serivce.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,15 @@ public class FileController {
     @PostMapping(value = "/uploadFile", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         //todo
-        return new JSONObject().toJSONString();
+        return JsonResponse.success().toString();
     }
 
-    @GetMapping(value = "/listFile", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
-    public String listFile() {
+    @GetMapping(value = "/search", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
+    public String search() {
+        //查询
+        FileService.FileIndexSearchResult result = fileService.search();
         //实现
-        return fileService.listFile();
+        return JsonResponse.success().put("result", result).toString();
     }
 
 }

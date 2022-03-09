@@ -1,8 +1,6 @@
 package org.rock.main.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -11,9 +9,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.rock.main.constant.JsonConst;
 import org.rock.main.controller.FileController;
 import org.rock.main.elasticsearch.ElasticSearchTemplate;
+import org.rock.main.pojo.es.FileIndex;
 import org.rock.main.serivce.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户业务实现层
@@ -34,47 +34,42 @@ public class FileServiceImpl implements FileService {
     private ElasticSearchTemplate elasticSearchTemplate;
 
     //es文件索引
-    private final static String FileIndex = "file";
+    private final static String FILE_INDEX = "file";
 
     @Override
-    public String listFile() {
+    public FileIndexSearchResult search() {
         //初始化
-        JSONObject result = new JSONObject();
+        FileIndexSearchResult result = new FileIndexSearchResult();
         //创建查询函数构造对象
         SearchSourceBuilder builder = new SearchSourceBuilder();
         //最外层是布尔查询
         MatchAllQueryBuilder match = QueryBuilders.matchAllQuery();
         builder.query(match);
         //构造请求发起对象,这里直接配置索引名即可
-        SearchRequest searchRequest = new SearchRequest(FileIndex);
+        SearchRequest searchRequest = new SearchRequest(FILE_INDEX);
         //把查询函数构造对象注入查询请求中
         searchRequest.source(builder);
         try {
-            //创建响应对象
+            //查询
             SearchResponse searchResponse = elasticSearchTemplate.client().search(searchRequest, RequestOptions.DEFAULT);
-            //获取响应中的列表数据
+            //获取响应数据
             SearchHits searchHits = searchResponse.getHits();
-            //初始化结果集
-            JSONArray items = new JSONArray();
-            //获取响应中的列表数据总数
-            long queryCount = searchHits.getTotalHits().value;
+            //初始化文件列表
+            List<FileIndex> fileList = new ArrayList<>();
             //循环参数
             for (SearchHit hit : searchHits.getHits()) {
-                //获取该参数
-                String value = hit.getSourceAsString();
-                //解析成Json
-                JSONObject valueJson = JSON.parseObject(value);
-                //组装进items
-                items.add(valueJson);
+                //解析为实体
+                fileList.add(JSON.parseObject(hit.getSourceAsString(), FileIndex.class));
             }
-            //items组装至result
-            result.put(JsonConst.Items, items);
+            //组装结果和总数
+            result.setFileList(fileList);
             //组装总数
-            result.put(JsonConst.Total, queryCount);
+            result.setTotal(searchHits.getTotalHits().value);
         } catch (IOException e) {
             logger.error("es search fail:{}", e.getMessage());
         }
-        return result.toJSONString();
+        //返回结果
+        return result;
     }
 
 }
