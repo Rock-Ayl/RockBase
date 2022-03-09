@@ -22,7 +22,6 @@ dependencies {
     //spring boot 基础套件
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
-    implementation 'org.springframework.bootw:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //spring elasticsearch
