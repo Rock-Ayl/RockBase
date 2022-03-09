@@ -10,18 +10,19 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class JsonResponse {
 
-    //本质是一个FastJson
-    JSONObject fastJson = new JSONObject();
+    //该class本质是一个FastJson
+    private JSONObject fastJson;
 
     //常量
     private static final String CODE = "code";
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
-    private static final String ERROR_MSG = "error_msg";
+    private static final String ERROR_MSG = "errorMsg";
 
     //私有化
     private JsonResponse() {
-
+        //同时生成对应json
+        this.fastJson = new JSONObject();
     }
 
     //成功
@@ -35,6 +36,16 @@ public class JsonResponse {
     }
 
     //失败
+    public static JsonResponse error() {
+        //初始化
+        JsonResponse response = new JsonResponse();
+        //组装error
+        response.fastJson.put(CODE, ERROR);
+        //返回
+        return response;
+    }
+
+    //失败+msg
     public static JsonResponse error(String errorMsg) {
         //初始化
         JsonResponse response = new JsonResponse();

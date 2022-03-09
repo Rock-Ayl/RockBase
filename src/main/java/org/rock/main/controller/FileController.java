@@ -28,9 +28,9 @@ public class FileController {
 
     @GetMapping(value = "/search", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
     public String search() {
-        //查询
+        //搜索实现
         FileService.FileIndexSearchResult result = fileService.search();
-        //实现
+        //返回
         return JsonResponse.success().put("result", result).toString();
     }
 
