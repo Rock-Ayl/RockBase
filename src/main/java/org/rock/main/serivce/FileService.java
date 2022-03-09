@@ -27,7 +27,7 @@ public interface FileService {
         //聚合结果
         private JSONArray aggregations;
         //总数
-        private long total;
+        private Long total;
     }
 
 }

@@ -19,8 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 用户业务实现层
@@ -54,17 +55,15 @@ public class FileServiceImpl implements FileService {
             SearchResponse searchResponse = elasticSearchTemplate.client().search(searchRequest, RequestOptions.DEFAULT);
             //获取响应数据
             SearchHits searchHits = searchResponse.getHits();
-            //初始化文件列表
-            List<FileIndex> fileList = new ArrayList<>();
-            //循环参数
-            for (SearchHit hit : searchHits.getHits()) {
-                //解析为实体
-                fileList.add(JSON.parseObject(hit.getSourceAsString(), FileIndex.class));
-            }
-            //组装结果和总数
-            result.setFileList(fileList);
             //组装总数
             result.setTotal(searchHits.getTotalHits().value);
+            //解析文件实体列表
+            List<FileIndex> fileList = Arrays.stream(searchHits.getHits())
+                    .map(SearchHit::getSourceAsString)
+                    .map(p -> JSON.parseObject(p, FileIndex.class))
+                    .collect(Collectors.toList());
+            //组装结果和总数
+            result.setFileList(fileList);
         } catch (IOException e) {
             logger.error("es search fail:{}", e.getMessage());
         }
