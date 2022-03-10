@@ -36,6 +36,9 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
 
+    //google guava
+    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+
     //lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 

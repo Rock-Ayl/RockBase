@@ -21,4 +21,7 @@ public class TestDoc extends BaseDocument {
     //编号
     private String number;
 
+    //值
+    private String value;
+
 }

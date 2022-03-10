@@ -1,5 +1,6 @@
 package org.rock.main.mongo;
 
+import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.main.pojo.base.BaseDocument;
 import org.slf4j.Logger;
@@ -102,8 +103,8 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
                     } else if (methodName.startsWith("is")) {
                         key = methodName.substring(2);
                     }
-                    key.substring(0, 1).toLowerCase();
-                    key = key.substring(1);
+                    //大驼峰转小驼峰
+                    key = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, key);
                     //第二层过滤,过滤掉基类字段
                     switch (key) {
                         case "id":

@@ -61,7 +61,7 @@ public interface BaseMongoService<T> {
     boolean delete(String id, Class<T> clazz);
 
     /**
-     * 覆盖更新
+     * 根据id更新单个实体,只更新update.set的字段
      *
      * @param clazz
      * @param id
