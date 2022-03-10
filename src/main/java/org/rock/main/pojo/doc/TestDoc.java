@@ -2,7 +2,7 @@ package org.rock.main.pojo.doc;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.main.pojo.BaseDO;
+import org.rock.main.pojo.base.BaseDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @Getter
 @Document(collection = "main.test")
-public class TestDoc extends BaseDO {
+public class TestDoc extends BaseDocument {
 
     private static final long serialVersionUID = 1L;
 

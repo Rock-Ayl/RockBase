@@ -2,7 +2,7 @@ package org.rock.main.pojo.index;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.main.pojo.BaseDO;
+import org.rock.main.pojo.base.BaseDO;
 
 /**
  * 文件ES索引实体

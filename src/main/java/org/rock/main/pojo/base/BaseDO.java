@@ -1,4 +1,4 @@
-package org.rock.main.pojo;
+package org.rock.main.pojo.base;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class BaseDO {
     //最后修改用户id
     private String updateUserId;
     //状态删除字段
-    private boolean del;
+    private Boolean del;
     //版本号
     private Long ver;
 
