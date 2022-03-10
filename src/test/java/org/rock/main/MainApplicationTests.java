@@ -6,7 +6,10 @@ import org.rock.main.pojo.doc.TestDoc;
 import org.rock.main.serivce.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.BulkOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 @SpringBootTest
@@ -14,6 +17,9 @@ class MainApplicationTests {
 
     @Autowired
     private MongoService mongoService;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Test
     void test() {
@@ -39,6 +45,14 @@ class MainApplicationTests {
         System.out.println(123);
         //分页查询
         BaseMongoService.RollPageResult<TestDoc> find = mongoService.rollPage(TestDoc.class, new Criteria(), null, null);
+        System.out.println(123);
+
+        //初始化批量更新
+        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, TestDoc.class);
+        bulkOperations.updateMulti(new Query(Criteria.where("_id").is(old.getId())), new Update().set("444", 5));
+        bulkOperations.updateMulti(new Query(Criteria.where("_id").is(old.getId())), new Update().set("555", 6));
+        //执行
+        bulkOperations.execute();
         System.out.println(123);
     }
 
