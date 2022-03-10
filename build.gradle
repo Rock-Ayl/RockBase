@@ -26,6 +26,8 @@ dependencies {
 
     //spring elasticsearch
     implementation group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '4.1.10'
+    //spring mongo
+    implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: '3.2.0'
 
     //apache-commons工具包
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
@@ -41,6 +43,8 @@ dependencies {
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.75'
     //mysql jdbc
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    //mongo client
+    implementation group: 'io.quarkus', name: 'quarkus-mongodb-client', version: '1.13.0.Final'
 
 }
 
