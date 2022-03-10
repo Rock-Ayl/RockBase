@@ -23,8 +23,8 @@ public class BaseDO {
     private Date createDate;
     //最后修改时间
     private Date updateDate;
-    //状态删除字段
-    private Boolean del;
+    //状态删除字段,基本类型,进库默认false
+    private boolean del;
     //版本号
     private Long ver;
 
