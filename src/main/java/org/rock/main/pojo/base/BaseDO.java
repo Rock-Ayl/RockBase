@@ -23,10 +23,6 @@ public class BaseDO {
     private Date createDate;
     //最后修改时间
     private Date updateDate;
-    //创建用户id
-    private String createUserId;
-    //最后修改用户id
-    private String updateUserId;
     //状态删除字段
     private Boolean del;
     //版本号

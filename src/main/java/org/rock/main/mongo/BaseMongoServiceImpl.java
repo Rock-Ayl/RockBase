@@ -109,8 +109,6 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
                         case "id":
                         case "createDate":
                         case "updateDate":
-                        case "createUserId":
-                        case "updateUserId":
                         case "del":
                         case "ver":
                             //本次过
@@ -191,7 +189,7 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
             query.with(sort);
         } else {
             //默认排序,按照创建时间倒序
-            query.with(Sort.by(Sort.Order.desc("gmtCreate")));
+            query.with(Sort.by(Sort.Order.desc("createDate")));
         }
         //如果需要限制返回字段
         if (fields != null && fields.length > 0) {
