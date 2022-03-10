@@ -1,4 +1,4 @@
-package org.rock.main.pojo.es;
+package org.rock.main.pojo.index;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,8 @@ import org.rock.main.pojo.BaseDO;
 @Getter
 @Setter
 public class FileIndex extends BaseDO {
+
+    private static final long serialVersionUID = 1L;
 
     //文件名
     private String fileName;

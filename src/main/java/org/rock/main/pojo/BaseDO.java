@@ -15,6 +15,8 @@ import java.util.Date;
 @Setter
 public class BaseDO {
 
+    private static final long serialVersionUID = 1L;
+
     //唯一id
     private String id;
     //创建时间

@@ -3,7 +3,7 @@ package org.rock.main.serivce;
 import com.alibaba.fastjson.JSONArray;
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.main.pojo.es.FileIndex;
+import org.rock.main.pojo.index.FileIndex;
 
 import java.util.List;
 
