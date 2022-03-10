@@ -1,22 +1,21 @@
 package org.rock.main.mongo;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.Document;
 import org.rock.main.pojo.base.BaseDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
@@ -166,55 +165,77 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
         return this.mongoTemplate.updateFirst(query, update, clazz).getModifiedCount();
     }
 
-    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Document fields, long pageNum, long pageSize, Sort sort, boolean needCount) {
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Integer pageNum, Integer pageSize) {
+        return rollPage(clazz, criteria, null, pageNum, pageSize);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize) {
+        return rollPage(clazz, criteria, fields, pageNum, pageSize, null);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort) {
+        return rollPage(clazz, criteria, fields, pageNum, pageSize, sort, true);
+    }
+
+    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult();
-        Criteria companyCriteria = new Criteria();
-        companyCriteria.andOperator(new Criteria[]{criteria});
-        Document idFiled = new Document();
-        idFiled.put("_id", 1);
-        BasicQuery idQuery = new BasicQuery(new Document(), idFiled);
-        idQuery.addCriteria(companyCriteria);
+        //初始化查询
+        Query query = new Query(criteria);
+        //如果需要排序
         if (sort != null) {
-            idQuery.with(sort);
+            //按照规则
+            query.with(sort);
+        } else {
+            //默认排序,按照创建时间倒序
+            query.with(Sort.by(Sort.Order.desc("gmtCreate")));
         }
-
-        idQuery.limit((int) pageSize).skip((pageNum - 1L) * pageSize);
-        LOG.info("QueryCondition:{}", idQuery.getQueryObject().toJson());
-        List<T> list = this.mongoTemplate.find(idQuery, clazz);
-        if (CollectionUtils.isNotEmpty(list)) {
-            Criteria dataCriteria = new Criteria();
-            List<String> idList = new ArrayList();
-            Iterator var18 = list.iterator();
-
-            while (var18.hasNext()) {
-                Object t = var18.next();
-                idList.add(((BaseDocument) t).getId());
-            }
-
-            dataCriteria.andOperator(new Criteria[]{Criteria.where("_id").in(idList), criteria});
-            BasicQuery dataQuery = new BasicQuery(new Document(), fields);
-            dataQuery.addCriteria(dataCriteria);
-            if (sort != null) {
-                dataQuery.with(sort);
-            }
-
-            list = this.mongoTemplate.find(dataQuery, clazz);
+        //如果需要限制返回字段
+        if (fields != null && fields.length > 0) {
+            //设置需要的字段
+            query.fields().include(fields);
         }
-        //组装数据
-        result.setList(list);
         //如果需要count
         if (needCount) {
             //查询count
-            long total = this.mongoTemplate.count(new Query(companyCriteria), clazz);
+            long total = this.mongoTemplate.count(query, clazz);
             //组装
             result.setTotal(total);
         } else {
             //默认
             result.setTotal(-1L);
         }
+        //设置分页
+        query = setPage(query, pageNum, pageSize);
+        //日志
+        LOG.info("QueryCondition:{}", query.getQueryObject().toJson());
+        //查询数据
+        List<T> list = this.mongoTemplate.find(query, clazz);
+        //组装数据
+        result.setList(list);
         //返回
         return result;
+    }
+
+    /**
+     * 设置分页
+     *
+     * @param query
+     * @param pageNum  分页,可为空
+     * @param pageSize 分页,可为空
+     * @return
+     */
+    private Query setPage(Query query, Integer pageNum, Integer pageSize) {
+        //如果需要限制分页
+        if (pageSize != null && pageNum != null && pageNum != 0 && pageSize != 0) {
+            //限制分页
+            query.limit(pageSize).skip((pageNum - 1L) * pageSize);
+        }
+        //返回
+        return query;
     }
 
 }

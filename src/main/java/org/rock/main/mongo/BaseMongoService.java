@@ -2,7 +2,6 @@ package org.rock.main.mongo;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.Document;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
@@ -84,16 +83,52 @@ public interface BaseMongoService<T> {
     /**
      * 翻页查询
      *
+     * @param clazz    实体
+     * @param criteria 条件
+     * @param pageNum  分页,页码
+     * @param pageSize 分页,每页数量
+     * @return
+     */
+    BaseMongoService.RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Integer pageNum, Integer pageSize);
+
+    /**
+     * 翻页查询
+     *
+     * @param clazz    实体
+     * @param criteria 条件
+     * @param fields   限制字段
+     * @param pageNum  分页,页码
+     * @param pageSize 分页,每页数量
+     * @return
+     */
+    BaseMongoService.RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize);
+
+    /**
+     * 翻页查询
+     *
+     * @param clazz    实体
+     * @param criteria 条件
+     * @param fields   限制字段
+     * @param pageNum  分页,页码
+     * @param pageSize 分页,每页数量
+     * @param sort     排序
+     * @return
+     */
+    BaseMongoService.RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort);
+
+    /**
+     * 翻页查询
+     *
      * @param clazz     实体
      * @param criteria  条件
-     * @param fields    字段
+     * @param fields    限制字段
      * @param pageNum   分页,页码
      * @param pageSize  分页,每页数量
      * @param sort      排序
      * @param needCount 是否需要count(如果不需要,减少一次查询消耗)
      * @return
      */
-    BaseMongoService.RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Document fields, long pageNum, long pageSize, Sort sort, boolean needCount);
+    BaseMongoService.RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
 
     /**
      * 查询响应对象实体
