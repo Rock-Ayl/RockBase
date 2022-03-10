@@ -1,10 +1,12 @@
 package org.rock.main;
 
 import org.junit.jupiter.api.Test;
+import org.rock.main.mongo.BaseMongoService;
 import org.rock.main.pojo.doc.TestDoc;
 import org.rock.main.serivce.MongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 
 @SpringBootTest
@@ -34,6 +36,9 @@ class MainApplicationTests {
         mongoService.update(TestDoc.class, old.getId(), update2, old.getVer());
         //查询
         old = mongoService.get(TestDoc.class, create.getId());
+        System.out.println(123);
+        //分页查询
+        BaseMongoService.RollPageResult<TestDoc> find = mongoService.rollPage(TestDoc.class, new Criteria(), null, null);
         System.out.println(123);
     }
 
