@@ -139,7 +139,7 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
         update.set("updateDate", new Date());
         update.set("ver", System.currentTimeMillis());
         //日志
-        LOG.info("Update Skip Null Query Condition:{}", query.getQueryObject().toJson());
+        LOG.info("Update Skip Null Query :{}", query.toString());
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, doc.getClass()).getModifiedCount() > 0L;
     }
@@ -148,7 +148,7 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
         //查询
         Query query = new Query(Criteria.where("_id").in(idList));
         //日志
-        LOG.info("QueryCondition:{}", query.getQueryObject().toJson());
+        LOG.info("Mongo list query:[{}]", query.toString());
         //查询
         return this.mongoTemplate.find(query, clazz);
     }
@@ -212,7 +212,7 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
         //设置分页
         query = setPage(query, pageNum, pageSize);
         //日志
-        LOG.info("QueryCondition:{}", query.getQueryObject().toJson());
+        LOG.info("Mongo RollPage Query:[{}]", query.toString());
         //查询数据
         List<T> list = this.mongoTemplate.find(query, clazz);
         //组装数据
