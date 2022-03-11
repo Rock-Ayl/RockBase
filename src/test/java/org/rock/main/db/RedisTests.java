@@ -1,5 +1,6 @@
 package org.rock.main.db;
 
+import com.alibaba.fastjson.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.rock.main.db.redis.BaseRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,13 @@ class RedisTests {
 
     @Test
     void test() {
+        //key
+        String key = "rock@123";
+        JSONObject json = new JSONObject();
+        json.put("name", "rock");
+        baseRedisService.set(key, json.toJSONString());
         //搜索
-        Object o = baseRedisService.get("user@2");
+        JSONObject o = baseRedisService.getJson(key);
         System.out.println(o);
     }
 

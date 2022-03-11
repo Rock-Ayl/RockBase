@@ -1,5 +1,7 @@
 package org.rock.main.db.redis;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,12 +44,20 @@ public interface BaseRedisService {
     void delete(String... key);
 
     /**
-     * 获取
+     * 获取string
      *
      * @param key 键
      * @return 值
      */
-    Object get(String key);
+    String get(String key);
+
+    /**
+     * 获取Json
+     *
+     * @param key 键
+     * @return 值
+     */
+    JSONObject getJson(String key);
 
     /**
      * 存储

@@ -1,5 +1,8 @@
 package org.rock.main.db.redis;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,13 +67,32 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
-    public Object get(String key) {
-        return key == null ? null : redisTemplate.opsForValue().get(key);
+    public String get(String key) {
+        //判空
+        if (StringUtils.isBlank(key)) {
+            //过
+            return null;
+        }
+        //查询返回
+        return redisTemplate.opsForValue().get(key).toString();
+    }
+
+    @Override
+    public JSONObject getJson(String key) {
+        //获取string
+        String str = get(key);
+        //如果不存在
+        if (StringUtils.isBlank(str)) {
+            //过
+            return null;
+        }
+        //解析并返回
+        return JSON.parseObject(str);
     }
 
     @Override
     public boolean set(String key, Object value) {
-        return setAndTime(key, key, -1L);
+        return setAndTime(key, value, -1L);
     }
 
     @Override
