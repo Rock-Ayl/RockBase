@@ -1,4 +1,4 @@
-package org.rock.main.elasticsearch;
+package org.rock.main.db.elasticsearch;
 
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.RestHighLevelClient;

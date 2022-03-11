@@ -1,4 +1,4 @@
-package org.rock.main.mongo;
+package org.rock.main.db.mongo;
 
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package org.rock.main.mongo;
+package org.rock.main.db.mongo;
 
 import lombok.Getter;
 import lombok.Setter;

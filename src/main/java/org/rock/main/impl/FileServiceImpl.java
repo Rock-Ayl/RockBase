@@ -9,7 +9,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.rock.main.elasticsearch.ElasticSearchTemplate;
+import org.rock.main.db.elasticsearch.ElasticSearchTemplate;
 import org.rock.main.pojo.index.FileIndex;
 import org.rock.main.serivce.FileService;
 import org.slf4j.Logger;
