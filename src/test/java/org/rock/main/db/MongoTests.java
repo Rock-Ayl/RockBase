@@ -3,7 +3,7 @@ package org.rock.main.db;
 import org.junit.jupiter.api.Test;
 import org.rock.main.db.mongo.BaseMongoService;
 import org.rock.main.pojo.doc.TestDoc;
-import org.rock.main.serivce.MongoService;
+import org.rock.main.serivce.MongoTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.BulkOperations;
@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 class MongoTests {
 
     @Autowired
-    private MongoService mongoService;
+    private MongoTestService mongoService;
 
     @Autowired
     private MongoTemplate mongoTemplate;

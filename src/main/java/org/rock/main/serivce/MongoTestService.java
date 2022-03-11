@@ -6,5 +6,5 @@ import org.rock.main.pojo.doc.TestDoc;
 /**
  * mongo 测试服务,一共一些基础的操作
  */
-public interface MongoService extends BaseMongoService<TestDoc> {
+public interface MongoTestService extends BaseMongoService<TestDoc> {
 }
