@@ -12,13 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Redis接口实现
- */
 @Service
-public final class RedisTable implements RedisInterface {
+public final class BaseRedisServiceImpl implements BaseRedisService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisTable.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseRedisServiceImpl.class);
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

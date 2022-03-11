@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Redis使用接口
+ * Redis 服务基底
  */
-public interface RedisInterface {
+public interface BaseRedisService {
 
     /**
      * 设置缓存失效时间
