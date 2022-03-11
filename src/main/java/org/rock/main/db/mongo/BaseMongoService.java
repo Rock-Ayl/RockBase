@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 封装的mongo服务
+ * mongo服务基底
  *
  * @Author ayl
  * @Date 2022-03-09

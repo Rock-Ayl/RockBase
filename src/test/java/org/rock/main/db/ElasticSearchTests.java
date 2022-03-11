@@ -1,7 +1,7 @@
 package org.rock.main.db;
 
 import org.junit.jupiter.api.Test;
-import org.rock.main.serivce.FileService;
+import org.rock.main.serivce.TestElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,12 +10,12 @@ class ElasticSearchTests {
 
 
     @Autowired
-    private FileService fileService;
+    private TestElasticSearchService testElasticSearchService;
 
     @Test
     void test() {
         //搜索
-        FileService.FileIndexSearchResult result = fileService.search();
+        TestElasticSearchService.FileIndexSearchResult result = testElasticSearchService.fileSearch();
         System.out.println(result);
     }
 

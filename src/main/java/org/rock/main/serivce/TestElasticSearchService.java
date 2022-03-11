@@ -3,21 +3,22 @@ package org.rock.main.serivce;
 import com.alibaba.fastjson.JSONArray;
 import lombok.Getter;
 import lombok.Setter;
+import org.rock.main.db.elasticsearch.BaseElasticSearchService;
 import org.rock.main.pojo.index.FileIndex;
 
 import java.util.List;
 
 /**
- * 文件服务
+ * elastic search 测试服务
  */
-public interface FileService {
+public interface TestElasticSearchService extends BaseElasticSearchService {
 
     /**
-     * 文件搜索
+     * 测试 文件搜索
      *
      * @return
      */
-    FileIndexSearchResult search();
+    FileIndexSearchResult fileSearch();
 
     @Setter
     @Getter

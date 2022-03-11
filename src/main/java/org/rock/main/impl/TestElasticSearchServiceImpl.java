@@ -9,12 +9,11 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.rock.main.db.elasticsearch.ElasticSearchTemplate;
+import org.rock.main.db.elasticsearch.BaseElasticSearchTemplate;
 import org.rock.main.pojo.index.FileIndex;
-import org.rock.main.serivce.FileService;
+import org.rock.main.serivce.TestElasticSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,22 +21,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * 用户业务实现层
- */
 @Service
-public class FileServiceImpl implements FileService {
+public class TestElasticSearchServiceImpl extends BaseElasticSearchTemplate implements TestElasticSearchService {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestElasticSearchServiceImpl.class);
 
-    @Autowired
-    private ElasticSearchTemplate elasticSearchTemplate;
-
-    //es文件索引
+    //es 测试 文件索引
     private final static String FILE_INDEX = "file";
 
     @Override
-    public FileIndexSearchResult search() {
+    public FileIndexSearchResult fileSearch() {
         //初始化
         FileIndexSearchResult result = new FileIndexSearchResult();
         //创建查询函数构造对象
@@ -51,7 +44,7 @@ public class FileServiceImpl implements FileService {
         searchRequest.source(builder);
         try {
             //查询
-            SearchResponse searchResponse = elasticSearchTemplate.client().search(searchRequest, RequestOptions.DEFAULT);
+            SearchResponse searchResponse = client().search(searchRequest, RequestOptions.DEFAULT);
             //获取响应数据
             SearchHits searchHits = searchResponse.getHits();
             //组装总数

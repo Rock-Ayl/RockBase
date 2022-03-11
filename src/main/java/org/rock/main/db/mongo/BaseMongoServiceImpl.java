@@ -19,6 +19,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * mongo 服务基底实现
+ *
+ * @Author ayl
+ * @Date 2022-03-09
+ */
 @Service
 public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
 

@@ -8,13 +8,13 @@ import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.stereotype.Service;
 
 /**
- * elastic search 基础实现
+ * elastic search 服务基底实现
  *
  * @Author ayl
  * @Date 2022-3-9
  */
 @Service
-public class ElasticSearchTemplate {
+public class BaseElasticSearchTemplate implements BaseElasticSearchService {
 
     //连接
     private RestHighLevelClient client;
@@ -26,11 +26,6 @@ public class ElasticSearchTemplate {
     @Value("${elastic.auth.password:}")
     private String password;
 
-    /**
-     * 获取连接
-     *
-     * @return
-     */
     public RestHighLevelClient client() {
         //如果不存在
         if (this.client == null) {
