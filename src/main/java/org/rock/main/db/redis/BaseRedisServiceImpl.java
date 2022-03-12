@@ -78,7 +78,7 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
-    public JSONObject getJson(String key) {
+    public JSONObject getJSONObject(String key) {
         //获取string
         String str = getString(key);
         //如果不存在

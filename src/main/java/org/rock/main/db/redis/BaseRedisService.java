@@ -52,12 +52,12 @@ public interface BaseRedisService {
     String getString(String key);
 
     /**
-     * 获取Json
+     * 获取JSONObject
      *
      * @param key 键
      * @return 值
      */
-    JSONObject getJson(String key);
+    JSONObject getJSONObject(String key);
 
     /**
      * 存储

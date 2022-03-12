@@ -21,7 +21,7 @@ class RedisTests {
         json.put("name", "rock");
         baseRedisService.set(key, json.toJSONString());
         //搜索
-        JSONObject o = baseRedisService.getJson(key);
+        JSONObject o = baseRedisService.getJSONObject(key);
         System.out.println(o);
     }
 
