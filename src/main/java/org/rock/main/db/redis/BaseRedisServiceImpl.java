@@ -67,7 +67,7 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
-    public String get(String key) {
+    public String getString(String key) {
         //判空
         if (StringUtils.isBlank(key)) {
             //过
@@ -80,7 +80,7 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     @Override
     public JSONObject getJson(String key) {
         //获取string
-        String str = get(key);
+        String str = getString(key);
         //如果不存在
         if (StringUtils.isBlank(str)) {
             //过

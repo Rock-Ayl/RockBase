@@ -49,7 +49,7 @@ public interface BaseRedisService {
      * @param key 键
      * @return 值
      */
-    String get(String key);
+    String getString(String key);
 
     /**
      * 获取Json
