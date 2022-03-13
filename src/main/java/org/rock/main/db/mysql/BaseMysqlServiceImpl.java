@@ -109,7 +109,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
 
     @Override
     public <E extends IPage<Map<String, Object>>> E selectMapsPage(E page, Wrapper<T> queryWrapper) {
-        return selectMapsPage(page, queryWrapper);
+        return baseMapper.selectMapsPage(page, queryWrapper);
     }
 
 }
