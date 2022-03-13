@@ -2,6 +2,7 @@ package org.rock.main.pojo.base;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.rock.main.util.IdUtils;
 
 import java.util.Date;
 
@@ -27,5 +28,17 @@ public class BaseDO {
     private boolean del;
     //版本号
     private Long ver;
+
+    /**
+     * 给已经存在的基底赋予基础数据
+     *
+     * @param baseDO
+     */
+    public static void build(BaseDO baseDO) {
+        baseDO.setVer(System.currentTimeMillis());
+        baseDO.setCreateDate(new Date());
+        baseDO.setUpdateDate(new Date());
+        baseDO.setId(IdUtils.genGUID());
+    }
 
 }

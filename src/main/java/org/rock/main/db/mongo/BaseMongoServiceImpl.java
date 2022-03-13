@@ -3,7 +3,6 @@ package org.rock.main.db.mongo;
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.main.pojo.base.BaseDocument;
-import org.rock.main.util.IdUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +55,7 @@ public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
      * @param document
      */
     private void initDocument(T document) {
-        BaseDocument doc = (BaseDocument) document;
-        doc.setVer(System.currentTimeMillis());
-        doc.setCreateDate(new Date());
-        doc.setUpdateDate(new Date());
-        doc.setId(IdUtils.genGUID());
+        BaseDocument.build((BaseDocument) document);
     }
 
     public T get(Class<T> clazz, String id) {
