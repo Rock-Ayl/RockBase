@@ -34,7 +34,7 @@ public class BaseDO {
      *
      * @param baseDO
      */
-    public static void build(BaseDO baseDO) {
+    public static void createBuild(BaseDO baseDO) {
         baseDO.setVer(System.currentTimeMillis());
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());

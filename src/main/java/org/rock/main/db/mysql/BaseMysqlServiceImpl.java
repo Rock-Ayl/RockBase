@@ -20,7 +20,10 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
 
     @Override
     public int insert(T entity) {
-        return 0;
+        //创建前初始化
+        BaseDO.createBuild(entity);
+        //插入
+        return baseMapper.insert(entity);
     }
 
     @Override

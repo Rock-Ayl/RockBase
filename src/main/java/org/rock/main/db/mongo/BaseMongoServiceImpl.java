@@ -35,7 +35,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     public T create(T document) {
         //创建前初始化
-        BaseDO.build((BaseDO) document);
+        BaseDO.createBuild(document);
         //插入
         return this.mongoTemplate.insert(document);
     }
@@ -44,7 +44,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //循环
         for (T document : documents) {
             //创建前初始化
-            BaseDO.build((BaseDO) document);
+            BaseDO.createBuild(document);
         }
         //批量插入
         return this.mongoTemplate.insertAll(documents);
@@ -67,10 +67,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //过
             return false;
         }
-        //强转基类
-        BaseDocument doc = (BaseDocument) document;
         //id
-        String id = doc.getId();
+        String id = document.getId();
         //判空
         if (StringUtils.isBlank(id)) {
             //过
@@ -82,7 +80,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 .and("ver").is(ver));
         //更新
         Update update = new Update();
-        Method[] var7 = doc.getClass().getMethods();
+        Method[] var7 = document.getClass().getMethods();
         int var8 = var7.length;
         try {
             for (int var9 = 0; var9 < var8; ++var9) {
@@ -112,7 +110,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                             //其他
                         default:
                             //value
-                            Object value = method.invoke(doc);
+                            Object value = method.invoke(document);
                             //判空
                             if (value != null) {
                                 //设置
@@ -134,7 +132,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //日志
         LOG.info("Update Skip Null Query :{}", query.toString());
         //只更新一个
-        return this.mongoTemplate.updateFirst(query, update, doc.getClass()).getModifiedCount() > 0L;
+        return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
     }
 
     public List<T> list(Class<T> clazz, List<String> idList) {
