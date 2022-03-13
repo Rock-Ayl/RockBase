@@ -48,11 +48,15 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
 
     @Override
     public int updateById(T entity) {
-        return 0;
+        //修改前初始化
+        BaseDO.updateBuild(entity);
+        //修改
+        return baseMapper.updateById(entity);
     }
 
     @Override
     public int update(T entity, Wrapper<T> updateWrapper) {
+        //todo 未实现
         return 0;
     }
 

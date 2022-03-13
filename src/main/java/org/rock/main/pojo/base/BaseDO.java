@@ -30,7 +30,7 @@ public class BaseDO {
     private Long ver;
 
     /**
-     * 给已经存在的基底赋予基础数据
+     * 给新增数据的基底赋予基础数据
      *
      * @param baseDO
      */
@@ -39,6 +39,16 @@ public class BaseDO {
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());
         baseDO.setId(IdUtils.genGUID());
+    }
+
+    /**
+     * 给修改数据的基底赋予基础数据
+     *
+     * @param baseDO
+     */
+    public static void updateBuild(BaseDO baseDO) {
+        baseDO.setVer(System.currentTimeMillis());
+        baseDO.setUpdateDate(new Date());
     }
 
 }
