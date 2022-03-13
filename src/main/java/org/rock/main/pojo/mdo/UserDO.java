@@ -1,4 +1,4 @@
-package org.rock.main.pojo;
+package org.rock.main.pojo.mdo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;

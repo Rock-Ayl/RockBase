@@ -1,7 +1,7 @@
 package org.rock.main.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.rock.main.pojo.UserDO;
+import org.rock.main.pojo.mdo.UserDO;
 
 /**
  * @Author ayl
