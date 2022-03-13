@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2022-03-09
  */
 @Service
-public class BaseMongoServiceImpl<T> implements BaseMongoService<T> {
+public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoService<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseMongoServiceImpl.class);
 

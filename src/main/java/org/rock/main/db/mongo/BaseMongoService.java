@@ -2,6 +2,7 @@ package org.rock.main.db.mongo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.rock.main.pojo.base.BaseDocument;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
@@ -15,7 +16,7 @@ import java.util.List;
  * @Author ayl
  * @Date 2022-03-09
  */
-public interface BaseMongoService<T> {
+public interface BaseMongoService<T extends BaseDocument> {
 
     /**
      * 单个创建
