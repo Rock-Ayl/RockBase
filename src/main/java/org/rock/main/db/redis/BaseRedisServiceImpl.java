@@ -119,6 +119,16 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
+    public long incr(String key, long delta, int seconds) {
+        //自增
+        long count = incr(key, delta);
+        //设置过期时间
+        setTime(key, seconds);
+        //返回
+        return count;
+    }
+
+    @Override
     public long decr(String key, long delta) {
         if (delta < 0L) {
             throw new RuntimeException("递减因子必须大于0");

@@ -88,6 +88,16 @@ public interface BaseRedisService {
     long incr(String key, long delta);
 
     /**
+     * 递增
+     *
+     * @param key     键
+     * @param delta   要增加几(大于0)
+     * @param seconds 过期时间秒
+     * @return
+     */
+    long incr(String key, long delta, int seconds);
+
+    /**
      * 递减
      *
      * @param key   键

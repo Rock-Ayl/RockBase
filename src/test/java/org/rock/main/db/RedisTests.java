@@ -23,6 +23,12 @@ class RedisTests {
         //搜索
         JSONObject o = baseRedisService.getJSONObject(key);
         System.out.println(o);
+
+        String key2 = "rock@4444";
+        long count = baseRedisService.incr(key2, 1, 100);
+        System.out.println(123);
+        long count2 = baseRedisService.incr(key2, 2, 500);
+        System.out.println(123);
     }
 
 }
