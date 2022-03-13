@@ -3,6 +3,7 @@ package org.rock.main.db.mysql;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.rock.main.pojo.base.BaseDO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BaseMysqlServiceImpl<T> implements BaseMysqlService<T> {
+public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<T> {
 
     @Resource
     private BaseMapper<T> baseMapper;

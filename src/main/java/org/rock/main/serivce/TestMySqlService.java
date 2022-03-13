@@ -7,4 +7,5 @@ import org.rock.main.pojo.mdo.UserDO;
  * mysql 测试服务
  */
 public interface TestMySqlService extends BaseMysqlService<UserDO> {
+
 }

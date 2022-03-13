@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Param;
+import org.rock.main.pojo.base.BaseDO;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.Map;
  * @Author ayl
  * @Date 2022-03-13
  */
-public interface BaseMysqlService<T> {
+public interface BaseMysqlService<T extends BaseDO> {
 
     /**
      * 插入一条记录
