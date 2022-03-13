@@ -46,11 +46,13 @@ dependencies {
 
     //阿里FastJson
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.75'
-    //mysql jdbc
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
     //mongo client
     implementation group: 'io.quarkus', name: 'quarkus-mongodb-client', version: '1.13.0.Final'
-    
+    //mysql jdbc
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    //mybatis plus
+    implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.2'
+
 }
 
 tasks.named('test') {
