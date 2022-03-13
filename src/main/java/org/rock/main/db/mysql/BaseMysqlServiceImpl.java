@@ -19,11 +19,26 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     private BaseMapper<T> baseMapper;
 
     @Override
-    public int insert(T entity) {
+    public T insert(T entity) {
         //创建前初始化
         BaseDO.createBuild(entity);
         //插入
-        return baseMapper.insert(entity);
+        baseMapper.insert(entity);
+        //返回
+        return entity;
+    }
+
+    @Override
+    public List<T> insert(List<T> entities) {
+        //循环
+        for (T entity : entities) {
+            //创建前初始化
+            BaseDO.createBuild(entity);
+            //创建(未实现真正批量)
+            baseMapper.insert(entity);
+        }
+        //返回
+        return entities;
     }
 
     @Override

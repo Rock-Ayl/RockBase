@@ -24,7 +24,14 @@ public interface BaseMysqlService<T extends BaseDO> {
      *
      * @param entity 实体对象
      */
-    int insert(T entity);
+    T insert(T entity);
+
+    /**
+     * 批量插入记录
+     *
+     * @param entities 实体对象列表
+     */
+    List<T> insert(List<T> entities);
 
     /**
      * 根据 ID 删除
