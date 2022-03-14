@@ -22,31 +22,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class ThreadPoolTaskConfig {
 
-    /**
-     * 本配置的bean名名称
-     */
+    //本配置的bean名名称
     public static final String SYNC_TASK_POOL_EXECUTOR = "syncTaskPoolExecutor";
-
-    /**
-     * 核心线程数（默认线程数）
-     */
-    private static final int corePoolSize = 20;
-    /**
-     * 最大线程数
-     */
-    private static final int maxPoolSize = 100;
-    /**
-     * 允许线程空闲时间（单位：默认为秒）
-     */
-    private static final int keepAliveTime = 10;
-    /**
-     * 缓冲队列大小
-     */
-    private static final int queueCapacity = 200;
-    /**
-     * 线程池名前缀
-     */
+    //线程池名前缀
     private static final String threadNamePrefix = "Async-Job-";
+    //核心线程数（默认线程数）
+    private static final int corePoolSize = 20;
+    //最大线程数
+    private static final int maxPoolSize = 100;
+    //允许线程空闲时间（单位：默认为秒）
+    private static final int keepAliveTime = 10;
+    //缓冲队列大小
+    private static final int queueCapacity = 200;
 
     //bean的名称,默认为首字母小写的方法名
     @Bean(SYNC_TASK_POOL_EXECUTOR)
