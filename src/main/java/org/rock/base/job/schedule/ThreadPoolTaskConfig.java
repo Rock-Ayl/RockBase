@@ -17,9 +17,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Author ayl
  * @Date 2022-03-14
  */
-//开启异步定时任务
+//开启异步定时任务,并初始化异步线程池配置
 @EnableAsync
-//异步线程池配置
 @Configuration
 public class ThreadPoolTaskConfig {
 
