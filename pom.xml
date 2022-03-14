@@ -126,12 +126,25 @@
             <version>8.0.22</version>
         </dependency>
 
-
         <!-- mongo client -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-mongodb-client</artifactId>
             <version>1.13.0.Final</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>wildfly-common</artifactId>
+                    <groupId>org.wildfly.common</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-threads</artifactId>
+                    <groupId>org.jboss.threads</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>microprofile-context-propagation-api</artifactId>
+                    <groupId>org.eclipse.microprofile.context-propagation</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
