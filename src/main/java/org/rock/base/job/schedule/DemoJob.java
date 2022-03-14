@@ -20,7 +20,7 @@ public class DemoJob {
     private static final Logger logger = LoggerFactory.getLogger(DemoJob.class);
 
     /**
-     * 每2秒执行一次,同步任务(所有同步任务共用一个线程)
+     * 每2秒执行一次,同步任务(所有同步任务共用一个线程,如果该任务效率很快建议同步)
      */
     @Scheduled(cron = "0/2 * *  * * ?")
     public void demo() throws InterruptedException {
@@ -29,7 +29,7 @@ public class DemoJob {
     }
 
     /**
-     * 每2秒执行一次,同步任务(所有同步任务共用一个线程)
+     * 每2秒执行一次,同步任务(所有同步任务共用一个线程,如果该任务效率很快建议同步)
      */
     @Scheduled(cron = "0/2 * *  * * ?")
     public void demo2() throws InterruptedException {
@@ -38,7 +38,7 @@ public class DemoJob {
     }
 
     /**
-     * 每2秒执行一次,异步任务(异步任务单独使用一个线程),指定的是线程池bean名称
+     * 每2秒执行一次,异步任务(异步任务单独使用一个线程,只有速度很慢的建议如此),指定的是线程池bean名称
      */
     @Async(ThreadPoolTaskConfig.SYNC_TASK_POOL_EXECUTOR)
     @Scheduled(cron = "0/2 * *  * * ?")
