@@ -2,12 +2,9 @@ package org.rock.base.db.mysql;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import org.apache.ibatis.annotations.Param;
 import org.rock.base.pojo.base.BaseDO;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * mysql服务基底
@@ -60,77 +57,47 @@ public interface BaseMysqlService<T extends BaseDO> {
     int delete(List<String> idList);
 
     /**
-     * 根据实体修改
+     * 根据实体修改,跳过NULL的字段
      *
      * @param entity 实体对象
      */
     int updateSkipNull(T entity);
 
     /**
-     * 根据 whereEntity 条件，更新记录
+     * 根据条件更新,跳过NULL的字段
      *
      * @param entity        实体对象 (set 条件值,可以为 null)
      * @param updateWrapper 实体对象封装操作类（可以为 null,里面的 entity 用于生成 where 语句）
      */
-    int update(@Param(Constants.ENTITY) T entity, @Param(Constants.WRAPPER) Wrapper<T> updateWrapper);
+    int updateByWrapper(T entity, Wrapper<T> updateWrapper);
 
     /**
-     * 查询（根据 columnMap 条件）
-     *
-     * @param columnMap 表字段 map 对象
-     */
-    List<T> selectByMap(@Param(Constants.COLUMN_MAP) Map<String, Object> columnMap);
-
-    /**
-     * 根据 entity 条件，查询一条记录
+     * 根据条件，查询一条记录
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    T selectOne(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    T getByWrapper(Wrapper<T> queryWrapper);
 
     /**
-     * 根据 Wrapper 条件，查询总记录数
+     * 根据条件，查询总记录数
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    Integer selectCount(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    Integer getCountByWrapper(Wrapper<T> queryWrapper);
 
     /**
-     * 根据 entity 条件，查询全部记录
+     * 根据条件，查询列表
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    List<T> selectList(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    List<T> listByWrapper(Wrapper<T> queryWrapper);
 
     /**
-     * 根据 Wrapper 条件，查询全部记录
-     *
-     * @param queryWrapper 实体对象封装操作类（可以为 null）
-     */
-    List<Map<String, Object>> selectMaps(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
-
-    /**
-     * 根据 Wrapper 条件，查询全部记录
-     * <p>注意： 只返回第一个字段的值</p>
-     *
-     * @param queryWrapper 实体对象封装操作类（可以为 null）
-     */
-    List<Object> selectObjs(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
-
-    /**
-     * 根据 entity 条件，查询全部记录（并翻页）
+     * 根据条件，分页查询
      *
      * @param page         分页查询条件（可以为 RowBounds.DEFAULT）
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    <E extends IPage<T>> E selectPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
-
-    /**
-     * 根据 Wrapper 条件，查询全部记录（并翻页）
-     *
-     * @param page         分页查询条件
-     * @param queryWrapper 实体对象封装操作类
-     */
-    <E extends IPage<Map<String, Object>>> E selectMapsPage(E page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+    <E extends IPage<T>> E rollPage(E page, Wrapper<T> queryWrapper);
 
 }

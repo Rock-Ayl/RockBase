@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<T> {
@@ -68,7 +67,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public int update(T entity, Wrapper<T> updateWrapper) {
+    public int updateByWrapper(T entity, Wrapper<T> updateWrapper) {
         //修改前初始化
         BaseDO.updateBuild(entity);
         //修改
@@ -76,43 +75,23 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public List<T> selectByMap(Map<String, Object> columnMap) {
-        return baseMapper.selectByMap(columnMap);
-    }
-
-    @Override
-    public T selectOne(Wrapper<T> queryWrapper) {
+    public T getByWrapper(Wrapper<T> queryWrapper) {
         return baseMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public Integer selectCount(Wrapper<T> queryWrapper) {
+    public Integer getCountByWrapper(Wrapper<T> queryWrapper) {
         return baseMapper.selectCount(queryWrapper);
     }
 
     @Override
-    public List<T> selectList(Wrapper<T> queryWrapper) {
+    public List<T> listByWrapper(Wrapper<T> queryWrapper) {
         return baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    public List<Map<String, Object>> selectMaps(Wrapper<T> queryWrapper) {
-        return baseMapper.selectMaps(queryWrapper);
-    }
-
-    @Override
-    public List<Object> selectObjs(Wrapper<T> queryWrapper) {
-        return baseMapper.selectObjs(queryWrapper);
-    }
-
-    @Override
-    public <E extends IPage<T>> E selectPage(E page, Wrapper<T> queryWrapper) {
+    public <E extends IPage<T>> E rollPage(E page, Wrapper<T> queryWrapper) {
         return baseMapper.selectPage(page, queryWrapper);
-    }
-
-    @Override
-    public <E extends IPage<Map<String, Object>>> E selectMapsPage(E page, Wrapper<T> queryWrapper) {
-        return baseMapper.selectMapsPage(page, queryWrapper);
     }
 
 }
