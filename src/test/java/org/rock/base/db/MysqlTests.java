@@ -38,4 +38,13 @@ class MysqlTests {
         System.out.println();
     }
 
+    @Test
+    void update() {
+        UserDO update = new UserDO();
+        update.setId("1");
+        update.setName("测试修改");
+        //修改
+        testMySqlService.updateSkipNull(update);
+    }
+
 }

@@ -60,7 +60,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public int updateById(T entity) {
+    public int updateSkipNull(T entity) {
         //修改前初始化
         BaseDO.updateBuild(entity);
         //修改

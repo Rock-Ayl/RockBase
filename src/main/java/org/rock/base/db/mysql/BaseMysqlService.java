@@ -60,11 +60,11 @@ public interface BaseMysqlService<T extends BaseDO> {
     int delete(List<String> idList);
 
     /**
-     * 根据 ID 修改
+     * 根据实体修改
      *
      * @param entity 实体对象
      */
-    int updateById(@Param(Constants.ENTITY) T entity);
+    int updateSkipNull(T entity);
 
     /**
      * 根据 whereEntity 条件，更新记录
