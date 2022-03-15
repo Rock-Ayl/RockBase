@@ -23,7 +23,7 @@ class MysqlTests {
         UserDO two = new UserDO();
         list.add(one);
         list.add(two);
-        testMySqlService.insert(list);
+        testMySqlService.create(list);
         List<UserDO> userList = testMySqlService.selectList(null);
         System.out.println(12);
     }

@@ -1,6 +1,9 @@
 package org.rock.base.db.elasticsearch;
 
-import org.elasticsearch.client.RestHighLevelClient;
+import org.rock.base.pojo.base.BaseIndex;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * elastic search 服务基底
@@ -8,13 +11,23 @@ import org.elasticsearch.client.RestHighLevelClient;
  * @Author ayl
  * @Date 2022-3-9
  */
-public interface BaseElasticSearchService {
+public interface BaseElasticSearchService<T extends BaseIndex> {
 
     /**
-     * 获取连接
+     * 单个创建
      *
+     * @param index
      * @return
      */
-    RestHighLevelClient client();
+    T create(T index);
+
+    /**
+     * 批量创建
+     *
+     * @param indexList
+     * @return
+     */
+    Collection<T> create(List<T> indexList);
+
 
 }

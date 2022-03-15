@@ -2,7 +2,10 @@ package org.rock.base.pojo.index;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.base.pojo.base.BaseDO;
+import org.rock.base.pojo.base.BaseIndex;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * 文件ES索引实体
@@ -12,17 +15,25 @@ import org.rock.base.pojo.base.BaseDO;
  */
 @Getter
 @Setter
-public class FileIndex extends BaseDO {
+@Document(indexName = "file")
+public class FileIndex extends BaseIndex {
 
     private static final long serialVersionUID = 1L;
 
-    //文件名
-    private String fileName;
+    //文件名,使用ik
+    @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_max_word")
+    private String name;
+
     //文件后缀
-    private String fileExt;
+    @Field(type = FieldType.Keyword)
+    private String ext;
+
     //文件MD5
-    private String fileMD5;
+    @Field(type = FieldType.Keyword)
+    private String md5;
+
     //文件大小
-    private Long fileSize;
+    @Field(type = FieldType.Long)
+    private Long size;
 
 }

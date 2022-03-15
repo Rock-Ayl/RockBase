@@ -19,7 +19,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     private BaseMapper<T> baseMapper;
 
     @Override
-    public T insert(T entity) {
+    public T create(T entity) {
         //创建前初始化
         BaseDO.createBuild(entity);
         //插入
@@ -29,7 +29,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public List<T> insert(List<T> entities) {
+    public List<T> create(List<T> entities) {
         //循环
         for (T entity : entities) {
             //创建前初始化

@@ -28,10 +28,8 @@ public class FileController {
 
     @GetMapping(value = "/search", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
     public String search() {
-        //搜索实现
-        TestElasticSearchService.FileIndexSearchResult result = testElasticSearchService.fileSearch();
         //返回
-        return JsonResponse.success().put("result", result).toString();
+        return JsonResponse.success().put("result", null).toString();
     }
 
 }
