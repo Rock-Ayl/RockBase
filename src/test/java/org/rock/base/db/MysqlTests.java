@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -16,7 +17,7 @@ class MysqlTests {
     private TestMySqlService testMySqlService;
 
     @Test
-    void test() {
+    void add() {
 
         List<UserDO> list = new ArrayList<>();
         UserDO one = new UserDO();
@@ -24,8 +25,17 @@ class MysqlTests {
         list.add(one);
         list.add(two);
         testMySqlService.create(list);
-        List<UserDO> userList = testMySqlService.selectList(null);
-        System.out.println(12);
+        System.out.println();
+    }
+
+    @Test
+    void search() {
+
+        UserDO one = testMySqlService.get("1");
+
+        List<UserDO> list = testMySqlService.list(Arrays.asList("1", "2"));
+
+        System.out.println();
     }
 
 }

@@ -42,6 +42,16 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
+    public T get(String id) {
+        return baseMapper.selectById(id);
+    }
+
+    @Override
+    public List<T> list(List<String> idList) {
+        return baseMapper.selectBatchIds(idList);
+    }
+
+    @Override
     public int deleteById(Serializable id) {
         return baseMapper.deleteById(id);
     }
@@ -75,16 +85,6 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
         BaseDO.updateBuild(entity);
         //修改
         return baseMapper.update(entity, updateWrapper);
-    }
-
-    @Override
-    public T selectById(Serializable id) {
-        return baseMapper.selectById(id);
-    }
-
-    @Override
-    public List<T> selectBatchIds(Collection<? extends Serializable> idList) {
-        return baseMapper.selectBatchIds(idList);
     }
 
     @Override

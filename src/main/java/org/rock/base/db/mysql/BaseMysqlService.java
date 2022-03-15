@@ -34,6 +34,20 @@ public interface BaseMysqlService<T extends BaseDO> {
     List<T> create(List<T> entities);
 
     /**
+     * 根据id查询单个
+     *
+     * @param id 主键ID
+     */
+    T get(String id);
+
+    /**
+     * 根据id列表查询多个
+     *
+     * @param idList 主键ID列表(不能为 null 以及 empty)
+     */
+    List<T> list(List<String> idList);
+
+    /**
      * 根据 ID 删除
      *
      * @param id 主键ID
@@ -75,20 +89,6 @@ public interface BaseMysqlService<T extends BaseDO> {
      * @param updateWrapper 实体对象封装操作类（可以为 null,里面的 entity 用于生成 where 语句）
      */
     int update(@Param(Constants.ENTITY) T entity, @Param(Constants.WRAPPER) Wrapper<T> updateWrapper);
-
-    /**
-     * 根据 ID 查询
-     *
-     * @param id 主键ID
-     */
-    T selectById(Serializable id);
-
-    /**
-     * 查询（根据ID 批量查询）
-     *
-     * @param idList 主键ID列表(不能为 null 以及 empty)
-     */
-    List<T> selectBatchIds(@Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
 
     /**
      * 查询（根据 columnMap 条件）
