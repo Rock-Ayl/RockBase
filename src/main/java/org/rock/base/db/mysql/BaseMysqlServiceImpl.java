@@ -7,8 +7,6 @@ import org.rock.base.pojo.base.BaseDO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -52,22 +50,12 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public int deleteById(Serializable id) {
+    public int delete(String id) {
         return baseMapper.deleteById(id);
     }
 
     @Override
-    public int deleteByMap(Map<String, Object> columnMap) {
-        return baseMapper.deleteByMap(columnMap);
-    }
-
-    @Override
-    public int delete(Wrapper<T> queryWrapper) {
-        return baseMapper.delete(queryWrapper);
-    }
-
-    @Override
-    public int deleteBatchIds(Collection<? extends Serializable> idList) {
+    public int delete(List<String> idList) {
         return baseMapper.deleteBatchIds(idList);
     }
 

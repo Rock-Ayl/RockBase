@@ -59,7 +59,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param clazz
      * @return
      */
-    boolean delete(String id, Class<T> clazz);
+    boolean delete(Class<T> clazz, String id);
 
     /**
      * 根据id更新单个实体,只更新update.set的字段

@@ -39,7 +39,7 @@ class ElasticSearchTests {
     @Test
     void delete() {
         //删除
-        testElasticSearchService.delete("1f59707c22d84fe2acffdab8b6870279", FileIndex.class);
+        testElasticSearchService.delete(FileIndex.class, "1f59707c22d84fe2acffdab8b6870279");
         System.out.println(123);
     }
 

@@ -54,7 +54,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return this.mongoTemplate.findById(id, clazz);
     }
 
-    public boolean delete(String id, Class<T> clazz) {
+    public boolean delete(Class<T> clazz, String id) {
         //根据id删除
         return this.mongoTemplate.remove(new Query(Criteria
                 .where("_id").is(id)

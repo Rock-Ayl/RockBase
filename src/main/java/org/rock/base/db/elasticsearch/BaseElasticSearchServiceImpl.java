@@ -70,7 +70,7 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     }
 
     @Override
-    public void delete(String id, Class<T> clazz) {
+    public void delete(Class<T> clazz, String id) {
         //删除
         elasticsearchRestTemplate.delete(id, clazz);
     }
