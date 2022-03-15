@@ -29,5 +29,23 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      */
     Collection<T> create(List<T> indexList);
 
+    /**
+     * 根据id查询单个实体
+     *
+     * @param clazz
+     * @param id
+     * @return
+     */
+    T get(Class<T> clazz, String id);
+
+    /**
+     * 根据id查询多个
+     *
+     * @param clazz
+     * @param idList
+     * @return
+     */
+    List<T> list(Class<T> clazz, List<String> idList);
+
 
 }

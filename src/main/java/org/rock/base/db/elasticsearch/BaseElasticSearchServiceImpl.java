@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -47,5 +48,18 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         //返回
         return indexList;
     }
+
+    @Override
+    public T get(Class<T> clazz, String id) {
+        //查询
+        return elasticsearchRestTemplate.get(id, clazz);
+    }
+
+    @Override
+    public List<T> list(Class<T> clazz, List<String> idList) {
+        //查询
+        return elasticsearchRestTemplate.multiGet(new NativeSearchQueryBuilder().withIds(idList).build(), clazz);
+    }
+
 }
 

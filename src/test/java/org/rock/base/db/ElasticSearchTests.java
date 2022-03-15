@@ -6,9 +6,11 @@ import org.rock.base.serivce.TestElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SpringBootTest
 class ElasticSearchTests {
-
 
     @Autowired
     private TestElasticSearchService testElasticSearchService;
@@ -24,6 +26,11 @@ class ElasticSearchTests {
         //插入
         testElasticSearchService.create(fileIndex);
         System.out.println();
+        //单个查询
+        FileIndex one = testElasticSearchService.get(FileIndex.class, "fcca086604d64ea8a6365abc1ebaeb30");
+        //批量查询
+        List<FileIndex> list = testElasticSearchService.list(FileIndex.class, Arrays.asList("fcca086604d64ea8a6365abc1ebaeb30", "ad48a5967f574b94b4e38b06a60b908e", "1f59707c22d84fe2acffdab8b6870279"));
+        System.out.println(12321312);
     }
 
 }
