@@ -6,6 +6,7 @@ import org.rock.base.serivce.TestElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,6 +54,32 @@ class ElasticSearchTests {
         fileIndex.setSize(41239999L);
         //更新
         testElasticSearchService.updateSkipNull(fileIndex);
+    }
+
+    @Test
+    void batchUpdate() {
+        //初始化
+        FileIndex fileIndex = new FileIndex();
+        fileIndex.setId("ac7eb80e513b4e4c9ad196c9e687862c");
+        fileIndex.setExt("");
+        fileIndex.setMd5("cvdsqwd");
+        fileIndex.setName("批量更新1-comjoisa1xvn.word");
+        fileIndex.setSize(41239999L);
+
+        //初始化
+        FileIndex fileIndex2 = new FileIndex();
+        fileIndex2.setId("b138d267485f475f8d0c2290198cf5c9");
+        fileIndex2.setExt("vasj1");
+        fileIndex2.setMd5("cvdsqwd");
+        fileIndex2.setName("批量更新2-comjoisa1xvn.word");
+        fileIndex2.setSize(4992319L);
+
+        List<FileIndex> list = new ArrayList<>();
+        list.add(fileIndex);
+        list.add(fileIndex2);
+
+        //更新
+        testElasticSearchService.batchUpdateSkipNull(list);
     }
 
 }

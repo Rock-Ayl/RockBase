@@ -63,5 +63,12 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      */
     void updateSkipNull(T index);
 
+    /**
+     * 根据多个实体批量更新实体,跳过NULL的字段
+     *
+     * @param indexList
+     */
+    void batchUpdateSkipNull(List<T> indexList);
+
 
 }
