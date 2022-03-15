@@ -1,16 +1,22 @@
 package org.rock.base.db.elasticsearch;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDO;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.document.Document;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * mongo 服务基底实现
@@ -65,6 +71,38 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     public void delete(String id, Class<T> clazz) {
         //删除
         elasticsearchRestTemplate.delete(id, clazz);
+    }
+
+    @Override
+    public void updateSkipNull(T index) {
+        //获取id
+        String id = index.getId();
+        //判空
+        if (StringUtils.isBlank(id)) {
+            //过
+            return;
+        }
+        //将实体解析为document
+        Document document = Document.parse(JSON.toJSONString(index));
+        //初始爱updateQuery
+        UpdateQuery updateQuery = UpdateQuery.builder(id).withDocument(document).build();
+        //更新
+        elasticsearchRestTemplate.update(updateQuery, getIndex(index));
+    }
+
+    /**
+     * 根据实体,获取索引对象
+     *
+     * @param index
+     * @return
+     */
+    private IndexCoordinates getIndex(T index) {
+        //获取索引settings
+        Map<String, Object> settings = elasticsearchRestTemplate.indexOps(index.getClass()).getSettings();
+        //获取索引名
+        String indexName = settings.getOrDefault("index.provided_name", "none").toString();
+        //返回
+        return IndexCoordinates.of(indexName);
     }
 
 }

@@ -16,7 +16,7 @@ class ElasticSearchTests {
     private TestElasticSearchService testElasticSearchService;
 
     @Test
-    void test() {
+    void search() {
 
         //初始化
         FileIndex fileIndex = new FileIndex();
@@ -33,11 +33,26 @@ class ElasticSearchTests {
         //批量查询
         List<FileIndex> list = testElasticSearchService.list(FileIndex.class, Arrays.asList("fcca086604d64ea8a6365abc1ebaeb30", "ad48a5967f574b94b4e38b06a60b908e", "1f59707c22d84fe2acffdab8b6870279"));
         System.out.println(12321312);
+    }
 
+    @Test
+    void delete() {
         //删除
         testElasticSearchService.delete("1f59707c22d84fe2acffdab8b6870279", FileIndex.class);
         System.out.println(123);
+    }
 
+    @Test
+    void update() {
+        //初始化
+        FileIndex fileIndex = new FileIndex();
+        fileIndex.setId("ac7eb80e513b4e4c9ad196c9e687862c");
+        fileIndex.setExt("");
+        fileIndex.setMd5("cvdsqwd");
+        fileIndex.setName("测试文件2-comjoisa1xvn.word");
+        fileIndex.setSize(41239999L);
+        //更新
+        testElasticSearchService.updateSkipNull(fileIndex);
     }
 
 }

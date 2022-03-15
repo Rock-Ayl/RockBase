@@ -56,5 +56,12 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      */
     void delete(String id, Class<T> clazz);
 
+    /**
+     * 根据实体更新单个实体,跳过NULL的字段
+     *
+     * @param index
+     */
+    void updateSkipNull(T index);
+
 
 }
