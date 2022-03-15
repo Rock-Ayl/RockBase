@@ -61,5 +61,11 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         return elasticsearchRestTemplate.multiGet(new NativeSearchQueryBuilder().withIds(idList).build(), clazz);
     }
 
+    @Override
+    public void delete(String id, Class<T> clazz) {
+        //删除
+        elasticsearchRestTemplate.delete(id, clazz);
+    }
+
 }
 

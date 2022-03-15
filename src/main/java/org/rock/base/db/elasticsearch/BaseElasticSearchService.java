@@ -47,5 +47,14 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      */
     List<T> list(Class<T> clazz, List<String> idList);
 
+    /**
+     * 根据id真实删除
+     *
+     * @param id
+     * @param clazz
+     * @return
+     */
+    void delete(String id, Class<T> clazz);
+
 
 }
