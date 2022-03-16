@@ -67,7 +67,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
-    public int updateByWrapper(T entity, Wrapper<T> updateWrapper) {
+    public int updateSkipByWrapper(T entity, Wrapper<T> updateWrapper) {
         //修改前初始化
         BaseDO.updateBuild(entity);
         //修改

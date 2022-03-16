@@ -69,7 +69,7 @@ public interface BaseMysqlService<T extends BaseDO> {
      * @param entity        实体对象 (set 条件值,可以为 null)
      * @param updateWrapper 实体对象封装操作类（可以为 null,里面的 entity 用于生成 where 语句）
      */
-    int updateByWrapper(T entity, Wrapper<T> updateWrapper);
+    int updateSkipByWrapper(T entity, Wrapper<T> updateWrapper);
 
     /**
      * 根据条件，查询一条记录

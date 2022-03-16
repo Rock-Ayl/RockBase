@@ -49,12 +49,12 @@ class MysqlTests {
     }
 
     @Test
-    void updateByWrapper() {
+    void updateSkipByWrapper() {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.isNull("name");
         UserDO update = new UserDO();
         update.setName("测试更新");
-        testMySqlService.updateByWrapper(update, queryWrapper);
+        testMySqlService.updateSkipByWrapper(update, queryWrapper);
     }
 
 }
