@@ -1,4 +1,4 @@
-package org.rock.base.job.schedule;
+package org.rock.base.job.asyncSchedule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

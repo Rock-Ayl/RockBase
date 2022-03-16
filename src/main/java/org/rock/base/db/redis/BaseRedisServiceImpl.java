@@ -309,6 +309,26 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
+    public String listLeftPop(String key) {
+        try {
+            return redisTemplate.opsForList().leftPop(key).toString();
+        } catch (Exception e) {
+            logger.error(" redis listLeftPop fail:{}", e);
+            return null;
+        }
+    }
+
+    @Override
+    public String listRightPop(String key) {
+        try {
+            return redisTemplate.opsForList().rightPop(key).toString();
+        } catch (Exception e) {
+            logger.error(" redis listLeftPop fail:{}", e);
+            return null;
+        }
+    }
+
+    @Override
     public boolean setListLeft(String key, Object value) {
         return setListLeftAndTime(key, value, -1L);
     }

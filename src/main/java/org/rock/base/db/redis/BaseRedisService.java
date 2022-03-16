@@ -282,6 +282,22 @@ public interface BaseRedisService {
     Object getList(String key, long index);
 
     /**
+     * list 左 pop 操作
+     *
+     * @param key 键
+     * @return
+     */
+    String listLeftPop(String key);
+
+    /**
+     * list 右 pop 操作
+     *
+     * @param key 键
+     * @return
+     */
+    String listRightPop(String key);
+
+    /**
      * set list 的左边
      *
      * @param key   键

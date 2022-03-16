@@ -1,18 +1,17 @@
 package org.rock.base.job.mq;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rock.base.constant.RedisKey;
 import org.rock.base.db.redis.BaseRedisService;
-import org.rock.base.job.schedule.ThreadPoolTaskConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
  * 简单的mq实现demo
- * 借用 Redis list,实现MQ的逻辑, 可以理解为 定时器+redis_list
+ * 借用 Redis list,实现MQ的逻辑,可以理解为[定时器+redis_list]
  *
  * @Author ayl
  * @Date 2022-03-16
@@ -26,24 +25,36 @@ public class DemoRedisMq {
     private BaseRedisService baseRedisService;
 
     /**
-     * 每3秒执行一次,异步定时任务,固定消费队列中最左边的一条记录
+     * 同步操作,每1秒执行一次,固定消费队列中最左边的一条记录
      */
-    @Async(ThreadPoolTaskConfig.SYNC_TASK_POOL_EXECUTOR)
     @Scheduled(cron = "0/1 * *  * * ?")
     public void consumer() {
-        //todo
+        //如果存在可消费队列
+        if (baseRedisService.containsKey(RedisKey.DEMO_MQ_ONE)) {
+            //从队列左端获取一个消息
+            String value = baseRedisService.listLeftPop(RedisKey.DEMO_MQ_ONE);
+            //如果存在可消费的内容
+            if (StringUtils.isNotBlank(value)) {
+                //日志
+                logger.info("消费了一个内容[{}]", value);
+                //过
+                return;
+            }
+        }
+        //默认日志
+        logger.info("无可消费内容,跳过!");
     }
 
     /**
-     * 每5秒执行一次,异步定时任务,固定给队列最右边增加一个可消费记录
+     * 同步操作,每3秒执行一次,固定给队列最右边增加一个可消费记录
      */
-    @Async(ThreadPoolTaskConfig.SYNC_TASK_POOL_EXECUTOR)
-    @Scheduled(cron = "0/1 * *  * * ?")
+    @Scheduled(cron = "0/3 * *  * * ?")
     public void sender() {
         //生成单个消费内容
         String value = "消费内容:" + System.currentTimeMillis();
-        //发送
+        //推送至队列右端
         baseRedisService.setListRight(RedisKey.DEMO_MQ_ONE, value);
+        //日志
         logger.info("产生一个可消费内容[{}]", value);
     }
 
