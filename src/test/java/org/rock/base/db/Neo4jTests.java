@@ -1,8 +1,8 @@
 package org.rock.base.db;
 
 import org.junit.jupiter.api.Test;
-import org.rock.base.db.neo4j.BaseNeo4jService;
 import org.rock.base.pojo.node.PersonNode;
+import org.rock.base.serivce.TestNeo4jSqlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,14 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 class Neo4jTests {
 
     @Autowired
-    private BaseNeo4jService baseNeo4jService;
+    private TestNeo4jSqlService testNeo4jSqlService;
 
     @Test
     void createNode() {
         PersonNode personNode = new PersonNode();
-        personNode.setName("节点名字");
+        personNode.setName("张三");
         personNode.setSex("男");
-        baseNeo4jService.create(personNode);
+        testNeo4jSqlService.create(personNode);
     }
 
 }
