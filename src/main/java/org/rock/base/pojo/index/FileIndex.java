@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
- * 文件ES索引实体
+ * 文件ES索引测试实体
  *
  * @Author ayl
  * @Date 2022-03-09

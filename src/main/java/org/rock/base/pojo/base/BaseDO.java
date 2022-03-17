@@ -7,7 +7,7 @@ import org.rock.base.util.IdUtils;
 import java.util.Date;
 
 /**
- * DB的基底(mysql mongo elasticsearch)
+ * 大部分DB的基底(mysql mongo elasticsearch)
  *
  * @Author ayl
  * @Date 2022-03-09
