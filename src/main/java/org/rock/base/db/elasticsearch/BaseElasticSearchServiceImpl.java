@@ -3,7 +3,6 @@ package org.rock.base.db.elasticsearch;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.rock.base.pojo.base.BaseDO;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     @Override
     public T create(T index) {
         //创建前初始化
-        BaseDO.createBuild(index);
+        BaseIndex.createBuild(index);
         //插入
         elasticsearchRestTemplate.save(index);
         //返回
@@ -49,7 +48,7 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         //循环
         for (T index : indexList) {
             //创建前初始化
-            BaseDO.createBuild(index);
+            BaseIndex.createBuild(index);
         }
         //批量插入
         elasticsearchRestTemplate.save(indexList);

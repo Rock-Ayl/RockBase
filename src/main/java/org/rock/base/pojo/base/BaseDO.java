@@ -4,17 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.util.IdUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 大部分DB的基底(mysql mongo elasticsearch)
+ * Mysql 实体的基底
  *
  * @Author ayl
  * @Date 2022-03-09
  */
 @Getter
 @Setter
-public class BaseDO {
+public class BaseDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

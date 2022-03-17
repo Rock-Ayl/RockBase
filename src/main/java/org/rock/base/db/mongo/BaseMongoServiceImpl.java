@@ -2,7 +2,6 @@ package org.rock.base.db.mongo;
 
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
-import org.rock.base.pojo.base.BaseDO;
 import org.rock.base.pojo.base.BaseDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     public T create(T document) {
         //创建前初始化
-        BaseDO.createBuild(document);
+        BaseDocument.createBuild(document);
         //插入
         return this.mongoTemplate.insert(document);
     }
@@ -44,7 +43,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //循环
         for (T document : documents) {
             //创建前初始化
-            BaseDO.createBuild(document);
+            BaseDocument.createBuild(document);
         }
         //批量插入
         return this.mongoTemplate.insertAll(documents);
