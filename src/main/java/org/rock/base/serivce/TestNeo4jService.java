@@ -6,6 +6,6 @@ import org.rock.base.pojo.node.PersonNode;
 /**
  * neo4j 测试服务
  */
-public interface TestNeo4jSqlService extends BaseNeo4jService<PersonNode> {
+public interface TestNeo4jService extends BaseNeo4jService<PersonNode> {
 
 }
