@@ -1,6 +1,7 @@
 package org.rock.base.db;
 
 import org.junit.jupiter.api.Test;
+import org.rock.base.pojo.base.BaseNode;
 import org.rock.base.pojo.node.PersonNode;
 import org.rock.base.serivce.TestNeo4jService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ class Neo4jTests {
     @Test
     void createNode() {
         PersonNode personNode = new PersonNode();
-        personNode.setName("赵六4444");
+        personNode.setName("张三");
         personNode.setSex("男");
-        testNeo4jService.createNode(personNode);
+        BaseNode.createBuild(personNode);
+        testNeo4jService.save(personNode);
     }
 
     @Test
@@ -28,16 +30,24 @@ class Neo4jTests {
         PersonNode one = new PersonNode();
         one.setName("王一");
         one.setSex("男");
+        BaseNode.createBuild(one);
 
         PersonNode two = new PersonNode();
         two.setName("王二");
         two.setSex("男");
+        BaseNode.createBuild(two);
 
         List<PersonNode> list = new ArrayList<>();
         list.add(one);
         list.add(two);
 
-        testNeo4jService.createNode(list);
+        testNeo4jService.saveAll(list);
+    }
+
+    @Test
+    void listAll() {
+        List<PersonNode> list = testNeo4jService.findAll();
+        System.out.println();
     }
 
 }
