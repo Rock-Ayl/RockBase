@@ -18,7 +18,7 @@ class Neo4jTests {
     @Test
     void createNode() {
         PersonNode personNode = new PersonNode();
-        personNode.setName("赵六");
+        personNode.setName("赵六4444");
         personNode.setSex("男");
         testNeo4jService.createNode(personNode);
     }

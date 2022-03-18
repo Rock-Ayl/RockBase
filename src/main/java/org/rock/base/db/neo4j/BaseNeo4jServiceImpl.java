@@ -10,13 +10,13 @@ import java.util.List;
 public class BaseNeo4jServiceImpl<T extends BaseNode> implements BaseNeo4jService<T> {
 
     @Autowired
-    private BasNeo4TemplateMapper<T> basNeo4TemplateMapper;
+    private BaseNeo4TemplateMapper<T> baseNeo4TemplateMapper;
 
     public T createNode(T node) {
         //创建前初始化
         BaseNode.createBuild(node);
         //实现
-        basNeo4TemplateMapper.save(node);
+        baseNeo4TemplateMapper.save(node);
         //插入
         return node;
     }
@@ -29,7 +29,7 @@ public class BaseNeo4jServiceImpl<T extends BaseNode> implements BaseNeo4jServic
             BaseNode.createBuild(node);
         }
         //实现
-        basNeo4TemplateMapper.saveAll(nodeList);
+        baseNeo4TemplateMapper.saveAll(nodeList);
         //返回
         return nodeList;
     }
