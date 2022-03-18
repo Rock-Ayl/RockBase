@@ -11,9 +11,9 @@ import org.springframework.data.neo4j.core.schema.Node;
  * @Author ayl
  * @Date 2022-03-17
  */
-@Node("person")
 @Getter
 @Setter
+@Node("person")
 public class PersonNode extends BaseNode {
 
     //姓名
