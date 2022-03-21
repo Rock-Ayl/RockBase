@@ -16,10 +16,15 @@ import org.rock.base.pojo.base.BaseDO;
 @TableName("rock_user")
 public class UserDO extends BaseDO {
 
-    String name;
-    String pwd;
-    String email;
-    String phone;
-    String remark;
+    //名称
+    private String name;
+    //密码
+    private String pwd;
+    //邮箱
+    private String email;
+    //手机号
+    private String phone;
+    //备注
+    private String remark;
 
 }
