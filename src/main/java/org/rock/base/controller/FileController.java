@@ -1,5 +1,6 @@
 package org.rock.base.controller;
 
+import org.rock.base.auth.LoginAuth;
 import org.rock.base.common.JsonResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.serivce.TestElasticSearchService;
@@ -20,13 +21,14 @@ public class FileController {
     @Autowired
     private TestElasticSearchService testElasticSearchService;
 
-    @PostMapping(value = "/uploadFile", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
+    @LoginAuth
+    @PostMapping(value = "/uploadFile", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         //todo
         return JsonResponse.success().toString();
     }
 
-    @GetMapping(value = "/search", produces = HttpConst.CONTENT_TYPE_APPLICATION_JSON)
+    @GetMapping(value = "/search", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String search() {
         //返回
         return JsonResponse.success().put("result", null).toString();

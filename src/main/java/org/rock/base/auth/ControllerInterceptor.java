@@ -1,6 +1,8 @@
 package org.rock.base.auth;
 
+import org.apache.commons.lang3.StringUtils;
 import org.rock.base.common.HttpResponse;
+import org.rock.base.constant.HttpConst;
 import org.rock.base.enums.HttpStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 /**
  * 请求拦截器实现
@@ -40,9 +41,22 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 //返回
                 return false;
             }
-            //尝试获取方法
-            Method method = handlerMethod.getMethod();
-            //todo 继续验证
+            //获取该请求上的登录注解
+            LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
+            //如果不为空,视为该接口需要登录认证
+            if (loginAuth != null) {
+                //获取token
+                String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
+                //如果不存在
+                if (StringUtils.isBlank(token)) {
+                    //过滤请求
+                    HttpResponse.sendError(response, HttpStatusEnum.UNAUTHORIZED);
+                    //返回
+                    return false;
+                }
+                //todo 未实现
+            }
+            //过
             return true;
         } else if (handler instanceof ResourceHttpRequestHandler) {
             //静态资源请求默认过

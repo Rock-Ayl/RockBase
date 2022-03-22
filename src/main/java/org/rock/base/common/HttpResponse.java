@@ -24,7 +24,7 @@ public class HttpResponse {
      */
     public static void sendError(HttpServletResponse response, HttpStatusEnum status) throws IOException {
         //统一设置响应体类型为JSON
-        response.setContentType(HttpConst.CONTENT_TYPE_APPLICATION_JSON);
+        response.setContentType(HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON);
         //设置其状态码
         response.setStatus(status.getCode());
         //body体

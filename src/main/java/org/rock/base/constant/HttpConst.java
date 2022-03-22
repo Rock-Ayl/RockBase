@@ -8,7 +8,18 @@ package org.rock.base.constant;
  */
 public class HttpConst {
 
-    //contentType application/json
-    public final static String CONTENT_TYPE_APPLICATION_JSON = "application/json;charset=UTF-8";
+    /**
+     * Request Headers
+     */
+
+    //请求登录token
+    public final static String REQUEST_HEADERS_TOKEN = "token";
+
+    /**
+     * Response Headers
+     */
+
+    //响应格式
+    public final static String RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON = "application/json;charset=UTF-8";
 
 }

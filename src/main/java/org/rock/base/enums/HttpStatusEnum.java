@@ -14,8 +14,9 @@ public enum HttpStatusEnum {
 
     NONE(0, "未知", "不存在或不识别的状态码"),
     OK(200, "OK", "请求成功"),
-    BAD_REQUEST(400, "Bad Request", "服务器不理解请求,可能参数有误"),
-    UNAUTHORIZED(401, "Unauthorized", "该请求需要识别用户信息或授权信息"),
+    BAD_REQUEST(400, "Bad Request", "服务器不理解请求,或接口参数有误"),
+    UNAUTHORIZED(401, "Unauthorized", "该请求需要识别用户信息"),
+    FORBIDDEN(403, "Forbidden", "该请求被禁止访问"),
     NOT_FOUND(404, "Not Found", "无法找到该请求的内容"),
 
     ;
