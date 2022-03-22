@@ -54,7 +54,8 @@ public class ControllerInterceptor implements HandlerInterceptor {
                     //返回
                     return false;
                 }
-                //todo 未实现
+                //todo 未实现,简单设置用户信息
+                LoginAuth.USER_ID.set(token);
             }
             //过
             return true;
@@ -76,7 +77,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-
+        //todo 清理资源,记录日志
     }
 
 }

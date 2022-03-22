@@ -8,4 +8,8 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LoginAuth {
+
+    //登录成功时,该线程承载着用户id
+    ThreadLocal<String> USER_ID = new ThreadLocal<>();
+
 }
