@@ -14,7 +14,8 @@ public enum HttpStatusEnum {
 
     NONE(0, "未知", "不存在或不识别的状态码"),
     OK(200, "OK", "请求成功"),
-    UNAUTHORIZED(401, "Unauthorized", "请求需要用户信息或授权信息"),
+    BAD_REQUEST(400, "Bad Request", "服务器不理解请求,可能参数有误"),
+    UNAUTHORIZED(401, "Unauthorized", "该请求需要识别用户信息或授权信息"),
     NOT_FOUND(404, "Not Found", "无法找到该请求的内容"),
 
     ;
@@ -30,28 +31,6 @@ public enum HttpStatusEnum {
         this.code = code;
         this.message = message;
         this.desc = desc;
-    }
-
-    /**
-     * 根据 code 解析出对应枚举
-     *
-     * @param code
-     * @return
-     */
-    public static HttpStatusEnum parse(Integer code) {
-        //判空
-        if (code != null) {
-            //循环
-            for (HttpStatusEnum object : HttpStatusEnum.values()) {
-                //如果一致
-                if (object.getCode().equals(code)) {
-                    //返回
-                    return object;
-                }
-            }
-        }
-        //默认
-        return NONE;
     }
 
 }
