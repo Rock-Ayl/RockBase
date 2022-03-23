@@ -8,4 +8,12 @@ import org.rock.base.pojo.mdo.UserDO;
  */
 public interface UserService extends BaseMysqlService<UserDO> {
 
+    /**
+     * 创建用户
+     *
+     * @param userDO 用户实体
+     * @return
+     */
+    UserDO addUser(UserDO userDO);
+
 }

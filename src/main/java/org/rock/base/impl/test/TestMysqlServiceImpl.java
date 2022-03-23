@@ -1,4 +1,4 @@
-package org.rock.base.impl;
+package org.rock.base.impl.test;
 
 import org.rock.base.db.mysql.BaseMysqlServiceImpl;
 import org.rock.base.pojo.mdo.UserDO;

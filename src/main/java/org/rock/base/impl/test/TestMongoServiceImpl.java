@@ -1,4 +1,4 @@
-package org.rock.base.impl;
+package org.rock.base.impl.test;
 
 import org.rock.base.db.mongo.BaseMongoServiceImpl;
 import org.rock.base.pojo.doc.TestDoc;
