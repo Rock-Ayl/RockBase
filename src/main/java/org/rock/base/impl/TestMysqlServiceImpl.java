@@ -2,7 +2,7 @@ package org.rock.base.impl;
 
 import org.rock.base.db.mysql.BaseMysqlServiceImpl;
 import org.rock.base.pojo.mdo.UserDO;
-import org.rock.base.serivce.TestMySqlService;
+import org.rock.base.serivce.test.TestMySqlService;
 import org.springframework.stereotype.Service;
 
 /**

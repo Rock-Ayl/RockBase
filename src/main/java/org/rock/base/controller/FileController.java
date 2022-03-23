@@ -3,7 +3,7 @@ package org.rock.base.controller;
 import org.rock.base.auth.LoginAuth;
 import org.rock.base.common.JsonResponse;
 import org.rock.base.constant.HttpConst;
-import org.rock.base.serivce.TestElasticSearchService;
+import org.rock.base.serivce.test.TestElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

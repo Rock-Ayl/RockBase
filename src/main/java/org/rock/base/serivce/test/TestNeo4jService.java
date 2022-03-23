@@ -1,4 +1,4 @@
-package org.rock.base.serivce;
+package org.rock.base.serivce.test;
 
 import org.rock.base.pojo.node.PersonNode;
 import org.springframework.data.neo4j.repository.Neo4jRepository;

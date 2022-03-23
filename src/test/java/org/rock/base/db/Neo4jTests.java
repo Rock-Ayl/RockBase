@@ -3,7 +3,7 @@ package org.rock.base.db;
 import org.junit.jupiter.api.Test;
 import org.rock.base.pojo.base.BaseNode;
 import org.rock.base.pojo.node.PersonNode;
-import org.rock.base.serivce.TestNeo4jService;
+import org.rock.base.serivce.test.TestNeo4jService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

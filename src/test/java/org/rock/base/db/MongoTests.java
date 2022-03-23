@@ -3,7 +3,7 @@ package org.rock.base.db;
 import org.junit.jupiter.api.Test;
 import org.rock.base.db.mongo.BaseMongoService;
 import org.rock.base.pojo.doc.TestDoc;
-import org.rock.base.serivce.TestMongoService;
+import org.rock.base.serivce.test.TestMongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.BulkOperations;

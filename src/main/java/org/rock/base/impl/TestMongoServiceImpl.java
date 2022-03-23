@@ -2,7 +2,7 @@ package org.rock.base.impl;
 
 import org.rock.base.db.mongo.BaseMongoServiceImpl;
 import org.rock.base.pojo.doc.TestDoc;
-import org.rock.base.serivce.TestMongoService;
+import org.rock.base.serivce.test.TestMongoService;
 import org.springframework.stereotype.Service;
 
 /**

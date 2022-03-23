@@ -2,7 +2,7 @@ package org.rock.base.db;
 
 import org.junit.jupiter.api.Test;
 import org.rock.base.pojo.index.FileIndex;
-import org.rock.base.serivce.TestElasticSearchService;
+import org.rock.base.serivce.test.TestElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

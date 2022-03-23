@@ -3,7 +3,7 @@ package org.rock.base.db;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.rock.base.pojo.mdo.UserDO;
-import org.rock.base.serivce.TestMySqlService;
+import org.rock.base.serivce.test.TestMySqlService;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;

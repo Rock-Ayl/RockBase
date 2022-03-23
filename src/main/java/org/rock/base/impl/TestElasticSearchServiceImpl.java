@@ -2,7 +2,7 @@ package org.rock.base.impl;
 
 import org.rock.base.db.elasticsearch.BaseElasticSearchServiceImpl;
 import org.rock.base.pojo.index.FileIndex;
-import org.rock.base.serivce.TestElasticSearchService;
+import org.rock.base.serivce.test.TestElasticSearchService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.rock.base.pojo.base.BaseDO;
 
 /**
- * mysql 测试实体
+ * 用户实体
  *
  * @Author ayl
  * @Date 2022-03-13

@@ -43,6 +43,11 @@ public interface BaseMysqlService<T extends BaseDO> {
     List<T> list(List<String> idList);
 
     /**
+     * 根据id列表查询所有
+     */
+    List<T> listAll();
+
+    /**
      * 根据id删除单个
      *
      * @param id 主键ID

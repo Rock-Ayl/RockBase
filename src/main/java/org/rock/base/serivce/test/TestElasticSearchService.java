@@ -1,4 +1,4 @@
-package org.rock.base.serivce;
+package org.rock.base.serivce.test;
 
 import org.rock.base.db.elasticsearch.BaseElasticSearchService;
 import org.rock.base.pojo.index.FileIndex;

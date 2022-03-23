@@ -49,6 +49,11 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
     }
 
     @Override
+    public List<T> listAll() {
+        return baseMapper.selectList(null);
+    }
+
+    @Override
     public int delete(String id) {
         return baseMapper.deleteById(id);
     }

@@ -1,4 +1,4 @@
-package org.rock.base.serivce;
+package org.rock.base.serivce.test;
 
 import org.rock.base.db.mysql.BaseMysqlService;
 import org.rock.base.pojo.mdo.UserDO;
