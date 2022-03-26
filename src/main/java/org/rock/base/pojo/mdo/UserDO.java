@@ -1,6 +1,7 @@
 package org.rock.base.pojo.mdo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import org.rock.base.pojo.base.BaseDO;
  */
 @Getter
 @Setter
+@ApiModel("用户实体")
 @TableName("rock_user")
 public class UserDO extends BaseDO {
 
