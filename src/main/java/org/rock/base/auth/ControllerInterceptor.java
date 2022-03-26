@@ -1,7 +1,7 @@
 package org.rock.base.auth;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
-import org.rock.base.common.HttpResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.enums.HttpStatusEnum;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
             //如果未找到对应控制层(即bean是BasicErrorController)
             if (handlerMethod.getBean() instanceof BasicErrorController) {
                 //当做未知请求直接过滤
-                HttpResponse.sendError(response, HttpStatusEnum.NOT_FOUND);
+                sendError(response, HttpStatusEnum.NOT_FOUND);
                 //返回
                 return false;
             }
@@ -50,7 +50,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 //如果不存在
                 if (StringUtils.isBlank(token)) {
                     //过滤请求
-                    HttpResponse.sendError(response, HttpStatusEnum.UNAUTHORIZED);
+                    sendError(response, HttpStatusEnum.UNAUTHORIZED);
                     //返回
                     return false;
                 }
@@ -64,7 +64,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
             return true;
         } else {
             //未知请求直接过滤
-            HttpResponse.sendError(response, HttpStatusEnum.NOT_FOUND);
+            sendError(response, HttpStatusEnum.NOT_FOUND);
             //返回
             return false;
         }
@@ -78,6 +78,28 @@ public class ControllerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         //todo 清理资源,记录日志
+    }
+
+    /**
+     * 根据http请求状态枚举,响应标准格式的错误消息
+     *
+     * @param response 请求响应
+     * @param status   请求状态枚举
+     * @throws IOException
+     */
+    private void sendError(HttpServletResponse response, HttpStatusEnum status) throws IOException {
+        //统一设置响应体类型为JSON
+        response.setContentType(HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON);
+        //设置其状态码
+        response.setStatus(status.getCode());
+        //body体
+        JSONObject json = new JSONObject();
+        json.put("desc", status.getDesc());
+        json.put("status", status.getCode());
+        json.put("message", status.getMessage());
+        json.put("timestamp", System.currentTimeMillis());
+        //写入
+        response.getWriter().write(json.toString());
     }
 
 }
