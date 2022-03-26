@@ -1,5 +1,6 @@
 package org.rock.base.pojo.base;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.util.IdUtils;
@@ -19,15 +20,19 @@ public class BaseDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    //唯一id
+    @ApiModelProperty("唯一id")
     private String id;
-    //创建时间
+
+    @ApiModelProperty("创建时间")
     private Date createDate;
-    //最后修改时间
+
+    @ApiModelProperty("最后修改时间")
     private Date updateDate;
-    //状态删除字段,基本类型,进库默认false
+
+    @ApiModelProperty("状态删除字段")
     private boolean del;
-    //版本号
+
+    @ApiModelProperty("版本号")
     private Long ver;
 
     /**

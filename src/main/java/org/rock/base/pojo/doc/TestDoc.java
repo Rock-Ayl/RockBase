@@ -1,5 +1,6 @@
 package org.rock.base.pojo.doc;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseDocument;
@@ -18,10 +19,10 @@ public class TestDoc extends BaseDocument {
 
     private static final long serialVersionUID = 1L;
 
-    //编号
+    @ApiModelProperty("编号")
     private String number;
 
-    //值
+    @ApiModelProperty("值")
     private String value;
 
 }

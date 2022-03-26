@@ -1,6 +1,7 @@
 package org.rock.base.pojo.mdo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseDO;
@@ -16,15 +17,19 @@ import org.rock.base.pojo.base.BaseDO;
 @TableName("rock_user")
 public class UserDO extends BaseDO {
 
-    //名称
+    @ApiModelProperty("名称")
     private String name;
-    //密码
+
+    @ApiModelProperty("密码")
     private String pwd;
-    //邮箱
+
+    @ApiModelProperty("邮箱")
     private String email;
-    //手机号
+
+    @ApiModelProperty("手机号")
     private String phone;
-    //备注
+
+    @ApiModelProperty("用户备注")
     private String remark;
 
 }

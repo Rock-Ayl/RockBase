@@ -1,5 +1,6 @@
 package org.rock.base.pojo.node;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseNode;
@@ -16,13 +17,13 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node("person")
 public class PersonNode extends BaseNode {
 
-    //姓名
+    @ApiModelProperty("姓名")
     private String name;
 
-    //性别
+    @ApiModelProperty("性别")
     private String sex;
 
-    //备注
+    @ApiModelProperty("备注")
     private String remark;
 
 }

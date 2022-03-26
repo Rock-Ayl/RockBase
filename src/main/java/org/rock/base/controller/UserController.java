@@ -1,5 +1,7 @@
 package org.rock.base.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.rock.base.common.JsonResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.pojo.mdo.UserDO;
@@ -15,6 +17,7 @@ import java.util.List;
  * @Author ayl
  * @Date 2022-03-23
  */
+@Api(tags = "用户模块")
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -22,6 +25,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "/listUser", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String listUser() {
         //查询所有
@@ -30,6 +34,7 @@ public class UserController {
         return JsonResponse.success().put("result", userDOList).toString();
     }
 
+    @ApiOperation(value = "新增用户")
     @PostMapping(value = "/addUser", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String addUser(@RequestBody UserDO userDO) {
         //实现

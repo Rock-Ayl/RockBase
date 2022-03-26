@@ -1,5 +1,6 @@
 package org.rock.base.pojo.index;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseIndex;
@@ -20,20 +21,20 @@ public class FileIndex extends BaseIndex {
 
     private static final long serialVersionUID = 1L;
 
-    //文件名,使用ik
     @Field(type = FieldType.Text, searchAnalyzer = "ik_max_word", analyzer = "ik_max_word")
+    @ApiModelProperty("文件名称")
     private String name;
 
-    //文件后缀
     @Field(type = FieldType.Keyword)
+    @ApiModelProperty("文件后缀")
     private String ext;
 
-    //文件MD5
     @Field(type = FieldType.Keyword)
+    @ApiModelProperty("文件MD5")
     private String md5;
 
-    //文件大小
     @Field(type = FieldType.Long)
+    @ApiModelProperty("文件大小")
     private Long size;
 
 }
