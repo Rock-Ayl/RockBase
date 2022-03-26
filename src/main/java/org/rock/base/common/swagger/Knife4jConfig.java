@@ -1,4 +1,4 @@
-package org.rock.base.config;
+package org.rock.base.common.swagger;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
