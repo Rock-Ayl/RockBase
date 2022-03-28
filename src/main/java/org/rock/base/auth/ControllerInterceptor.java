@@ -1,11 +1,16 @@
 package org.rock.base.auth;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.constant.HttpConst;
+import org.rock.base.constant.RedisKey;
+import org.rock.base.db.redis.BaseRedisService;
 import org.rock.base.enums.HttpStatusEnum;
+import org.rock.base.pojo.mdo.UserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -27,6 +32,9 @@ import java.io.IOException;
 public class ControllerInterceptor implements HandlerInterceptor {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerInterceptor.class);
+
+    @Autowired
+    private BaseRedisService baseRedisService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
@@ -54,8 +62,21 @@ public class ControllerInterceptor implements HandlerInterceptor {
                     //返回
                     return false;
                 }
-                //todo 未实现,简单设置用户信息
-                LoginAuth.USER_ID.set(token);
+                //组装redis key
+                String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
+                //获取用户信息
+                String userInfo = baseRedisService.getString(redisUserTokenKey);
+                //如果不存在
+                if (StringUtils.isBlank(userInfo)) {
+                    //过滤请求
+                    sendError(response, HttpStatusEnum.UNAUTHORIZED);
+                    //返回
+                    return false;
+                }
+                //获取用户信息
+                UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
+                //记录用户信息
+                LoginAuth.USER.set(userDO);
             }
             //过
             return true;

@@ -1,5 +1,7 @@
 package org.rock.base.auth;
 
+import org.rock.base.pojo.mdo.UserDO;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -10,7 +12,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface LoginAuth {
 
     //登录成功时,这里承载着该线程的用户信息
-    ThreadLocal<String> USER_ID = new ThreadLocal<>();
-    ThreadLocal<String> USER_NAME = new ThreadLocal<>();
+    ThreadLocal<UserDO> USER = new ThreadLocal<>();
 
 }

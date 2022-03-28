@@ -1,7 +1,11 @@
 package org.rock.base.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import lombok.Getter;
+import lombok.Setter;
+import org.rock.base.auth.LoginAuth;
 import org.rock.base.common.JsonResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.pojo.mdo.UserDO;
@@ -34,6 +38,31 @@ public class UserController {
         return JsonResponse.success().put("result", userDOList).toString();
     }
 
+    /**
+     * 登录参数
+     */
+    @Setter
+    @Getter
+    public static class LoginParam {
+
+        @ApiModelProperty("手机号")
+        private String phone;
+
+        @ApiModelProperty("密码")
+        private String pwd;
+
+    }
+
+    @ApiOperation(value = "手机号登录")
+    @PostMapping(value = "/loginByPhone", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
+    public String loginByPhone(@RequestBody LoginParam param) {
+        //实现,并返回token
+        String token = userService.loginByPhone(param.getPhone(), param.getPwd());
+        //返回
+        return JsonResponse.success().put("token", token).toString();
+    }
+
+    @LoginAuth
     @ApiOperation(value = "新增用户")
     @PostMapping(value = "/addUser", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String addUser(@RequestBody UserDO userDO) {

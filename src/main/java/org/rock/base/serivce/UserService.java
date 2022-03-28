@@ -16,4 +16,21 @@ public interface UserService extends BaseMysqlService<UserDO> {
      */
     UserDO addUser(UserDO userDO);
 
+    /**
+     * 根据手机号获取用户
+     *
+     * @param phone 手机号
+     * @return
+     */
+    UserDO getByPhone(String phone);
+
+    /**
+     * 根据手机号,密码登录
+     *
+     * @param phone 手机号
+     * @param pwd   密码
+     * @return
+     */
+    String loginByPhone(String phone, String pwd);
+
 }

@@ -73,8 +73,15 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
             //过
             return null;
         }
+        //结果
+        Object value = redisTemplate.opsForValue().get(key);
+        //判空
+        if (value == null) {
+            //过
+            return null;
+        }
         //查询返回
-        return redisTemplate.opsForValue().get(key).toString();
+        return value.toString();
     }
 
     @Override
