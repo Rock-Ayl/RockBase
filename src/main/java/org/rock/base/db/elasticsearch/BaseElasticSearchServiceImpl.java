@@ -138,5 +138,20 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         return IndexCoordinates.of(indexName);
     }
 
+    /**
+     * 根据类,获取索引对象
+     *
+     * @param clazz
+     * @return
+     */
+    private IndexCoordinates getIndex(Class<T> clazz) {
+        //获取索引settings
+        Map<String, Object> settings = elasticsearchRestTemplate.indexOps(clazz).getSettings();
+        //获取索引名
+        String indexName = settings.getOrDefault("index.provided_name", "none").toString();
+        //返回
+        return IndexCoordinates.of(indexName);
+    }
+
 }
 
