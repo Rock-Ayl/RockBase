@@ -3,6 +3,7 @@ package org.rock.base.db.elasticsearch;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,8 +69,18 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
 
     @Override
     public List<T> list(Class<T> clazz, List<String> idList) {
+        //初始化id查询
+        IdsQueryBuilder idBuilder = new IdsQueryBuilder();
+        //组装id
+        idBuilder.addIds(idList.toArray(new String[]{}));
         //查询
-        return elasticsearchRestTemplate.multiGet(new NativeSearchQueryBuilder().withIds(idList).build(), clazz);
+        return rollPage(clazz, new NativeSearchQueryBuilder().withQuery(idBuilder).build(), null, null).getList();
+    }
+
+    @Override
+    public List<T> list(Class<T> clazz, Query query) {
+        //查询
+        return rollPage(clazz, query, null, null).getList();
     }
 
     @Override

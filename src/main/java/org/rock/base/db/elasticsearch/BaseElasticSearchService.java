@@ -45,10 +45,19 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      * 根据id列表查询多个
      *
      * @param clazz
-     * @param idList
+     * @param idList id列表
      * @return
      */
     List<T> list(Class<T> clazz, List<String> idList);
+
+    /**
+     * 根据条件查询多个
+     *
+     * @param clazz
+     * @param query 限制条件
+     * @return
+     */
+    List<T> list(Class<T> clazz, Query query);
 
     /**
      * 根据id真实删除
