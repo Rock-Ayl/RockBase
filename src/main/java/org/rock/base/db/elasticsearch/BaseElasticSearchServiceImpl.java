@@ -141,10 +141,21 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize) {
+        //实现
+        return rollPage(clazz, query, null, pageNum, pageSize);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize) {
         //初始化searchBuilder
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         //组装查询条件
         nativeSearchQueryBuilder.withQuery(query);
+        //如果要限制返回字段
+        if (fields != null && fields.length > 0) {
+            //限制返回字段
+            nativeSearchQueryBuilder.withFields(fields);
+        }
         //build
         NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
         //初始化
