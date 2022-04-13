@@ -82,6 +82,20 @@ public interface BaseMongoService<T extends BaseDocument> {
     boolean updateSkipNull(T document, long ver);
 
     /**
+     * 查询响应对象实体
+     *
+     * @param <T>
+     */
+    @Getter
+    @Setter
+    class RollPageResult<T> {
+        //总数
+        private long total;
+        //数据
+        private List<T> list;
+    }
+
+    /**
      * 翻页查询
      *
      * @param clazz    实体
@@ -130,19 +144,5 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @return
      */
     RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
-
-    /**
-     * 查询响应对象实体
-     *
-     * @param <T>
-     */
-    @Getter
-    @Setter
-    class RollPageResult<T> {
-        //总数
-        private long total;
-        //数据
-        private List<T> list;
-    }
 
 }

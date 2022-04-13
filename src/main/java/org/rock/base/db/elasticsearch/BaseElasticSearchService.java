@@ -1,6 +1,9 @@
 package org.rock.base.db.elasticsearch;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.rock.base.pojo.base.BaseIndex;
+import org.springframework.data.elasticsearch.core.query.Query;
 
 import java.util.Collection;
 import java.util.List;
@@ -70,5 +73,29 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      */
     void batchUpdateSkipNull(List<T> indexList);
 
+    /**
+     * 查询响应对象实体
+     *
+     * @param <T>
+     */
+    @Getter
+    @Setter
+    class RollPageResult<T> {
+        //总数
+        private long total;
+        //数据
+        private List<T> list;
+    }
+
+    /**
+     * 翻页查询
+     *
+     * @param clazz    类
+     * @param query    条件
+     * @param pageNum  分页-页码(可以为空)
+     * @param pageSize 分页-数量(可以为空)
+     * @return
+     */
+    RollPageResult<T> rollPage(Class<T> clazz, Query query, Integer pageNum, Integer pageSize);
 
 }

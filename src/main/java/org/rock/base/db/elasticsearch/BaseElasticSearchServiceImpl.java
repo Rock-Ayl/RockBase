@@ -7,10 +7,13 @@ import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * mongo 服务基底实现
@@ -121,6 +125,27 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
             //批量更新
             elasticsearchRestTemplate.bulkUpdate(updateQueryList, getIndex(indexList.get(0)));
         }
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, Query query, Integer pageNum, Integer pageSize) {
+        //初始化
+        RollPageResult<T> result = new RollPageResult<T>();
+        //如果需要分页
+        if (pageNum != null && pageSize != null && pageNum > 0 && pageSize > 0) {
+            //初始化分页
+            PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize);
+            //设置分页
+            query.setPageable(pageRequest);
+        }
+        //查询
+        SearchHits<T> searchHits = elasticsearchRestTemplate.search(query, clazz, getIndex(clazz));
+        //记录总数
+        result.setTotal(searchHits.getTotalHits());
+        //将返回实体拆包
+        result.setList(searchHits.getSearchHits().stream().map(p -> p.getContent()).collect(Collectors.toList()));
+        //返回
+        return result;
     }
 
     /**
