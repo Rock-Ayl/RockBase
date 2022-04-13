@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.IdsQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.stereotype.Service;
 
@@ -74,11 +75,11 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         //组装id
         idBuilder.addIds(idList.toArray(new String[]{}));
         //查询
-        return rollPage(clazz, new NativeSearchQueryBuilder().withQuery(idBuilder).build(), null, null).getList();
+        return rollPage(clazz, idBuilder, null, null).getList();
     }
 
     @Override
-    public List<T> list(Class<T> clazz, Query query) {
+    public List<T> list(Class<T> clazz, QueryBuilder query) {
         //查询
         return rollPage(clazz, query, null, null).getList();
     }
@@ -139,7 +140,13 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, Query query, Integer pageNum, Integer pageSize) {
+    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize) {
+        //初始化searchBuilder
+        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
+        //组装查询条件
+        nativeSearchQueryBuilder.withQuery(query);
+        //build
+        NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
         //初始化
         RollPageResult<T> result = new RollPageResult<T>();
         //如果需要分页
@@ -147,10 +154,10 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
             //初始化分页
             PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize);
             //设置分页
-            query.setPageable(pageRequest);
+            nativeSearchQuery.setPageable(pageRequest);
         }
         //查询
-        SearchHits<T> searchHits = elasticsearchRestTemplate.search(query, clazz, getIndex(clazz));
+        SearchHits<T> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, clazz, getIndex(clazz));
         //记录总数
         result.setTotal(searchHits.getTotalHits());
         //将返回实体拆包
