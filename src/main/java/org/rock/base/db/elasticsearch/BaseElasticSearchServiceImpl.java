@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,11 +143,17 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize) {
         //实现
-        return rollPage(clazz, query, null, pageNum, pageSize);
+        return rollPage(clazz, query, null, pageNum, pageSize, null);
     }
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize) {
+        //实现
+        return rollPage(clazz, query, fields, pageNum, pageSize, null);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize, SortBuilder sort) {
         //初始化searchBuilder
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         //组装查询条件
@@ -155,6 +162,11 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         if (fields != null && fields.length > 0) {
             //限制返回字段
             nativeSearchQueryBuilder.withFields(fields);
+        }
+        //如果要限制排序
+        if (sort != null) {
+            //限制排序
+            nativeSearchQueryBuilder.withSort(sort);
         }
         //build
         NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
