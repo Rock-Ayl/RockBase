@@ -125,6 +125,18 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
      *
      * @param clazz    实体类
      * @param query    条件对象
+     * @param pageNum  分页-页码(可以为空)
+     * @param pageSize 分页-数量(可以为空)
+     * @param sort     限制排序(可以为空)
+     * @return
+     */
+    RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize, SortBuilder sort);
+
+    /**
+     * 条件分页查询
+     *
+     * @param clazz    实体类
+     * @param query    条件对象
      * @param fields   限制返回字段(可以为空)
      * @param pageNum  分页-页码(可以为空)
      * @param pageSize 分页-数量(可以为空)
