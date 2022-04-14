@@ -76,13 +76,13 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         //组装id
         idBuilder.addIds(idList.toArray(new String[]{}));
         //查询
-        return rollPage(clazz, idBuilder, null, null).getList();
+        return rollPage(clazz, idBuilder, null, null, null, null).getList();
     }
 
     @Override
     public List<T> list(Class<T> clazz, QueryBuilder query) {
         //查询
-        return rollPage(clazz, query, null, null).getList();
+        return rollPage(clazz, query, null, null, null, null).getList();
     }
 
     @Override
