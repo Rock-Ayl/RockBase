@@ -1,11 +1,16 @@
 package org.rock.base.db.elasticsearch;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
@@ -203,8 +208,47 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         result.setTotal(searchHits.getTotalHits());
         //将返回实体拆包
         result.setList(searchHits.getSearchHits().stream().map(p -> p.getContent()).collect(Collectors.toList()));
-        //组装聚合搜索内容
-        result.setAggregations(searchHits.getAggregations());
+        //获取聚合内容
+        Aggregations aggregations = searchHits.getAggregations();
+        //如果存在聚合结果
+        if (aggregations != null) {
+            //初始化聚合列表
+            List<JSONObject> aggList = new ArrayList<>();
+            //获取聚合返回的数据
+            Map<String, Aggregation> map = aggregations.asMap();
+            //循环
+            for (Map.Entry<String, Aggregation> entry : map.entrySet()) {
+                //获取聚合名
+                String aggregationName = entry.getKey();
+                //强转成 Terms ,并获取聚合返回的buckets
+                List<? extends Terms.Bucket> buckets = ((Terms) entry.getValue()).getBuckets();
+                //判空
+                if (CollectionUtils.isEmpty(buckets)) {
+                    //略过
+                    continue;
+                }
+                //初始化一个子数据对象
+                JSONArray items = new JSONArray();
+                //循环
+                for (Terms.Bucket bucket : buckets) {
+                    //初始化当前对象
+                    JSONObject json = new JSONObject();
+                    //组装
+                    json.put("count", bucket.getDocCount());
+                    json.put("value", bucket.getKeyAsString());
+                    items.add(json);
+                }
+                //该聚合对象
+                JSONObject agg = new JSONObject();
+                //组装名字及内容
+                agg.put("name", aggregationName);
+                agg.put("items", items);
+                //组装
+                aggList.add(agg);
+            }
+            //组装
+            result.setAggregations(aggList);
+        }
         //返回
         return result;
     }
