@@ -3,6 +3,8 @@ package org.rock.base.db.elasticsearch;
 import lombok.Getter;
 import lombok.Setter;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 
@@ -91,10 +93,14 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
     @Getter
     @Setter
     class RollPageResult<T> {
+
         //总数
         private long total;
         //数据
         private List<T> list;
+        //聚合搜索内容
+        private Aggregations aggregations;
+
     }
 
     /**
@@ -135,14 +141,15 @@ public interface BaseElasticSearchService<T extends BaseIndex> {
     /**
      * 条件分页查询
      *
-     * @param clazz    实体类
-     * @param query    条件对象
-     * @param fields   限制返回字段(可以为空)
-     * @param pageNum  分页-页码(可以为空)
-     * @param pageSize 分页-数量(可以为空)
-     * @param sort     限制排序(可以为空)
+     * @param clazz                      实体类
+     * @param query                      条件对象
+     * @param abstractAggregationBuilder 聚合条件(可以为空)
+     * @param fields                     限制返回字段(可以为空)
+     * @param pageNum                    分页-页码(可以为空)
+     * @param pageSize                   分页-数量(可以为空)
+     * @param sort                       限制排序(可以为空)
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize, SortBuilder sort);
+    RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, AbstractAggregationBuilder abstractAggregationBuilder, String[] fields, Integer pageNum, Integer pageSize, SortBuilder sort);
 
 }

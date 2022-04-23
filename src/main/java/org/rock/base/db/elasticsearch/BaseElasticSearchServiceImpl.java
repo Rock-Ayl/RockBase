@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.rock.base.pojo.base.BaseIndex;
 import org.slf4j.Logger;
@@ -76,13 +77,13 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         //组装id
         idBuilder.addIds(idList.toArray(new String[]{}));
         //查询
-        return rollPage(clazz, idBuilder, null, null, null, null).getList();
+        return rollPage(clazz, idBuilder, null, null, null, null, null).getList();
     }
 
     @Override
     public List<T> list(Class<T> clazz, QueryBuilder query) {
         //查询
-        return rollPage(clazz, query, null, null, null, null).getList();
+        return rollPage(clazz, query, null, null, null, null, null).getList();
     }
 
     @Override
@@ -143,23 +144,23 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize) {
         //实现
-        return rollPage(clazz, query, null, pageNum, pageSize, null);
+        return rollPage(clazz, query, null, null, pageNum, pageSize, null);
     }
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize) {
         //实现
-        return rollPage(clazz, query, fields, pageNum, pageSize, null);
+        return rollPage(clazz, query, null, fields, pageNum, pageSize, null);
     }
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, Integer pageNum, Integer pageSize, SortBuilder sort) {
         //实现
-        return rollPage(clazz, query, null, pageNum, pageSize, sort);
+        return rollPage(clazz, query, null, null, pageNum, pageSize, sort);
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize, SortBuilder sort) {
+    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, AbstractAggregationBuilder abstractAggregationBuilder, String[] fields, Integer pageNum, Integer pageSize, SortBuilder sort) {
         //初始化searchBuilder
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         //组装查询条件
@@ -173,6 +174,11 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         if (sort != null) {
             //限制排序
             nativeSearchQueryBuilder.withSort(sort);
+        }
+        //如果要加入聚合
+        if (abstractAggregationBuilder != null) {
+            //聚合搜索
+            nativeSearchQueryBuilder.addAggregation(abstractAggregationBuilder);
         }
         //build
         NativeSearchQuery nativeSearchQuery = nativeSearchQueryBuilder.build();
@@ -191,6 +197,8 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
         result.setTotal(searchHits.getTotalHits());
         //将返回实体拆包
         result.setList(searchHits.getSearchHits().stream().map(p -> p.getContent()).collect(Collectors.toList()));
+        //组装聚合搜索内容
+        result.setAggregations(searchHits.getAggregations());
         //返回
         return result;
     }
