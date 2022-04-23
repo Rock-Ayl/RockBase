@@ -148,6 +148,12 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
     }
 
     @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, AbstractAggregationBuilder abstractAggregationBuilder, Integer pageNum, Integer pageSize) {
+        //实现
+        return rollPage(clazz, query, abstractAggregationBuilder, null, pageNum, pageSize, null);
+    }
+
+    @Override
     public RollPageResult<T> rollPage(Class<T> clazz, QueryBuilder query, String[] fields, Integer pageNum, Integer pageSize) {
         //实现
         return rollPage(clazz, query, null, fields, pageNum, pageSize, null);

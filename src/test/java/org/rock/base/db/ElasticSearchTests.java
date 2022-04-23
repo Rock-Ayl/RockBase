@@ -2,6 +2,8 @@ package org.rock.base.db;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.junit.jupiter.api.Test;
 import org.rock.base.db.elasticsearch.BaseElasticSearchService;
 import org.rock.base.pojo.index.FileIndex;
@@ -45,10 +47,10 @@ class ElasticSearchTests {
     void rollPage() {
         //布尔查询
         BoolQueryBuilder query = QueryBuilders.boolQuery();
-        //限制del
-        query.must(QueryBuilders.matchQuery("del", false));
+        //聚合搜索
+        AbstractAggregationBuilder abstractAggregationBuilder = AggregationBuilders.terms("md5Count").field("md5.keyword");
         //查询
-        BaseElasticSearchService.RollPageResult<FileIndex> rollPageResult = testElasticSearchService.rollPage(FileIndex.class, query, null, null);
+        BaseElasticSearchService.RollPageResult<FileIndex> rollPageResult = testElasticSearchService.rollPage(FileIndex.class, query, abstractAggregationBuilder, null, null);
         System.out.println();
     }
 
