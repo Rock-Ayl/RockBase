@@ -38,7 +38,19 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        //判断请求类型,是 标准请求 or 静态资源 or 其他
+        //如果请求不是 标准请求 or 静态资源
+        if (handler instanceof HandlerMethod == false || handler instanceof ResourceHttpRequestHandler == false) {
+            //未知请求直接过滤
+            sendError(response, HttpStatusEnum.NOT_FOUND);
+            //返回
+            return false;
+        }
+        //如果是 静态资源请求
+        if (handler instanceof ResourceHttpRequestHandler) {
+            //静态资源请求默认过
+            return true;
+        }
+        //如果是 标准请求
         if (handler instanceof HandlerMethod) {
             //强转请求信息
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -49,7 +61,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 //返回
                 return false;
             }
-            //获取该请求上的登录注解
+            //获取该请求上的登录朱姐
             LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
             //如果不为空,视为该接口需要登录认证
             if (loginAuth != null) {
@@ -78,17 +90,13 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 //记录用户信息
                 LoginAuth.USER.set(userDO);
             }
-            //过
+            //标准请求默认通过
             return true;
-        } else if (handler instanceof ResourceHttpRequestHandler) {
-            //静态资源请求默认过
-            return true;
-        } else {
-            //未知请求直接过滤
-            sendError(response, HttpStatusEnum.NOT_FOUND);
-            //返回
-            return false;
         }
+        //最后的一律视为未知
+        sendError(response, HttpStatusEnum.NOT_FOUND);
+        //默认
+        return false;
     }
 
     @Override
