@@ -2,6 +2,8 @@ package org.rock.base.common;
 
 import com.alibaba.fastjson.JSONObject;
 
+import static org.rock.base.constant.JSONConst.*;
+
 /**
  * Json封装器,方便控制层组装返回
  *
@@ -12,12 +14,6 @@ public class JsonResponse {
 
     //该class本质是一个FastJson
     private JSONObject fastJson;
-
-    //常量
-    private static final String CODE = "code";
-    private static final String SUCCESS = "success";
-    private static final String ERROR = "error";
-    private static final String ERROR_MSG = "errorMsg";
 
     //私有化
     private JsonResponse() {
@@ -30,7 +26,7 @@ public class JsonResponse {
         //初始化
         JsonResponse response = new JsonResponse();
         //组装success
-        response.fastJson.put(CODE, SUCCESS);
+        response.fastJson.put(KEY_CODE, VALUE_SUCCESS);
         //返回
         return response;
     }
@@ -40,7 +36,7 @@ public class JsonResponse {
         //初始化
         JsonResponse response = new JsonResponse();
         //组装error
-        response.fastJson.put(CODE, ERROR);
+        response.fastJson.put(KEY_CODE, VALUE_ERROR);
         //返回
         return response;
     }
@@ -50,8 +46,8 @@ public class JsonResponse {
         //初始化
         JsonResponse response = new JsonResponse();
         //组装error
-        response.fastJson.put(CODE, ERROR);
-        response.fastJson.put(ERROR_MSG, errorMsg);
+        response.fastJson.put(KEY_CODE, VALUE_ERROR);
+        response.fastJson.put(KEY_ERROR_MSG, errorMsg);
         //返回
         return response;
     }
@@ -68,7 +64,7 @@ public class JsonResponse {
     }
 
     //转变为FastJson
-    public JSONObject toFastJson() {
+    public JSONObject toJSONObject() {
         return this.fastJson;
     }
 
