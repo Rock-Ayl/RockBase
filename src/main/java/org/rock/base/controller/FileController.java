@@ -44,11 +44,12 @@ public class FileController {
         //布尔查询
         BoolQueryBuilder query = QueryBuilders.boolQuery();
         //聚合搜索
-        AbstractAggregationBuilder abstractAggregationBuilder = AggregationBuilders.terms("md5Count").field("md5.keyword");
+        AbstractAggregationBuilder abstractAggregationBuilder = AggregationBuilders
+                .terms("md5Count").field("md5.keyword");
         //查询
         BaseElasticSearchService.RollPageResult<FileIndex> rollPageResult = testElasticSearchService.rollPage(FileIndex.class, query, abstractAggregationBuilder, null, null);
         //返回
-        return JSONResponse.success().put("result", rollPageResult).toString();
+        return JSONResponse.success().putResult(rollPageResult).toString();
     }
 
 }

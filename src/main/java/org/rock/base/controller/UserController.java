@@ -35,7 +35,7 @@ public class UserController {
         //查询所有
         List<UserDO> userDOList = userService.listAll();
         //返回
-        return JSONResponse.success().put("result", userDOList).toString();
+        return JSONResponse.success().putResult(userDOList).toString();
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserController {
         //实现,并返回token
         String token = userService.loginByPhone(param.getPhone(), param.getPwd());
         //返回
-        return JSONResponse.success().put("token", token).toString();
+        return JSONResponse.success().putResult(token).toString();
     }
 
     @LoginAuth
@@ -69,7 +69,7 @@ public class UserController {
         //实现
         userService.addUser(userDO);
         //返回
-        return JSONResponse.success().put("result", userDO).toString();
+        return JSONResponse.success().putResult(userDO).toString();
     }
 
 }

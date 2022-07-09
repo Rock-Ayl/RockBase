@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import static org.rock.base.constant.JSONConst.*;
 
 /**
- * JSON封装器,方便控制层组装返回
+ * FastJson封装器,方便控制层组装返回,规范json结构
  *
  * @Author ayl
  * @Date 2022-03-09
@@ -21,7 +21,11 @@ public class JSONResponse {
         this.fastJson = new JSONObject();
     }
 
-    //成功
+    /**
+     * 成功
+     *
+     * @return
+     */
     public static JSONResponse success() {
         //初始化
         JSONResponse response = new JSONResponse();
@@ -50,6 +54,14 @@ public class JSONResponse {
         response.fastJson.put(KEY_ERROR_MSG, errorMsg);
         //返回
         return response;
+    }
+
+    //组装返回结果
+    public JSONResponse putResult(Object value) {
+        //固定key
+        this.fastJson.put(KEY_RESULT, value);
+        //返回
+        return this;
     }
 
     //组装一般key
