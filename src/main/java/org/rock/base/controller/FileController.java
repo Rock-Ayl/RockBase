@@ -7,7 +7,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.rock.base.auth.LoginAuth;
-import org.rock.base.common.JsonResponse;
+import org.rock.base.common.JSONResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.db.elasticsearch.BaseElasticSearchService;
 import org.rock.base.pojo.index.FileIndex;
@@ -35,7 +35,7 @@ public class FileController {
     @PostMapping(value = "/uploadFile", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         //todo
-        return JsonResponse.success().toString();
+        return JSONResponse.success().toString();
     }
 
     @ApiOperation(value = "文件搜索")
@@ -48,7 +48,7 @@ public class FileController {
         //查询
         BaseElasticSearchService.RollPageResult<FileIndex> rollPageResult = testElasticSearchService.rollPage(FileIndex.class, query, abstractAggregationBuilder, null, null);
         //返回
-        return JsonResponse.success().put("result", rollPageResult).toString();
+        return JSONResponse.success().put("result", rollPageResult).toString();
     }
 
 }

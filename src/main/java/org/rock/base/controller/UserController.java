@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.auth.LoginAuth;
-import org.rock.base.common.JsonResponse;
+import org.rock.base.common.JSONResponse;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.pojo.mdo.UserDO;
 import org.rock.base.serivce.UserService;
@@ -35,7 +35,7 @@ public class UserController {
         //查询所有
         List<UserDO> userDOList = userService.listAll();
         //返回
-        return JsonResponse.success().put("result", userDOList).toString();
+        return JSONResponse.success().put("result", userDOList).toString();
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserController {
         //实现,并返回token
         String token = userService.loginByPhone(param.getPhone(), param.getPwd());
         //返回
-        return JsonResponse.success().put("token", token).toString();
+        return JSONResponse.success().put("token", token).toString();
     }
 
     @LoginAuth
@@ -69,7 +69,7 @@ public class UserController {
         //实现
         userService.addUser(userDO);
         //返回
-        return JsonResponse.success().put("result", userDO).toString();
+        return JSONResponse.success().put("result", userDO).toString();
     }
 
 }

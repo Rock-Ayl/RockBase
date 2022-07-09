@@ -5,26 +5,26 @@ import com.alibaba.fastjson.JSONObject;
 import static org.rock.base.constant.JSONConst.*;
 
 /**
- * Json封装器,方便控制层组装返回
+ * JSON封装器,方便控制层组装返回
  *
  * @Author ayl
  * @Date 2022-03-09
  */
-public class JsonResponse {
+public class JSONResponse {
 
     //该class本质是一个FastJson
     private JSONObject fastJson;
 
     //私有化
-    private JsonResponse() {
+    private JSONResponse() {
         //同时生成对应json
         this.fastJson = new JSONObject();
     }
 
     //成功
-    public static JsonResponse success() {
+    public static JSONResponse success() {
         //初始化
-        JsonResponse response = new JsonResponse();
+        JSONResponse response = new JSONResponse();
         //组装success
         response.fastJson.put(KEY_CODE, VALUE_SUCCESS);
         //返回
@@ -32,9 +32,9 @@ public class JsonResponse {
     }
 
     //失败
-    public static JsonResponse error() {
+    public static JSONResponse error() {
         //初始化
-        JsonResponse response = new JsonResponse();
+        JSONResponse response = new JSONResponse();
         //组装error
         response.fastJson.put(KEY_CODE, VALUE_ERROR);
         //返回
@@ -42,9 +42,9 @@ public class JsonResponse {
     }
 
     //失败+msg
-    public static JsonResponse error(String errorMsg) {
+    public static JSONResponse error(String errorMsg) {
         //初始化
-        JsonResponse response = new JsonResponse();
+        JSONResponse response = new JSONResponse();
         //组装error
         response.fastJson.put(KEY_CODE, VALUE_ERROR);
         response.fastJson.put(KEY_ERROR_MSG, errorMsg);
@@ -53,7 +53,7 @@ public class JsonResponse {
     }
 
     //组装一般key
-    public JsonResponse put(String property, Object value) {
+    public JSONResponse put(String property, Object value) {
         this.fastJson.put(property, value);
         return this;
     }
