@@ -35,7 +35,11 @@ public class JSONResponse {
         return response;
     }
 
-    //失败
+    /**
+     * 失败
+     *
+     * @return
+     */
     public static JSONResponse error() {
         //初始化
         JSONResponse response = new JSONResponse();
@@ -45,7 +49,12 @@ public class JSONResponse {
         return response;
     }
 
-    //失败+msg
+    /**
+     * 失败+msg
+     *
+     * @param errorMsg
+     * @return
+     */
     public static JSONResponse error(String errorMsg) {
         //初始化
         JSONResponse response = new JSONResponse();
@@ -56,7 +65,12 @@ public class JSONResponse {
         return response;
     }
 
-    //组装返回结果
+    /**
+     * 组装返回结果
+     *
+     * @param value
+     * @return
+     */
     public JSONResponse putResult(Object value) {
         //固定key
         this.fastJson.put(KEY_RESULT, value);
@@ -64,18 +78,32 @@ public class JSONResponse {
         return this;
     }
 
-    //组装一般key
-    public JSONResponse put(String property, Object value) {
-        this.fastJson.put(property, value);
+    /**
+     * 组装一般key
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public JSONResponse put(String key, Object value) {
+        this.fastJson.put(key, value);
         return this;
     }
 
-    //重写toString
+    /**
+     * 重写toString
+     *
+     * @return
+     */
     public String toString() {
         return this.fastJson.toString();
     }
 
-    //转变为FastJson
+    /**
+     * 转变为FastJson
+     *
+     * @return
+     */
     public JSONObject toJSONObject() {
         return this.fastJson;
     }
