@@ -12,7 +12,7 @@ import java.util.List;
  * @Author ayl
  * @Date 2022-3-11
  */
-public class ListUtils {
+public class ListExtraUtils {
 
     /**
      * 根据逗号拆分str并过滤掉里面的空值,返回列表
