@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * List 额外工具包
+ * List 扩展工具包
  *
  * @Author ayl
  * @Date 2022-3-11
@@ -24,20 +24,24 @@ public class ListExtraUtils {
      * @return ["1","2","3"]
      */
     public static List<String> toList(String str) {
-        //初始化一个
+        //初始化列表
         List<String> result = new ArrayList<>();
         //判空
-        if (StringUtils.isNotBlank(str)) {
-            //拆分
-            String[] arr = str.split(",");
-            //循环
-            for (String s : arr) {
-                //判空
-                if (StringUtils.isNotBlank(s)) {
-                    //组装
-                    result.add(s);
-                }
+        if (StringUtils.isBlank(str)) {
+            //返回
+            return result;
+        }
+        //拆分
+        String[] arr = str.split(",");
+        //循环
+        for (String s : arr) {
+            //判空
+            if (StringUtils.isBlank(s)) {
+                //过
+                continue;
             }
+            //组装
+            result.add(s);
         }
         //默认
         return result;
@@ -51,23 +55,30 @@ public class ListExtraUtils {
      * @return
      */
     public static String toString(List<String> list) {
+        //初始化
+        StringBuffer str = new StringBuffer();
         //判空
-        if (CollectionUtils.isNotEmpty(list)) {
-            //str
-            StringBuffer str = new StringBuffer();
-            //循环
-            for (String s : list) {
-                //判空
-                if (StringUtils.isNotBlank(s)) {
-                    //组装
-                    str.append(s + ",");
-                }
-            }
-            //删除最后一个,并返回
-            return str.deleteCharAt(str.length() - 1).toString();
+        if (CollectionUtils.isEmpty(list)) {
+            //返回
+            return str.toString();
         }
-        //默认
-        return "";
+        //循环
+        for (String s : list) {
+            //判空
+            if (StringUtils.isBlank(s)) {
+                //过
+                continue;
+            }
+            //组装
+            str.append(s + ",");
+        }
+        //如果有长度
+        if (str.length() > 0) {
+            //删除最后一个,
+            str = str.deleteCharAt(str.length() - 1);
+        }
+        //返回结果
+        return str.toString();
     }
 
 }
