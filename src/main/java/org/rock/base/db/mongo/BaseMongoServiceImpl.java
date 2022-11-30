@@ -79,9 +79,10 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 .and("ver").is(ver));
         //更新
         Update update = new Update();
-        //method arr
-        Method[] methodArr = document.getClass().getMethods();
         try {
+            //method arr
+            Method[] methodArr = document.getClass().getMethods();
+            //循环
             for (int var9 = 0; var9 < methodArr.length; ++var9) {
                 //当前method
                 Method method = methodArr[var9];
@@ -92,38 +93,40 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                     //本轮过
                     continue;
                 }
-                //过滤2
-                if ((methodName.startsWith("get") || methodName.startsWith("is"))) {
-                    //初始化key
-                    String key = new String();
-                    //切割
-                    if (methodName.startsWith("get")) {
-                        key = methodName.substring(3);
-                    } else if (methodName.startsWith("is")) {
-                        key = methodName.substring(2);
-                    }
-                    //大驼峰转小驼峰
-                    key = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, key);
-                    //第二层过滤,过滤掉基类字段
-                    switch (key) {
-                        case "id":
-                        case "createDate":
-                        case "updateDate":
-                        case "del":
-                        case "ver":
-                            //本次过
-                            continue;
-                            //其他
-                        default:
-                            //value
-                            Object value = method.invoke(document);
-                            //判空
-                            if (value != null) {
-                                //设置
-                                update.set(key, value);
-                            }
-                            break;
-                    }
+                //如果不是get is 方法
+                if (methodName.startsWith("get") == false && methodName.startsWith("is") == false) {
+                    //本轮过
+                    continue;
+                }
+                //初始化key
+                String key = new String();
+                //切割
+                if (methodName.startsWith("get")) {
+                    key = methodName.substring(3);
+                } else if (methodName.startsWith("is")) {
+                    key = methodName.substring(2);
+                }
+                //大驼峰转小驼峰
+                key = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, key);
+                //第二层过滤,过滤掉基类字段
+                switch (key) {
+                    case "id":
+                    case "createDate":
+                    case "updateDate":
+                    case "del":
+                    case "ver":
+                        //本次过
+                        continue;
+                        //其他
+                    default:
+                        //value
+                        Object value = method.invoke(document);
+                        //判空
+                        if (value != null) {
+                            //设置
+                            update.set(key, value);
+                        }
+                        break;
                 }
             }
         } catch (Exception e) {
