@@ -31,7 +31,7 @@ public class BaseMysqlServiceImpl<T extends BaseDO> implements BaseMysqlService<
         for (T entity : entities) {
             //创建前初始化
             BaseDO.createBuild(entity);
-            //创建(未实现真正批量)
+            //创建
             baseMapper.insert(entity);
         }
         //返回

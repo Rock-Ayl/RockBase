@@ -22,7 +22,7 @@ public interface BaseMysqlService<T extends BaseDO> {
     T create(T entity);
 
     /**
-     * 批量插入记录
+     * todo 批量插入记录(未实现真正批量操作,本质还是单个)
      *
      * @param entities 实体对象列表
      */
