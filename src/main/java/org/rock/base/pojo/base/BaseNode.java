@@ -3,7 +3,7 @@ package org.rock.base.pojo.base;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.base.util.IdUtils;
+import org.rock.base.util.IdExtraUtils;
 import org.springframework.data.neo4j.core.schema.Id;
 
 import java.io.Serializable;
@@ -46,7 +46,7 @@ public class BaseNode implements Serializable {
         baseNode.setVer(System.currentTimeMillis());
         baseNode.setCreateDate(new Date());
         baseNode.setUpdateDate(new Date());
-        baseNode.setId(IdUtils.genGUID());
+        baseNode.setId(IdExtraUtils.genGUID());
     }
 
     /**

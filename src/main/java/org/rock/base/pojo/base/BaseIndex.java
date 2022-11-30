@@ -3,7 +3,7 @@ package org.rock.base.pojo.base;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.base.util.IdUtils;
+import org.rock.base.util.IdExtraUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -44,7 +44,7 @@ public class BaseIndex implements Serializable {
         baseIndex.setVer(System.currentTimeMillis());
         baseIndex.setCreateDate(new Date());
         baseIndex.setUpdateDate(new Date());
-        baseIndex.setId(IdUtils.genGUID());
+        baseIndex.setId(IdExtraUtils.genGUID());
     }
 
     /**

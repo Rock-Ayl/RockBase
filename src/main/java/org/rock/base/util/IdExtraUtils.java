@@ -3,12 +3,12 @@ package org.rock.base.util;
 import java.util.UUID;
 
 /**
- * ID工具包
+ * ID 扩展工具包
  *
  * @Author ayl
  * @Date 2022-03-10
  */
-public class IdUtils {
+public class IdExtraUtils {
 
     /**
      * 生成一个GUID

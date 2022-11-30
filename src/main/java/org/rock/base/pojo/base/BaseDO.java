@@ -3,7 +3,7 @@ package org.rock.base.pojo.base;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.rock.base.util.IdUtils;
+import org.rock.base.util.IdExtraUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -44,7 +44,7 @@ public class BaseDO implements Serializable {
         baseDO.setVer(System.currentTimeMillis());
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());
-        baseDO.setId(IdUtils.genGUID());
+        baseDO.setId(IdExtraUtils.genGUID());
     }
 
     /**

@@ -8,7 +8,7 @@ import org.rock.base.db.mysql.BaseMysqlServiceImpl;
 import org.rock.base.db.redis.BaseRedisService;
 import org.rock.base.pojo.mdo.UserDO;
 import org.rock.base.serivce.UserService;
-import org.rock.base.util.IdUtils;
+import org.rock.base.util.IdExtraUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +66,7 @@ public class UserServiceImpl extends BaseMysqlServiceImpl<UserDO> implements Use
         //用户id
         String userId = userDO.getId();
         //生成对用token
-        String token = IdUtils.creatUserToken(userId);
+        String token = IdExtraUtils.creatUserToken(userId);
         //写入缓存
         baseRedisService.setAndTime(RedisKey.USER_LOGIN_AUTH_SET + token, JSON.toJSONString(userDO), 7200);
         //返回
