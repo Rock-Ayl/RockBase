@@ -232,7 +232,13 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, MongoRollPageParam param) {
+    public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param) {
+        //实现
+        return rollPage(clazz, param, null);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param, List<Criteria> criteriaList) {
 
         /**
          * 初始化

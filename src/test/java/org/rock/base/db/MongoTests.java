@@ -93,9 +93,11 @@ class MongoTests {
         param.setSearchType("dim");
         param.setKeywordType("number");
         param.setKeywords("编");
+        //需要总count
+        param.setNeedCount(true);
 
         //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), param);
+        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, param);
 
         System.out.println();
 

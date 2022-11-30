@@ -187,11 +187,20 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 模板翻页查询
      *
-     * @param clazz        实体
-     * @param criteriaList 除了模板参数,其他的限制条件
-     * @param param        模板参数
+     * @param clazz 实体
+     * @param param 模板参数
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, MongoRollPageParam param);
+    RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param);
+
+    /**
+     * 模板翻页查询
+     *
+     * @param clazz        实体
+     * @param param        模板参数
+     * @param criteriaList 除了模板参数,其他的限制条件
+     * @return
+     */
+    RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param, List<Criteria> criteriaList);
 
 }
