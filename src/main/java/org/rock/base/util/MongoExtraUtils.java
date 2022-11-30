@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.List;
 
 /**
- * mongo相关工具包
+ * mongo 扩展工具包
  *
  * @Author ayl
  * @Date 2021-12-24
