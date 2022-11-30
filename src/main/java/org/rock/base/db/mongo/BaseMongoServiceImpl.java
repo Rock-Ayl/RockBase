@@ -100,7 +100,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 }
                 //初始化key
                 String key = new String();
-                //切割
+                //切割key
                 if (methodName.startsWith("get")) {
                     key = methodName.substring(3);
                 } else if (methodName.startsWith("is")) {
@@ -108,8 +108,9 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 }
                 //大驼峰转小驼峰
                 key = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, key);
-                //第二层过滤,过滤掉基类字段
+                //判断是否为基础字段
                 switch (key) {
+                    //基础字段不参与
                     case "id":
                     case "createDate":
                     case "updateDate":
@@ -121,7 +122,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                     default:
                         //value
                         Object value = method.invoke(document);
-                        //判空
+                        //如果存在
                         if (value != null) {
                             //设置
                             update.set(key, value);
@@ -131,7 +132,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             }
         } catch (Exception e) {
             //日志
-            LOG.error("Update Skip Null fail:[{}]", e);
+            LOG.error("Mongo Update Skip Null fail:[{}]", e);
             //过
             return false;
         }
@@ -139,7 +140,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         update.set("updateDate", new Date());
         update.set("ver", System.currentTimeMillis());
         //日志
-        LOG.info("Update Skip Null Query :{}", query.toString());
+        LOG.info("Mongo Update Skip Null Query :{}", query.toString());
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
     }
