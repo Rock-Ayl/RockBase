@@ -45,15 +45,29 @@ class MongoTests {
         //查询
         old = testMongoService.get(TestDoc.class, create.getId());
         System.out.println(123);
-        //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
-        System.out.println(123);
+
         //初始化批量更新
         BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, TestDoc.class);
         bulkOperations.updateMulti(new Query(Criteria.where("_id").is(old.getId())), new Update().set("444", 5));
         bulkOperations.updateMulti(new Query(Criteria.where("_id").is(old.getId())), new Update().set("555", 6));
         //执行批量更新
         bulkOperations.execute();
+        System.out.println(123);
+    }
+
+    @Test
+    void create() {
+        //创建
+        TestDoc create = new TestDoc();
+        create.setNumber("编号");
+        testMongoService.create(create);
+        System.out.println();
+    }
+
+    @Test
+    void rollPage() {
+        //分页查询
+        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
         System.out.println(123);
     }
 

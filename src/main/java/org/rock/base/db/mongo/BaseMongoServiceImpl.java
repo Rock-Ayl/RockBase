@@ -1,6 +1,7 @@
 package org.rock.base.db.mongo;
 
 import com.google.common.base.CaseFormat;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
 import org.rock.base.util.MongoExtraUtils;
@@ -186,8 +187,15 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult();
+        //初始化条件
+        Criteria criteria = new Criteria();
+        //如果存在条件列表
+        if (CollectionUtils.isNotEmpty(criteriaList)) {
+            //组装条件列表
+            criteria.andOperator(criteriaList.toArray(new Criteria[]{}));
+        }
         //初始化查询
-        Query query = new Query(new Criteria().andOperator(criteriaList.toArray(new Criteria[]{})));
+        Query query = new Query(criteria);
         //如果需要排序
         if (sort != null) {
             //按照规则
