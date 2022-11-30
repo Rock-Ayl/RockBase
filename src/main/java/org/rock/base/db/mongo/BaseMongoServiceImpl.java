@@ -307,8 +307,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 //限制返回字段
                 MongoExtraUtils.initDocumentByFields(param.getFields()),
                 //分页,默认20
-                param.getPageSize() == null ? 20 : param.getPageSize(),
                 param.getPageNum() == null ? 1 : param.getPageNum(),
+                param.getPageSize() == null ? 20 : param.getPageSize(),
                 //指定排序
                 Sort.by(Sort.Direction.fromString(sortOrder), sortKey),
                 //是否返回count

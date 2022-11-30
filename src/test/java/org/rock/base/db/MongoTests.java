@@ -82,4 +82,23 @@ class MongoTests {
         System.out.println(123);
     }
 
+    @Test
+    void rollPageTemplate() {
+
+        //初始化参数
+        BaseMongoService.MongoRollPageParam param = new BaseMongoService.MongoRollPageParam();
+        //限制参数
+        param.setFields("id,number");
+        //限制关键词 模糊搜索number
+        param.setSearchType("dim");
+        param.setKeywordType("number");
+        param.setKeywords("编");
+
+        //分页查询
+        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), param);
+
+        System.out.println();
+
+    }
+
 }
