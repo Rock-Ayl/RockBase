@@ -98,51 +98,51 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 翻页查询
      *
-     * @param clazz    实体
-     * @param criteria 条件
-     * @param pageNum  分页,页码
-     * @param pageSize 分页,每页数量
+     * @param clazz        实体
+     * @param criteriaList 条件列表
+     * @param pageNum      分页,页码
+     * @param pageSize     分页,每页数量
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Integer pageNum, Integer pageSize);
+    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, Integer pageNum, Integer pageSize);
 
     /**
      * 翻页查询
      *
-     * @param clazz    实体
-     * @param criteria 条件
-     * @param fields   限制字段
-     * @param pageNum  分页,页码
-     * @param pageSize 分页,每页数量
+     * @param clazz        实体
+     * @param criteriaList 条件列表
+     * @param fields       限制字段
+     * @param pageNum      分页,页码
+     * @param pageSize     分页,每页数量
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize);
+    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize);
 
     /**
      * 翻页查询
      *
-     * @param clazz    实体
-     * @param criteria 条件
-     * @param fields   限制字段
-     * @param pageNum  分页,页码
-     * @param pageSize 分页,每页数量
-     * @param sort     排序
+     * @param clazz        实体
+     * @param criteriaList 条件列表
+     * @param fields       限制字段
+     * @param pageNum      分页,页码
+     * @param pageSize     分页,每页数量
+     * @param sort         排序
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort);
+    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort);
 
     /**
      * 翻页查询
      *
-     * @param clazz     实体
-     * @param criteria  条件
-     * @param fields    限制字段
-     * @param pageNum   分页,页码
-     * @param pageSize  分页,每页数量
-     * @param sort      排序
-     * @param needCount 是否需要count(如果不需要,减少一次查询消耗)
+     * @param clazz        实体
+     * @param criteriaList 条件列表
+     * @param fields       限制字段
+     * @param pageNum      分页,页码
+     * @param pageSize     分页,每页数量
+     * @param sort         排序
+     * @param needCount    是否需要count(如果不需要,减少一次查询消耗)
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
+    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
 
 }

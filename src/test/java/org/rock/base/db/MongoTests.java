@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import java.util.ArrayList;
+
 @SpringBootTest
 class MongoTests {
 
@@ -44,7 +46,7 @@ class MongoTests {
         old = testMongoService.get(TestDoc.class, create.getId());
         System.out.println(123);
         //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new Criteria(), null, null);
+        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
         System.out.println(123);
         //初始化批量更新
         BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, TestDoc.class);

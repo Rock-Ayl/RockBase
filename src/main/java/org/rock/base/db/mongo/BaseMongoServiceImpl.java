@@ -169,25 +169,25 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, Integer pageNum, Integer pageSize) {
-        return rollPage(clazz, criteria, null, pageNum, pageSize);
+    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, Integer pageNum, Integer pageSize) {
+        return rollPage(clazz, criteriaList, null, pageNum, pageSize);
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize) {
-        return rollPage(clazz, criteria, fields, pageNum, pageSize, null);
+    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize) {
+        return rollPage(clazz, criteriaList, fields, pageNum, pageSize, null);
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort) {
-        return rollPage(clazz, criteria, fields, pageNum, pageSize, sort, true);
+    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort) {
+        return rollPage(clazz, criteriaList, fields, pageNum, pageSize, sort, true);
     }
 
-    public RollPageResult<T> rollPage(Class<T> clazz, Criteria criteria, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
+    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult();
         //初始化查询
-        Query query = new Query(criteria);
+        Query query = new Query(new Criteria().andOperator(criteriaList.toArray(new Criteria[]{})));
         //如果需要排序
         if (sort != null) {
             //按照规则
