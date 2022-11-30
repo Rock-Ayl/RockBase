@@ -79,14 +79,21 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 .and("ver").is(ver));
         //更新
         Update update = new Update();
-        Method[] var7 = document.getClass().getMethods();
-        int var8 = var7.length;
+        //method arr
+        Method[] methodArr = document.getClass().getMethods();
         try {
-            for (int var9 = 0; var9 < var8; ++var9) {
-                Method method = var7[var9];
+            for (int var9 = 0; var9 < methodArr.length; ++var9) {
+                //当前method
+                Method method = methodArr[var9];
+                //名字
                 String methodName = method.getName();
-                //第一层过滤
-                if (methodName.equals("getClass") == false && (methodName.startsWith("get") || methodName.startsWith("is"))) {
+                //如果是getClass
+                if (methodName.equals("getClass") == true) {
+                    //本轮过
+                    continue;
+                }
+                //过滤2
+                if ((methodName.startsWith("get") || methodName.startsWith("is"))) {
                     //初始化key
                     String key = new String();
                     //切割
