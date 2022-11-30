@@ -146,7 +146,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
 
     /**
-     * 模板查询条件
+     * Mongo常用模板查询参数
      */
 
     @Getter
