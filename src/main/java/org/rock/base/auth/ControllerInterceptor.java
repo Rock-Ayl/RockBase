@@ -61,35 +61,37 @@ public class ControllerInterceptor implements HandlerInterceptor {
                 //返回
                 return false;
             }
-            //获取该请求上的登录朱姐
+            //获取该请求上的登录注解
             LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
-            //如果不为空,视为该接口需要登录认证
-            if (loginAuth != null) {
-                //获取token
-                String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
-                //如果不存在
-                if (StringUtils.isBlank(token)) {
-                    //过滤请求
-                    sendError(response, HttpStatusEnum.UNAUTHORIZED);
-                    //返回
-                    return false;
-                }
-                //组装redis key
-                String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
-                //获取用户信息
-                String userInfo = baseRedisService.getString(redisUserTokenKey);
-                //如果不存在
-                if (StringUtils.isBlank(userInfo)) {
-                    //过滤请求
-                    sendError(response, HttpStatusEnum.UNAUTHORIZED);
-                    //返回
-                    return false;
-                }
-                //获取用户信息
-                UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
-                //记录用户信息
-                LoginAuth.USER.set(userDO);
+            //如果不存在注解,可直接登录
+            if (loginAuth == null) {
+                //通过
+                return true;
             }
+            //获取token
+            String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
+            //如果不存在
+            if (StringUtils.isBlank(token)) {
+                //过滤请求
+                sendError(response, HttpStatusEnum.UNAUTHORIZED);
+                //返回
+                return false;
+            }
+            //组装redis key
+            String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
+            //获取用户信息
+            String userInfo = baseRedisService.getString(redisUserTokenKey);
+            //如果不存在
+            if (StringUtils.isBlank(userInfo)) {
+                //过滤请求
+                sendError(response, HttpStatusEnum.UNAUTHORIZED);
+                //返回
+                return false;
+            }
+            //获取用户信息
+            UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
+            //记录用户信息
+            LoginAuth.USER.set(userDO);
             //标准请求默认通过
             return true;
         }
