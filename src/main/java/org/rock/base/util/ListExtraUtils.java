@@ -23,7 +23,22 @@ public class ListExtraUtils {
      * @param str 1,2,3,4,5
      * @return ["1","2","3"]
      */
-    public static List<String> toList(String str) {
+    public static List<String> split(String str) {
+        //根据,拆分
+        return split(str, ",");
+    }
+
+    /**
+     * 根据逗号拆分str并过滤掉里面的空值,返回列表
+     * 注意：为了可以做add操作,采用了初始化arrayList的结果
+     * eg:
+     * 1,2,3,,,,,,9,,,, => ["1","2","3","9"]
+     *
+     * @param str 1,2,3,4,5
+     * @param sym 符号
+     * @return ["1","2","3"]
+     */
+    public static List<String> split(String str, String sym) {
         //初始化列表
         List<String> result = new ArrayList<>();
         //判空
@@ -31,8 +46,8 @@ public class ListExtraUtils {
             //返回
             return result;
         }
-        //拆分
-        String[] arr = str.split(",");
+        //根据符号拆分
+        String[] arr = str.split(sym);
         //循环
         for (String s : arr) {
             //判空

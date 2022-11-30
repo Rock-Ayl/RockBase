@@ -3,6 +3,7 @@ package org.rock.base.db.mongo;
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
+import org.rock.base.util.MongoExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,7 +212,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             result.setTotal(-1L);
         }
         //设置分页
-        query = setPage(query, pageNum, pageSize);
+        query = MongoExtraUtils.setPage(query, pageNum, pageSize);
         //日志
         LOG.info("Mongo RollPage Query:[{}]", query.toString());
         //查询数据
@@ -220,24 +221,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         result.setList(list);
         //返回
         return result;
-    }
-
-    /**
-     * 设置分页
-     *
-     * @param query
-     * @param pageNum  分页,可为空
-     * @param pageSize 分页,可为空
-     * @return
-     */
-    private Query setPage(Query query, Integer pageNum, Integer pageSize) {
-        //如果需要限制分页
-        if (pageSize != null && pageNum != null && pageNum != 0 && pageSize != 0) {
-            //限制分页
-            query.limit(pageSize).skip((pageNum - 1L) * pageSize);
-        }
-        //返回
-        return query;
     }
 
 }
