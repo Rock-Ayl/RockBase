@@ -145,4 +145,53 @@ public interface BaseMongoService<T extends BaseDocument> {
      */
     RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
 
+    /**
+     * 模板查询条件
+     */
+
+    @Getter
+    @Setter
+    public static class MongoRollPageParam {
+
+        //分页
+        private Integer pageSize;
+        private Integer pageNum;
+
+        //是否需要count
+        private Boolean needCount;
+
+        //排序字段
+        private String sortKey;
+        //正序还是倒叙
+        private String sortOrder;
+
+        //限制时间类型
+        private String timeType;
+        //开始时间
+        private Long startTime;
+        //结束时间
+        private Long endTime;
+
+        //精确/模糊搜索
+        private String searchType;
+        //关键字搜索类型
+        private String keywordType;
+        //关键字,支持批量(回车是换行)
+        private String keywords;
+
+        //限制返回字段
+        private String fields;
+
+    }
+
+    /**
+     * 模板翻页查询
+     *
+     * @param clazz        实体
+     * @param criteriaList 除了模板参数,其他的限制条件
+     * @param param        模板参数
+     * @return
+     */
+    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, MongoRollPageParam param);
+
 }

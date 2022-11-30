@@ -231,5 +231,10 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return result;
     }
 
+    @Override
+    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, MongoRollPageParam param) {
+        return null;
+    }
+
 }
 
