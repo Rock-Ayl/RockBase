@@ -153,17 +153,28 @@ public interface BaseMongoService<T extends BaseDocument> {
     @Setter
     public static class MongoRollPageParam {
 
+        /**
+         * 分页
+         */
+
         //分页
         private Integer pageSize;
         private Integer pageNum;
-
         //是否需要count
         private Boolean needCount;
+
+        /**
+         * 排序
+         */
 
         //排序字段
         private String sortKey;
         //正序还是倒叙
         private String sortOrder;
+
+        /**
+         * 限制时间区间
+         */
 
         //限制时间类型
         private String timeType;
@@ -172,12 +183,20 @@ public interface BaseMongoService<T extends BaseDocument> {
         //结束时间
         private Long endTime;
 
+        /**
+         * 限制关键词
+         */
+
         //精确/模糊搜索
         private String searchType;
         //关键字搜索类型
         private String keywordType;
         //关键字,支持批量(回车是换行)
         private String keywords;
+
+        /**
+         * 限制返回字段
+         */
 
         //限制返回字段
         private String fields;
