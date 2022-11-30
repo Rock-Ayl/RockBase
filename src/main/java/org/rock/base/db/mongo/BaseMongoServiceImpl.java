@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
+import org.rock.base.util.ListExtraUtils;
 import org.rock.base.util.MongoExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * mongo 服务基底实现
@@ -233,7 +233,87 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, MongoRollPageParam param) {
-        return null;
+
+        /**
+         * 初始化
+         */
+
+        //and条件列表
+        List<Criteria> andCriteriaList = new ArrayList<>();
+        //如果有额外的条件
+        if (CollectionUtils.isNotEmpty(criteriaList)) {
+            //组装
+            andCriteriaList.addAll(criteriaList);
+        }
+
+        /**
+         * 处理各种模板参数
+         */
+
+        //如果要限制时间范围
+        if (StringUtils.isNotBlank(param.getTimeType()) && param.getStartTime() != null && param.getEndTime() != null) {
+            //限制时间范围
+            andCriteriaList.add(Criteria.where(param.getTimeType()).gte(new Date(param.getStartTime())).lte(new Date(param.getEndTime())));
+        }
+        //根据空格分割获取关键字列表
+        List<String> keywordList = ListExtraUtils.split(param.getKeywords(), "\n");
+        //获取查询模式,默认查询产品SKU
+        String keywordType = Optional.ofNullable(param)
+                .map(MongoRollPageParam::getKeywordType)
+                .orElse("");
+        //如果需要限制关键词
+        if (CollectionUtils.isNotEmpty(keywordList) && StringUtils.isNotBlank(keywordType)) {
+            //查询精度,默认精确
+            String searchType = Optional.ofNullable(param)
+                    .map(MongoRollPageParam::getSearchType)
+                    .orElse("exact");
+            //判断是模糊还是确定还是其他
+            switch (searchType) {
+                //精确
+                case "exact":
+                    //支持多关键词
+                    andCriteriaList.add(Criteria.where(keywordType).in(keywordList));
+                    break;
+                //简单模糊查询(适用90%情况)
+                case "dim":
+                    //模糊查不支持多关键词
+                    andCriteriaList.add(Criteria.where(keywordType).regex(keywordList.stream().findFirst().get()));
+                    break;
+                //复杂模糊查询(消耗性能但是模糊准确,忽略大小写并适配特殊字符)
+                case "complexDim":
+                    //模糊查不支持多关键词
+                    andCriteriaList.add(Criteria.where(keywordType).regex(Pattern.compile("^.*" + MongoExtraUtils.escapeExprSpecialWord(keywordList.stream().findFirst().get()) + ".*$", Pattern.CASE_INSENSITIVE)));
+                    break;
+            }
+        }
+        //排序key,默认创建时间
+        String sortKey = Optional.ofNullable(param)
+                .map(MongoRollPageParam::getSortKey)
+                .orElse("createDate");
+        //排序方式,默认倒序
+        String sortOrder = Optional.ofNullable(param)
+                .map(MongoRollPageParam::getSortOrder)
+                .orElse("desc");
+        //是否需要count,默认false
+        boolean needCount = Optional.ofNullable(param)
+                .map(MongoRollPageParam::getNeedCount)
+                .orElse(false);
+        //查询实现
+        return rollPage(
+                //限制class
+                clazz,
+                //组装各种条件
+                andCriteriaList,
+                //限制返回字段
+                MongoExtraUtils.initDocumentByFields(param.getFields()),
+                //分页,默认20
+                param.getPageSize() == null ? 20 : param.getPageSize(),
+                param.getPageNum() == null ? 1 : param.getPageNum(),
+                //指定排序
+                Sort.by(Sort.Direction.fromString(sortOrder), sortKey),
+                //是否返回count
+                needCount
+        );
     }
 
 }

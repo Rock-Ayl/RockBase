@@ -1,8 +1,6 @@
 package org.rock.base.util;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.bson.Document;
-import org.springframework.data.mongodb.core.query.Field;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
@@ -29,38 +27,19 @@ public class MongoExtraUtils {
             //过
             return;
         }
-        //准备
-        Field field = query.fields();
-        //循环
-        for (String key : fieldList) {
-            //组装
-            field = field.include(key);
-        }
+        //组装
+        query.fields().include(fieldList.toArray(new String[]{}));
     }
 
     /**
-     * 根据要限制的字段,初始化一个 Document
+     * 根据要限制的字段,初始化一个 fieLdsArr
      *
      * @param fields eg id,productSku,developerList
      * @return
      */
-    public static Document initDocumentByFields(String fields) {
-        //切割限制返回字段
-        List<String> fieldList = ListExtraUtils.split(fields);
-        //初始化限制返回
-        Document document = new Document();
-        //判空
-        if (CollectionUtils.isEmpty(fieldList)) {
-            //直接返回
-            return document;
-        }
-        //循环
-        for (String field : fieldList) {
-            //组装
-            document.put(field, 1);
-        }
-        //返回
-        return document;
+    public static String[] initDocumentByFields(String fields) {
+        //实现
+        return ListExtraUtils.split(fields).toArray(new String[]{});
     }
 
     /**
