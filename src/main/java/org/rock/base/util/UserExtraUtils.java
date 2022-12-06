@@ -13,19 +13,17 @@ public class UserExtraUtils {
     /**
      * 给用户实体脱敏
      *
-     * @param userDO 店铺
+     * @param userDO 用户实体
      * @return
      */
-    public static UserDO desensitization(UserDO userDO) {
+    public static void desensitization(UserDO userDO) {
         //判空
         if (userDO == null) {
             //过
-            return null;
+            return;
         }
         //脱敏
         userDO.setPwd(null);
-        //返回实体
-        return userDO;
     }
 
 }

@@ -89,8 +89,8 @@ public class ControllerInterceptor implements HandlerInterceptor {
         }
         //获取用户信息
         UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
-        //脱敏
-        userDO = UserExtraUtils.desensitization(userDO);
+        //用户实体脱敏
+        UserExtraUtils.desensitization(userDO);
         //记录用户信息
         LoginAuth.USER.set(userDO);
         //标准请求默认通过
