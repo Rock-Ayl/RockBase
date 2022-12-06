@@ -42,7 +42,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod == false || handler instanceof ResourceHttpRequestHandler == false) {
             //未知请求直接过滤
             sendError(response, HttpStatusEnum.NOT_FOUND);
-            //返回
+            //不过
             return false;
         }
         //如果是 静态资源请求
@@ -50,55 +50,48 @@ public class ControllerInterceptor implements HandlerInterceptor {
             //静态资源请求默认过
             return true;
         }
-        //如果是 标准请求
-        if (handler instanceof HandlerMethod) {
-            //强转请求信息
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            //如果未找到对应控制层(即bean是BasicErrorController)
-            if (handlerMethod.getBean() instanceof BasicErrorController) {
-                //当做未知请求直接过滤
-                sendError(response, HttpStatusEnum.NOT_FOUND);
-                //返回
-                return false;
-            }
-            //获取该请求上的登录注解
-            LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
-            //如果不存在注解,可直接登录
-            if (loginAuth == null) {
-                //通过
-                return true;
-            }
-            //获取token
-            String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
-            //如果不存在
-            if (StringUtils.isBlank(token)) {
-                //过滤请求
-                sendError(response, HttpStatusEnum.UNAUTHORIZED);
-                //返回
-                return false;
-            }
-            //组装redis key
-            String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
-            //获取用户信息
-            String userInfo = baseRedisService.getString(redisUserTokenKey);
-            //如果不存在
-            if (StringUtils.isBlank(userInfo)) {
-                //过滤请求
-                sendError(response, HttpStatusEnum.UNAUTHORIZED);
-                //返回
-                return false;
-            }
-            //获取用户信息
-            UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
-            //记录用户信息
-            LoginAuth.USER.set(userDO);
-            //标准请求默认通过
+        //强转请求信息
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        //如果未找到对应控制层(即bean是BasicErrorController)
+        if (handlerMethod.getBean() instanceof BasicErrorController) {
+            //当做未知请求直接过滤
+            sendError(response, HttpStatusEnum.NOT_FOUND);
+            //返回
+            return false;
+        }
+        //获取该请求上的登录注解
+        LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
+        //如果不存在注解,可直接登录
+        if (loginAuth == null) {
+            //通过
             return true;
         }
-        //最后的一律视为未知
-        sendError(response, HttpStatusEnum.NOT_FOUND);
-        //默认
-        return false;
+        //获取token
+        String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
+        //如果不存在
+        if (StringUtils.isBlank(token)) {
+            //过滤请求
+            sendError(response, HttpStatusEnum.UNAUTHORIZED);
+            //返回
+            return false;
+        }
+        //组装redis key
+        String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
+        //获取用户信息
+        String userInfo = baseRedisService.getString(redisUserTokenKey);
+        //如果不存在
+        if (StringUtils.isBlank(userInfo)) {
+            //过滤请求
+            sendError(response, HttpStatusEnum.UNAUTHORIZED);
+            //返回
+            return false;
+        }
+        //获取用户信息
+        UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
+        //记录用户信息
+        LoginAuth.USER.set(userDO);
+        //标准请求默认通过
+        return true;
     }
 
     @Override
