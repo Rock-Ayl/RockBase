@@ -1,7 +1,9 @@
 package org.rock.base.auth;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.constant.HttpConst;
 import org.rock.base.constant.RedisKey;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * 请求拦截器实现
@@ -108,6 +111,28 @@ public class ControllerInterceptor implements HandlerInterceptor {
     }
 
     /**
+     * 错误请求响应实体
+     */
+
+    @Setter
+    @Getter
+    public static class ErrorResponseBody {
+
+        @ApiModelProperty("描述")
+        private String desc;
+
+        @ApiModelProperty("状态")
+        private Integer status;
+
+        @ApiModelProperty("消息")
+        private String message;
+
+        @ApiModelProperty("时间")
+        private Date timestamp;
+
+    }
+
+    /**
      * 根据http请求状态枚举,响应标准格式的错误消息
      *
      * @param response 请求响应
@@ -119,14 +144,15 @@ public class ControllerInterceptor implements HandlerInterceptor {
         response.setContentType(HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON);
         //设置其状态码
         response.setStatus(status.getCode());
-        //body体
-        JSONObject json = new JSONObject();
-        json.put("desc", status.getDesc());
-        json.put("status", status.getCode());
-        json.put("message", status.getMessage());
-        json.put("timestamp", System.currentTimeMillis());
+        //初始化错误消息体
+        ErrorResponseBody errorResponseBody = new ErrorResponseBody();
+        //组装信息
+        errorResponseBody.setDesc(status.getDesc());
+        errorResponseBody.setStatus(status.getCode());
+        errorResponseBody.setMessage(status.getMessage());
+        errorResponseBody.setTimestamp(new Date());
         //写入
-        response.getWriter().write(json.toString());
+        response.getWriter().write(JSON.toJSONString(errorResponseBody));
     }
 
 }
