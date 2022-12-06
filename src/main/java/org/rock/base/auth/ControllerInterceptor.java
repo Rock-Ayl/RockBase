@@ -38,17 +38,17 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        //如果请求不是 标准请求 or 静态资源
-        if (handler instanceof HandlerMethod == false || handler instanceof ResourceHttpRequestHandler == false) {
-            //未知请求直接过滤
-            sendError(response, HttpStatusEnum.NOT_FOUND);
-            //不过
-            return false;
-        }
         //如果是 静态资源请求
         if (handler instanceof ResourceHttpRequestHandler) {
             //静态资源请求默认过
             return true;
+        }
+        //如果请求不是 标准请求
+        if (handler instanceof HandlerMethod == false) {
+            //未知请求直接过滤
+            sendError(response, HttpStatusEnum.NOT_FOUND);
+            //不过
+            return false;
         }
         //强转请求信息
         HandlerMethod handlerMethod = (HandlerMethod) handler;
