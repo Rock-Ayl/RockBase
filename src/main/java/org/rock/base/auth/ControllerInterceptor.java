@@ -8,6 +8,7 @@ import org.rock.base.constant.RedisKey;
 import org.rock.base.db.redis.BaseRedisService;
 import org.rock.base.enums.HttpStatusEnum;
 import org.rock.base.pojo.mdo.UserDO;
+import org.rock.base.util.UserExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,8 @@ public class ControllerInterceptor implements HandlerInterceptor {
         }
         //获取用户信息
         UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
+        //脱敏
+        userDO = UserExtraUtils.desensitization(userDO);
         //记录用户信息
         LoginAuth.USER.set(userDO);
         //标准请求默认通过
