@@ -12,7 +12,7 @@ public interface UserService extends BaseMysqlService<UserDO> {
      * 创建用户
      *
      * @param userDO 用户实体
-     * @return
+     * @return 如果成功, 会返回用户实体
      */
     UserDO addUser(UserDO userDO);
 
@@ -20,7 +20,7 @@ public interface UserService extends BaseMysqlService<UserDO> {
      * 根据手机号获取用户
      *
      * @param phone 手机号
-     * @return
+     * @return 如果成功, 会返回用户实体
      */
     UserDO getByPhone(String phone);
 
@@ -29,7 +29,7 @@ public interface UserService extends BaseMysqlService<UserDO> {
      *
      * @param phone 手机号
      * @param pwd   密码
-     * @return
+     * @return 如果成功, 会返回token
      */
     String loginByPhone(String phone, String pwd);
 

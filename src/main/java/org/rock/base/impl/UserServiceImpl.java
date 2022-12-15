@@ -37,7 +37,7 @@ public class UserServiceImpl extends BaseMysqlServiceImpl<UserDO> implements Use
         }
         //初始化查询
         QueryWrapper<UserDO> query = new QueryWrapper<>();
-        //限制受教
+        //限制手机号
         query.eq("phone", phone);
         //查询并返回
         return this.getByWrapper(query);
