@@ -91,21 +91,22 @@ public class JSONResponse {
     }
 
     /**
-     * 重写toString
-     *
-     * @return
-     */
-    public String toString() {
-        return this.fastJson.toString();
-    }
-
-    /**
      * 转变为FastJson
      *
      * @return
      */
     public JSONObject toJSONObject() {
         return this.fastJson;
+    }
+
+    /**
+     * 重写toString
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return this.fastJson.toString();
     }
 
 }
