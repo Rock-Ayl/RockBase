@@ -1,6 +1,7 @@
 package org.rock.base.util;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
@@ -49,6 +50,11 @@ public class MongoExtraUtils {
      * @return
      */
     public static String escapeExprSpecialWord(String keyword) {
+        //判空
+        if (StringUtils.isNotBlank(keyword)) {
+            //过
+            return "";
+        }
         //一般特殊
         String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
         //循环

@@ -16,7 +16,7 @@ public class UserExtraUtils {
      * @param userDO 用户实体
      * @return
      */
-    public static void desensitization(UserDO userDO) {
+    public static <T extends UserDO> void desensitization(T userDO) {
         //判空
         if (userDO == null) {
             //过
