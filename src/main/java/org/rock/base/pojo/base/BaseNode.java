@@ -21,6 +21,6 @@ public class BaseNode extends BaseDO implements Serializable {
 
     @Id
     @ApiModelProperty("唯一id")
-    private String id;
+    private String nodeId;
 
 }
