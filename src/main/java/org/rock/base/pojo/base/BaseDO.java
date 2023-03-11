@@ -40,7 +40,7 @@ public class BaseDO implements Serializable {
      *
      * @param baseDO
      */
-    public static void createBuild(BaseDO baseDO) {
+    public static <T extends BaseDO> void createBuild(T baseDO) {
         baseDO.setVer(System.currentTimeMillis());
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());
@@ -52,7 +52,7 @@ public class BaseDO implements Serializable {
      *
      * @param baseDO
      */
-    public static void updateBuild(BaseDO baseDO) {
+    public static <T extends BaseDO> void updateBuild(T baseDO) {
         baseDO.setVer(System.currentTimeMillis());
         baseDO.setUpdateDate(new Date());
     }
