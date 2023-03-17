@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * List 扩展工具包
@@ -94,6 +95,22 @@ public class ListExtraUtils {
         }
         //返回结果
         return str.toString();
+    }
+
+    /**
+     * 从列表中随机拿一个对象,概率完全相等
+     *
+     * @param list 列表
+     * @return
+     */
+    public static <T> T randomOne(List<T> list) {
+        //判空
+        if (CollectionUtils.isEmpty(list)) {
+            //过
+            return null;
+        }
+        //随机数取一个
+        return list.get(new Random().nextInt(list.size()));
     }
 
 }
