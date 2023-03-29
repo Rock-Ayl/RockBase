@@ -44,7 +44,7 @@ public class JSONResponse {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
-        response.fastJson.put(KEY_CODE, VALUE_ERROR);
+        response.fastJson.put(KEY_CODE, 500);
         //返回
         return response;
     }
@@ -59,7 +59,7 @@ public class JSONResponse {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
-        response.fastJson.put(KEY_CODE, VALUE_ERROR);
+        response.fastJson.put(KEY_CODE, 500);
         response.fastJson.put(KEY_ERROR_MSG, errorMsg);
         //返回
         return response;
