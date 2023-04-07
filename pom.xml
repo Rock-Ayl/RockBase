@@ -24,8 +24,10 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <!-- 使用阿里的库 -->
+    <!-- 库 -->
     <repositories>
+
+        <!-- 使用阿里的库 -->
         <repository>
             <id>alimaven</id>
             <name>aliyun maven</name>
@@ -37,6 +39,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+
     </repositories>
 
     <!-- 依赖 -->
@@ -148,6 +151,7 @@
 
     <build>
 
+        <!-- 插件列表 -->
         <plugins>
 
             <plugin>
