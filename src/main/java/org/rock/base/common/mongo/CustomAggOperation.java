@@ -6,7 +6,8 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperationContext;
 
 /**
- * 一个自定义的 Mongo operation 实体
+ * 自定义的 Mongo operation 实体
+ * 解决复杂语句专用
  *
  * @Author ayl
  * @Date 2022-09-28

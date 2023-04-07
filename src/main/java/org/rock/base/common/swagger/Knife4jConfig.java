@@ -20,7 +20,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @EnableKnife4j
 public class Knife4jConfig {
 
-    @Bean()
+    @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(new ApiInfoBuilder()
@@ -42,4 +42,5 @@ public class Knife4jConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
 }

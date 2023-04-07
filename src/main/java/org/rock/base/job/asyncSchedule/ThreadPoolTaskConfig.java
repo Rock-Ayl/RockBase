@@ -24,6 +24,7 @@ public class ThreadPoolTaskConfig {
 
     //本配置的bean名名称
     public static final String SYNC_TASK_POOL_EXECUTOR = "syncTaskPoolExecutor";
+
     //线程池名前缀
     private static final String THREAD_NAME_PREFIX = "Async-Job-";
     //核心线程数（默认线程数）
