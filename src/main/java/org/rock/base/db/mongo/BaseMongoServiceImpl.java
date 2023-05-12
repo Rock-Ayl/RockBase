@@ -32,6 +32,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Override
     public T create(T document) {
         //创建前初始化
         BaseDocument.createBuild(document);
@@ -39,7 +40,13 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return this.mongoTemplate.insert(document);
     }
 
+    @Override
     public Collection<T> create(List<T> documents) {
+        //判空
+        if (CollectionUtils.isEmpty(documents)) {
+            //过
+            return new ArrayList<>();
+        }
         //循环
         for (T document : documents) {
             //创建前初始化
@@ -49,17 +56,18 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return this.mongoTemplate.insertAll(documents);
     }
 
+    @Override
     public T get(Class<T> clazz, String id) {
         return this.mongoTemplate.findById(id, clazz);
     }
 
+    @Override
     public boolean delete(Class<T> clazz, String id) {
         //根据id删除
-        return this.mongoTemplate.remove(new Query(Criteria
-                .where("_id").is(id)
-        ), clazz).getDeletedCount() == 1L;
+        return this.mongoTemplate.remove(new Query(Criteria.where("_id").is(id)), clazz).getDeletedCount() == 1L;
     }
 
+    @Override
     public boolean updateSkipNull(T document) {
 
         //判空
@@ -84,17 +92,18 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
 
         //日志
-        LOG.info("Mongo Update Skip Null Query :{}", query.toString());
+        LOG.info("Mongo updateSkipNull Query :{}", query.toString());
 
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
     }
 
-    public List<T> list(Class<T> clazz, List<String> idList) {
+    @Override
+    public List<T> listByIdList(Class<T> clazz, List<String> idList) {
         //查询
         Query query = new Query(Criteria.where("_id").in(idList));
         //日志
-        LOG.info("Mongo list query:[{}]", query.toString());
+        LOG.info("Mongo listByIdList query:[{}]", query.toString());
         //查询
         return this.mongoTemplate.find(query, clazz);
     }
@@ -114,6 +123,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return rollPage(clazz, criteriaList, fields, pageNum, pageSize, sort, true);
     }
 
+    @Override
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult();

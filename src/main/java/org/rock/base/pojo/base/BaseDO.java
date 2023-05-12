@@ -35,21 +35,41 @@ public class BaseDO implements Serializable {
     /**
      * 给新增数据的基底赋予基础数据
      *
-     * @param baseDO
+     * @param baseDO 基类
      */
     public static <T extends BaseDO> void createBuild(T baseDO) {
+
+        //判空
+        if (baseDO == null) {
+            //过
+            return;
+        }
+
+        //创建、更新时间
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());
+
+        //统一id
         baseDO.setId(IdExtraUtils.genGUID());
+
     }
 
     /**
      * 给修改数据的基底赋予基础数据
      *
-     * @param baseDO
+     * @param baseDO 基类
      */
     public static <T extends BaseDO> void updateBuild(T baseDO) {
+
+        //判空
+        if (baseDO == null) {
+            //过
+            return;
+        }
+
+        //更新时间
         baseDO.setUpdateDate(new Date());
+
     }
 
 }

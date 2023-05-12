@@ -34,7 +34,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     Collection<T> create(List<T> document);
 
     /**
-     * 根据id查询单个
+     * 根据id,查询单个
      *
      * @param clazz
      * @param id
@@ -43,13 +43,13 @@ public interface BaseMongoService<T extends BaseDocument> {
     T get(Class<T> clazz, String id);
 
     /**
-     * 根据id列表查询多个
+     * 根据id列表,查询多个
      *
      * @param clazz
      * @param idList
      * @return
      */
-    List<T> list(Class<T> clazz, List<String> idList);
+    List<T> listByIdList(Class<T> clazz, List<String> idList);
 
     /**
      * 根据id真实删除
