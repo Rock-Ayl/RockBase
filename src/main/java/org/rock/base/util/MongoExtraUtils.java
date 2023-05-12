@@ -24,12 +24,17 @@ public class MongoExtraUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MongoExtraUtils.class);
 
     /**
-     * 为 mongo query 对象组装限制返回参数
+     * 为 mongo {@link Query} 对象组装限制返回参数
      *
      * @param query  mongo query 对象
      * @param fields 限制参数 eg:   "id,state,sellerSku"
      */
     public static void setFields(Query query, String fields) {
+        //判空
+        if (query == null) {
+            //过
+            return;
+        }
         //根据,分割
         List<String> fieldList = ListExtraUtils.split(fields);
         //判空
@@ -39,6 +44,27 @@ public class MongoExtraUtils {
         }
         //组装
         query.fields().include(fieldList.toArray(new String[]{}));
+    }
+
+    /**
+     * 为 mongo {@link Query} 设置常用分页
+     *
+     * @param query
+     * @param pageNum  分页,可为空
+     * @param pageSize 分页,可为空
+     * @return
+     */
+    public static void setPage(Query query, Integer pageNum, Integer pageSize) {
+        //判空
+        if (query == null) {
+            //过
+            return;
+        }
+        //如果需要限制分页
+        if (pageSize != null && pageNum != null && pageNum != 0 && pageSize != 0) {
+            //限制分页
+            query.limit(pageSize).skip((pageNum - 1L) * pageSize);
+        }
     }
 
     /**
@@ -187,24 +213,6 @@ public class MongoExtraUtils {
         }
         //返回
         return keyword;
-    }
-
-    /**
-     * 为query设置常用分页
-     *
-     * @param query
-     * @param pageNum  分页,可为空
-     * @param pageSize 分页,可为空
-     * @return
-     */
-    public static Query setPage(Query query, Integer pageNum, Integer pageSize) {
-        //如果需要限制分页
-        if (pageSize != null && pageNum != null && pageNum != 0 && pageSize != 0) {
-            //限制分页
-            query.limit(pageSize).skip((pageNum - 1L) * pageSize);
-        }
-        //返回
-        return query;
     }
 
 }

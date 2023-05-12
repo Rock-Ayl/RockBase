@@ -171,7 +171,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             result.setTotal(-1L);
         }
         //设置分页
-        query = MongoExtraUtils.setPage(query, pageNum, pageSize);
+        MongoExtraUtils.setPage(query, pageNum, pageSize);
         //日志
         LOG.info("Mongo RollPage Query:[{}]", query.toString());
         //查询数据
