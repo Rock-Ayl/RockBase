@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -133,8 +134,54 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean batchUpdateSkipNullById(List<T> documentList) {
-        //todo
+    public boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList) {
+
+        //判空
+        if (CollectionUtils.isEmpty(documentList)) {
+            //过
+            return false;
+        }
+
+        //更新数量
+        int count = 0;
+        //批量update操作
+        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, clazz);
+        //循环
+        for (T document : documentList) {
+
+            //获取id
+            String id = Optional.ofNullable(document)
+                    .map(BaseDocument::getId)
+                    .orElse("");
+            //判空
+            if (StringUtils.isBlank(id)) {
+                //本轮过
+                continue;
+            }
+
+            //初始化查询
+            Query query = MongoExtraUtils.initQueryAndBase(id);
+            //初始化更新
+            Update update = MongoExtraUtils.initUpDateAndBase();
+
+            //组装批量更新
+            MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
+
+            //组装批量修改
+            bulkOperations.updateMulti(query, update);
+            //+1
+            count++;
+
+        }
+        //如果有更新
+        if (count > 0) {
+            //批量更新
+            bulkOperations.execute();
+            //成功
+            return true;
+        }
+
+        //默认失败
         return false;
     }
 
