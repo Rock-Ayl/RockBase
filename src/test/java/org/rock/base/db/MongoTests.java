@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootTest
 class MongoTests {
@@ -39,6 +40,11 @@ class MongoTests {
 
         //更新
         testMongoService.updateSkipNullById(update);
+
+        update.setValue("测试12341231231231231");
+
+        //批量更新
+        testMongoService.batchUpdateSkipNullById(TestDoc.class, Arrays.asList(update));
 
         //查询
         old = testMongoService.getById(TestDoc.class, create.getId());
