@@ -58,7 +58,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param clazz
      * @return
      */
-    boolean delete(Class<T> clazz, String id);
+    boolean deleteById(Class<T> clazz, String id);
 
     /**
      * 根据实体更新单个实体,跳过NULL的字段
@@ -76,10 +76,13 @@ public interface BaseMongoService<T extends BaseDocument> {
     @Getter
     @Setter
     class RollPageResult<T> {
+
         //总数
         private long total;
+
         //数据
         private List<T> list;
+
     }
 
     /**

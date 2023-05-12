@@ -68,7 +68,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean delete(Class<T> clazz, String id) {
+    public boolean deleteById(Class<T> clazz, String id) {
         //判空
         if (StringUtils.isBlank(id)) {
             //过
