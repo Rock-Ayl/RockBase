@@ -38,7 +38,7 @@ class MongoTests {
         update.setValue("测试123");
 
         //更新
-        testMongoService.updateSkipNull(update);
+        testMongoService.updateSkipNullById(update);
 
         //查询
         old = testMongoService.getById(TestDoc.class, create.getId());

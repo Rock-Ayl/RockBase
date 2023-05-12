@@ -70,12 +70,12 @@ public interface BaseMongoService<T extends BaseDocument> {
     boolean deleteByIdList(Class<T> clazz, List<String> idList);
 
     /**
-     * 根据实体更新单个实体,跳过NULL的字段
+     * 根据实体,使用id,更新单个实体,跳过NULL的字段
      *
      * @param document
      * @return
      */
-    boolean updateSkipNull(T document);
+    boolean updateSkipNullById(T document);
 
     /**
      * 查询响应对象实体

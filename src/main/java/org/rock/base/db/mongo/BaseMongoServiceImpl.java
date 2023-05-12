@@ -102,7 +102,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean updateSkipNull(T document) {
+    public boolean updateSkipNullById(T document) {
 
         //判空
         if (document == null) {
