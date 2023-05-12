@@ -83,7 +83,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param documentList
      * @return
      */
-    boolean batchUpdateSkipNullById(Class<T> clazz,List<T> documentList);
+    boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList);
 
     /**
      * 查询响应对象实体
