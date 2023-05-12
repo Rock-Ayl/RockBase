@@ -40,7 +40,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param id
      * @return
      */
-    T get(Class<T> clazz, String id);
+    T getById(Class<T> clazz, String id);
 
     /**
      * 根据id列表,查询多个

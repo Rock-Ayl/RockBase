@@ -57,12 +57,23 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public T get(Class<T> clazz, String id) {
+    public T getById(Class<T> clazz, String id) {
+        //判空
+        if (StringUtils.isBlank(id)) {
+            //过
+            return null;
+        }
+        //实现
         return this.mongoTemplate.findById(id, clazz);
     }
 
     @Override
     public boolean delete(Class<T> clazz, String id) {
+        //判空
+        if (StringUtils.isBlank(id)) {
+            //过
+            return false;
+        }
         //根据id删除
         return this.mongoTemplate.remove(new Query(Criteria.where("_id").is(id)), clazz).getDeletedCount() == 1L;
     }
