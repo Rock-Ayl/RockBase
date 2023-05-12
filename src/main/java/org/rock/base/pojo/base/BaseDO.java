@@ -32,16 +32,12 @@ public class BaseDO implements Serializable {
     @ApiModelProperty("状态删除字段")
     private boolean del;
 
-    @ApiModelProperty("版本号")
-    private Long ver;
-
     /**
      * 给新增数据的基底赋予基础数据
      *
      * @param baseDO
      */
     public static <T extends BaseDO> void createBuild(T baseDO) {
-        baseDO.setVer(System.currentTimeMillis());
         baseDO.setCreateDate(new Date());
         baseDO.setUpdateDate(new Date());
         baseDO.setId(IdExtraUtils.genGUID());
@@ -53,7 +49,6 @@ public class BaseDO implements Serializable {
      * @param baseDO
      */
     public static <T extends BaseDO> void updateBuild(T baseDO) {
-        baseDO.setVer(System.currentTimeMillis());
         baseDO.setUpdateDate(new Date());
     }
 

@@ -1,6 +1,5 @@
 package org.rock.base.db.mongo;
 
-import com.google.common.base.CaseFormat;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
@@ -16,7 +15,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -62,7 +60,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         ), clazz).getDeletedCount() == 1L;
     }
 
-    public boolean updateSkipNull(T document, long ver) {
+    public boolean updateSkipNull(T document) {
+
         //判空
         if (document == null) {
             //过
@@ -75,74 +74,18 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //过
             return false;
         }
+
         //限制条件
-        Query query = new Query(Criteria
-                .where("_id").is(id)
-                .and("ver").is(ver));
+        Query query = MongoExtraUtils.initQueryAndBase(id);
         //更新
-        Update update = new Update();
-        try {
-            //method arr
-            Method[] methodArr = document.getClass().getMethods();
-            //循环
-            for (int var9 = 0; var9 < methodArr.length; ++var9) {
-                //当前method
-                Method method = methodArr[var9];
-                //名字
-                String methodName = method.getName();
-                //如果是getClass
-                if (methodName.equals("getClass") == true) {
-                    //本轮过
-                    continue;
-                }
-                //如果不是get is 方法
-                if (methodName.startsWith("get") == false && methodName.startsWith("is") == false) {
-                    //本轮过
-                    continue;
-                }
-                //初始化key
-                String key = new String();
-                //切割key
-                if (methodName.startsWith("get")) {
-                    key = methodName.substring(3);
-                } else if (methodName.startsWith("is")) {
-                    key = methodName.substring(2);
-                }
-                //大驼峰转小驼峰
-                key = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, key);
-                //判断是否为基础字段
-                switch (key) {
-                    //基础字段不参与
-                    case "id":
-                    case "createDate":
-                    case "updateDate":
-                    case "del":
-                    case "ver":
-                        //本次过
-                        continue;
-                        //其他
-                    default:
-                        //value
-                        Object value = method.invoke(document);
-                        //如果存在
-                        if (value != null) {
-                            //设置
-                            update.set(key, value);
-                        }
-                        break;
-                }
-            }
-        } catch (Exception e) {
-            //日志
-            LOG.error("Mongo Update Skip Null fail:[{}]", e);
-            //过
-            return false;
-        }
-        //固定更新最后更新时间、版本
-        update.set("updateDate", new Date());
-        update.set("ver", System.currentTimeMillis());
+        Update update = MongoExtraUtils.initUpDateAndBase();
+
+        //组装更新字段
+        MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
+
         //日志
         LOG.info("Mongo Update Skip Null Query :{}", query.toString());
+
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
     }
@@ -154,19 +97,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         LOG.info("Mongo list query:[{}]", query.toString());
         //查询
         return this.mongoTemplate.find(query, clazz);
-    }
-
-    public long update(Class<T> clazz, String id, Update update, long ver) {
-        //限制条件
-        Query query = new Query(Criteria
-                .where("_id").is(id)
-                .and("ver").is(ver)
-        );
-        //固定更新最后更新时间、版本
-        update.set("updateDate", new Date());
-        update.set("ver", System.currentTimeMillis());
-        //更新一个
-        return this.mongoTemplate.updateFirst(query, update, clazz).getModifiedCount();
     }
 
     @Override

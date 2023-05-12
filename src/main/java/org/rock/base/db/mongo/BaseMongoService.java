@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.rock.base.pojo.base.BaseDocument;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.Collection;
 import java.util.List;
@@ -62,24 +61,12 @@ public interface BaseMongoService<T extends BaseDocument> {
     boolean delete(Class<T> clazz, String id);
 
     /**
-     * 根据id更新单个实体,只更新update.set的字段
-     *
-     * @param clazz
-     * @param id
-     * @param update
-     * @param ver
-     * @return
-     */
-    long update(Class<T> clazz, String id, Update update, long ver);
-
-    /**
      * 根据实体更新单个实体,跳过NULL的字段
      *
      * @param document
-     * @param ver
      * @return
      */
-    boolean updateSkipNull(T document, long ver);
+    boolean updateSkipNull(T document);
 
     /**
      * 查询响应对象实体

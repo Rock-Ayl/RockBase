@@ -28,7 +28,7 @@ class MongoTests {
 
         //创建
         TestDoc create = new TestDoc();
-        create.setNumber("编号");
+        create.setNumber("编号123");
         testMongoService.create(create);
 
         //查询
@@ -38,15 +38,12 @@ class MongoTests {
         update.setValue("测试123");
 
         //更新
-        testMongoService.updateSkipNull(update, old.getVer());
+        testMongoService.updateSkipNull(update);
 
         //查询
         old = testMongoService.get(TestDoc.class, create.getId());
         Update update2 = new Update();
         update2.set("123", 45);
-
-        //覆盖更新
-        testMongoService.update(TestDoc.class, old.getId(), update2, old.getVer());
 
         //查询
         old = testMongoService.get(TestDoc.class, create.getId());
