@@ -13,7 +13,9 @@ import lombok.Getter;
 public enum HttpStatusEnum {
 
     NONE(0, "未知", "不存在或不识别的状态码"),
+
     OK(200, "OK", "请求成功"),
+
     BAD_REQUEST(400, "Bad Request", "服务器不理解请求,或接口参数有误"),
     UNAUTHORIZED(401, "Unauthorized", "该请求需要身份验证,验证失败."),
     FORBIDDEN(403, "Forbidden", "该请求被禁止访问"),
@@ -23,8 +25,10 @@ public enum HttpStatusEnum {
 
     //代码
     private Integer code;
+
     //消息
     private String message;
+
     //描述
     private String desc;
 
