@@ -99,62 +99,6 @@ public class MongoExtraUtils {
     }
 
     /**
-     * 根据实体,为 mongo {@link Update} set 该实体所有不为空的字段
-     * 注意:不包含继承对象的参数
-     *
-     * @param update   要update的对象
-     * @param document 实体
-     * @return
-     */
-    public static <T extends BaseDocument> void updateSkipNullByDocumentNoExtends(Update update, T document) {
-        //判空
-        if (update == null || document == null) {
-            //过
-            return;
-        }
-        //获取本类的Field数组,继承无效
-        Field[] fields = document.getClass().getDeclaredFields();
-        //判空
-        if (fields == null || fields.length < 1) {
-            //过
-            return;
-        }
-        //循环
-        for (Field field : fields) {
-            try {
-                //字段名
-                String fieldName = field.getName();
-                //判空
-                if (StringUtils.isBlank(fieldName)) {
-                    //本轮过
-                    continue;
-                }
-                //过滤掉一些特殊的
-                switch (fieldName) {
-                    //要被过滤的
-                    case "id":
-                    case "serialVersionUID":
-                        continue;
-                        //其他过
-                    default:
-                        break;
-                }
-                //限强制访问私有字段
-                field.setAccessible(true);
-                //获取内容
-                Object value = field.get(document);
-                //判空
-                if (value != null) {
-                    //组装
-                    update.set(fieldName, value);
-                }
-            } catch (Exception e) {
-                LOG.error("updateSkipNullByDocumentNoExtends error", e);
-            }
-        }
-    }
-
-    /**
      * 为 mongo upsert 操作 初始化一个关于基类的 {@link Update}
      *
      * @param id 主键id
@@ -187,6 +131,62 @@ public class MongoExtraUtils {
     public static String[] initDocumentByFields(String fields) {
         //实现
         return ListExtraUtils.split(fields).toArray(new String[]{});
+    }
+
+    /**
+     * 根据实体,为 mongo {@link Update} set 该实体所有不为空的字段
+     * 注意:不包含继承对象的参数
+     *
+     * @param update   要update的对象
+     * @param document 实体
+     * @return
+     */
+    public static <T extends BaseDocument> void updateSkipNullByDocumentNoExtends(Update update, T document) {
+        //判空
+        if (update == null || document == null) {
+            //过
+            return;
+        }
+        //获取本类的Field数组,继承无效
+        Field[] fields = document.getClass().getDeclaredFields();
+        //判空
+        if (fields == null || fields.length < 1) {
+            //过
+            return;
+        }
+        //循环
+        for (Field field : fields) {
+            try {
+                //字段名
+                String fieldName = field.getName();
+                //判空
+                if (StringUtils.isBlank(fieldName)) {
+                    //本轮过
+                    continue;
+                }
+                //过滤掉一些特殊的
+                switch (fieldName) {
+                    //一定不需要更新的
+                    case "id":
+                    case "serialVersionUID":
+                        continue;
+                        //其他过
+                    default:
+                        break;
+                }
+                //限强制访问私有字段
+                field.setAccessible(true);
+                //获取内容
+                Object value = field.get(document);
+                //判空
+                if (value != null) {
+                    //组装
+                    update.set(fieldName, value);
+                }
+            } catch (Exception e) {
+                LOG.error("updateSkipNullByDocumentNoExtends error", e);
+            }
+        }
     }
 
     /**
