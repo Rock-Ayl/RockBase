@@ -159,7 +159,8 @@ public interface BaseMongoService<T extends BaseDocument> {
         //分页
         private Integer pageSize;
         private Integer pageNum;
-        //是否需要count
+
+        //是否需要count(如果需要,多做一次查询)
         private Boolean needCount;
 
         /**
