@@ -133,6 +133,12 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
+    public boolean batchUpdateSkipNullById(List<T> documentList) {
+        //todo
+        return false;
+    }
+
+    @Override
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, Integer pageNum, Integer pageSize) {
         return rollPage(clazz, criteriaList, null, pageNum, pageSize);
     }
