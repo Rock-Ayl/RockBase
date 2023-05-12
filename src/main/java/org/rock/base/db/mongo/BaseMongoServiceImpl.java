@@ -202,8 +202,10 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
+
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult();
+
         //初始化条件
         Criteria criteria = new Criteria();
         //如果存在条件列表
@@ -211,6 +213,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //组装条件列表
             criteria.andOperator(criteriaList.toArray(new Criteria[]{}));
         }
+
         //初始化查询
         Query query = new Query(criteria);
         //如果需要排序
@@ -221,11 +224,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //默认排序,按照更新时间倒序
             query.with(Sort.by(Sort.Order.desc("updateDate")));
         }
-        //如果需要限制返回字段
-        if (fields != null && fields.length > 0) {
-            //设置需要的字段
-            query.fields().include(fields);
-        }
+
         //如果需要count
         if (needCount) {
             //查询count
@@ -236,8 +235,12 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //默认
             result.setTotal(-1L);
         }
+
         //设置分页
         MongoExtraUtils.setPage(query, pageNum, pageSize);
+        //限制返回字段
+        MongoExtraUtils.setFields(query, fields);
+
         //日志
         LOG.info("Mongo RollPage Query:[{}]", query.toString());
         //查询数据

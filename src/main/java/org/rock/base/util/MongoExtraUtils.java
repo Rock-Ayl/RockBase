@@ -47,6 +47,22 @@ public class MongoExtraUtils {
     }
 
     /**
+     * 为 mongo {@link Query} 对象组装限制返回参数
+     *
+     * @param query  mongo query 对象
+     * @param fields 限制参数 eg:   "id,state,sellerSku"
+     */
+    public static void setFields(Query query, String[] fields) {
+        //判空
+        if (query == null || fields == null || fields.length < 1) {
+            //过
+            return;
+        }
+        //组装
+        query.fields().include(fields);
+    }
+
+    /**
      * 为 mongo {@link Query} 设置常用分页
      *
      * @param query
