@@ -270,7 +270,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         }
 
         /**
-         * 处理各种模板参数
+         * 处理时间区间
          */
 
         //如果要限制时间范围
@@ -278,6 +278,11 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //限制时间范围
             andCriteriaList.add(Criteria.where(param.getTimeType()).gte(new Date(param.getStartTime())).lte(new Date(param.getEndTime())));
         }
+
+        /**
+         * 处理一般关键词
+         */
+
         //根据空格分割获取关键字列表
         List<String> keywordList = ListExtraUtils.split(param.getKeywords(), "\n");
         //获取查询模式,默认查询产品SKU
@@ -309,6 +314,11 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                     break;
             }
         }
+
+        /**
+         * 排序
+         */
+
         //排序key,默认创建时间
         String sortKey = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getSortKey)
@@ -317,10 +327,20 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         String sortOrder = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getSortOrder)
                 .orElse("desc");
+
+        /**
+         * 是否需要分页
+         */
+
         //是否需要count,默认false
         boolean needCount = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getNeedCount)
                 .orElse(false);
+
+        /**
+         * 最终实现
+         */
+
         //查询实现
         return rollPage(
                 //限制class
