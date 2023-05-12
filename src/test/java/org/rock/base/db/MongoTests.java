@@ -32,7 +32,7 @@ class MongoTests {
         testMongoService.create(create);
 
         //查询
-        TestDoc old = testMongoService.get(TestDoc.class, create.getId());
+        TestDoc old = testMongoService.getById(TestDoc.class, create.getId());
         TestDoc update = new TestDoc();
         update.setId(old.getId());
         update.setValue("测试123");
@@ -41,12 +41,12 @@ class MongoTests {
         testMongoService.updateSkipNull(update);
 
         //查询
-        old = testMongoService.get(TestDoc.class, create.getId());
+        old = testMongoService.getById(TestDoc.class, create.getId());
         Update update2 = new Update();
         update2.set("123", 45);
 
         //查询
-        old = testMongoService.get(TestDoc.class, create.getId());
+        old = testMongoService.getById(TestDoc.class, create.getId());
         System.out.println(123);
 
         //分页查询

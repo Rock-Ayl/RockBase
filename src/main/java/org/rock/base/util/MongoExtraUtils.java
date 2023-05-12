@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -86,14 +87,14 @@ public class MongoExtraUtils {
             return;
         }
         //获取本类的Field数组,继承无效
-        java.lang.reflect.Field[] fields = document.getClass().getDeclaredFields();
+        Field[] fields = document.getClass().getDeclaredFields();
         //判空
         if (fields == null || fields.length < 1) {
             //过
             return;
         }
         //循环
-        for (java.lang.reflect.Field field : fields) {
+        for (Field field : fields) {
             try {
                 //字段名
                 String fieldName = field.getName();
