@@ -68,6 +68,16 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
+    public List<T> listByIdList(Class<T> clazz, List<String> idList) {
+        //查询
+        Query query = new Query(Criteria.where("_id").in(idList));
+        //日志
+        LOG.info("Mongo listByIdList query:[{}]", query.toString());
+        //查询
+        return this.mongoTemplate.find(query, clazz);
+    }
+
+    @Override
     public boolean deleteById(Class<T> clazz, String id) {
         //判空
         if (StringUtils.isBlank(id)) {
@@ -76,6 +86,19 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         }
         //根据id删除
         return this.mongoTemplate.remove(new Query(Criteria.where("_id").is(id)), clazz).getDeletedCount() == 1L;
+    }
+
+    @Override
+    public boolean deleteByIdList(Class<T> clazz, List<String> idList) {
+        //判空
+        if (CollectionUtils.isEmpty(idList)) {
+            //过
+            return false;
+        }
+        //根据id删除
+        this.mongoTemplate.remove(new Query(Criteria.where("_id").in(idList)), clazz);
+        //成功
+        return true;
     }
 
     @Override
@@ -107,16 +130,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
-    }
-
-    @Override
-    public List<T> listByIdList(Class<T> clazz, List<String> idList) {
-        //查询
-        Query query = new Query(Criteria.where("_id").in(idList));
-        //日志
-        LOG.info("Mongo listByIdList query:[{}]", query.toString());
-        //查询
-        return this.mongoTemplate.find(query, clazz);
     }
 
     @Override

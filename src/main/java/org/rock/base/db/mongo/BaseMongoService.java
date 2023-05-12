@@ -52,13 +52,22 @@ public interface BaseMongoService<T extends BaseDocument> {
     List<T> listByIdList(Class<T> clazz, List<String> idList);
 
     /**
-     * 根据id真实删除
+     * 根据id,真实删除
      *
      * @param id
      * @param clazz
      * @return
      */
     boolean deleteById(Class<T> clazz, String id);
+
+    /**
+     * 根据id列表,批量真实删除
+     *
+     * @param idList id列表
+     * @param clazz
+     * @return
+     */
+    boolean deleteByIdList(Class<T> clazz, List<String> idList);
 
     /**
      * 根据实体更新单个实体,跳过NULL的字段
