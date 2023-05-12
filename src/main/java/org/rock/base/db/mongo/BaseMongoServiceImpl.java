@@ -218,8 +218,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //按照规则
             query.with(sort);
         } else {
-            //默认排序,按照创建时间倒序
-            query.with(Sort.by(Sort.Order.desc("createDate")));
+            //默认排序,按照更新时间倒序
+            query.with(Sort.by(Sort.Order.desc("updateDate")));
         }
         //如果需要限制返回字段
         if (fields != null && fields.length > 0) {
@@ -319,10 +319,10 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
          * 排序
          */
 
-        //排序key,默认创建时间
+        //排序key,默认更新时间
         String sortKey = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getSortKey)
-                .orElse("createDate");
+                .orElse("updateDate");
         //排序方式,默认倒序
         String sortOrder = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getSortOrder)
