@@ -28,10 +28,10 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 批量创建
      *
-     * @param document
+     * @param documentList
      * @return
      */
-    Collection<T> create(List<T> document);
+    Collection<T> create(List<T> documentList);
 
     /**
      * 根据id,查询单个

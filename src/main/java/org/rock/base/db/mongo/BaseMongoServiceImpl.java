@@ -41,19 +41,19 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public Collection<T> create(List<T> documents) {
+    public Collection<T> create(List<T> documentList) {
         //判空
-        if (CollectionUtils.isEmpty(documents)) {
+        if (CollectionUtils.isEmpty(documentList)) {
             //过
             return new ArrayList<>();
         }
         //循环
-        for (T document : documents) {
+        for (T document : documentList) {
             //创建前初始化
             BaseDocument.createBuild(document);
         }
         //批量插入
-        return this.mongoTemplate.insertAll(documents);
+        return this.mongoTemplate.insertAll(documentList);
     }
 
     @Override
