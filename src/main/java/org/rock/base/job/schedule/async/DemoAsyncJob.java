@@ -1,4 +1,4 @@
-package org.rock.base.job.asyncSchedule;
+package org.rock.base.job.schedule.async;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

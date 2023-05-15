@@ -1,4 +1,4 @@
-package org.rock.base.job.syncSchedule;
+package org.rock.base.job.schedule.sync;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +17,11 @@ public class DemoSyncJob {
     private static final Logger logger = LoggerFactory.getLogger(DemoSyncJob.class);
 
     /**
-     * 每1秒执行一次,同步任务(所有同步任务共用一个线程,如果该任务效率很快建议同步)
+     * 每5秒执行一次,同步任务(所有同步任务共用一个线程,如果该任务效率很快建议同步)
      */
-    @Scheduled(cron = "0/1 * *  * * ?")
+    @Scheduled(cron = "0/5 * *  * * ?")
     public void demo() {
-        logger.info("一秒一次的输出:[{}]", System.currentTimeMillis());
+        logger.info("五秒一次的输出:[{}]", System.currentTimeMillis());
     }
 
     /**

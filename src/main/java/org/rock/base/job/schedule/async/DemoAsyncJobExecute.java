@@ -1,4 +1,4 @@
-package org.rock.base.job.asyncSchedule;
+package org.rock.base.job.schedule.async;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
