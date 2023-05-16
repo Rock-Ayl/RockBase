@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootTest
-class MongoTests {
+class TestMongo {
 
     @Autowired
     private TestMongoService testMongoService;

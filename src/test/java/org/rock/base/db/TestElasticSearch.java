@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
-class ElasticSearchTests {
+class TestElasticSearch {
 
     @Autowired
     private TestElasticSearchService testElasticSearchService;

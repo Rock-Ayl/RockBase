@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-class Neo4jTests {
+class TestNeo4j {
 
     @Autowired
     private TestNeo4jService testNeo4jService;

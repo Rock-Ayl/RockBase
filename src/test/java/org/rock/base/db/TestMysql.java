@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
-class MysqlTests {
+class TestMysql {
 
     @Resource
     private TestMySqlService testMySqlService;
