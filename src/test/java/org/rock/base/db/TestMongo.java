@@ -45,32 +45,40 @@ class TestMongo {
 
     @Test
     void create() {
-        //创建
+
+        //初始化一个实体
         TestDoc create = new TestDoc();
         create.setNumber("编号");
+
+        //创建
         testMongoService.create(create);
         System.out.println();
     }
 
     @Test
-    void rollPage() {
+    void rollPageTypeOne() {
+
         //分页查询
         BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
-        System.out.println(123);
+        System.out.println();
+
     }
 
     @Test
-    void rollPageTemplate() {
+    void rollPageTypeTwo() {
 
-        //初始化参数
+        //初始化参数对象
         BaseMongoService.MongoRollPageParam param = new BaseMongoService.MongoRollPageParam();
-        //限制参数
+
+        //限制返回参数
         param.setFields("id,number");
+
         //限制关键词 模糊搜索number
         param.setSearchType("dim");
         param.setKeywordType("number");
         param.setKeywords("编");
-        //需要总count
+
+        //是否需要返回count
         param.setNeedCount(true);
 
         //分页查询

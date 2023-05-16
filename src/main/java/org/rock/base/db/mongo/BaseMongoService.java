@@ -168,7 +168,7 @@ public interface BaseMongoService<T extends BaseDocument> {
         private Integer pageSize;
         private Integer pageNum;
 
-        //是否需要count(如果需要,多做一次查询)
+        //是否需要count(如果需要,多做一次查询,如果数据量非常大,会损耗很大的性能)
         private Boolean needCount;
 
         /**
