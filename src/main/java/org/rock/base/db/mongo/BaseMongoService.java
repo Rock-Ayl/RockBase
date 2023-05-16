@@ -199,8 +199,8 @@ public interface BaseMongoService<T extends BaseDocument> {
         private String searchType;
         //关键字搜索类型
         private String keywordType;
-        //关键字,支持批量(回车是换行)
-        private String keywords;
+        //关键字列表
+        private List<String> keywordList;
 
         /**
          * 限制返回字段

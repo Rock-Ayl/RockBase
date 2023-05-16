@@ -76,7 +76,7 @@ class TestMongo {
         //限制关键词 模糊搜索number
         param.setSearchType("dim");
         param.setKeywordType("number");
-        param.setKeywords("编");
+        param.setKeywordList(Arrays.asList("编"));
 
         //是否需要返回count
         param.setNeedCount(true);

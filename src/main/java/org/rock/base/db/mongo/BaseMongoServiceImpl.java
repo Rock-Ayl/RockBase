@@ -3,7 +3,6 @@ package org.rock.base.db.mongo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
-import org.rock.base.util.ListExtraUtils;
 import org.rock.base.util.MongoExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -286,8 +285,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
          * 处理一般关键词
          */
 
-        //根据空格分割获取关键字列表
-        List<String> keywordList = ListExtraUtils.split(param.getKeywords(), "\n");
+        //获取关键词列表
+        List<String> keywordList = param.getKeywordList();
         //获取查询模式,默认查询产品SKU
         String keywordType = Optional.ofNullable(param)
                 .map(MongoRollPageParam::getKeywordType)
