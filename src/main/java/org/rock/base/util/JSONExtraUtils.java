@@ -23,22 +23,13 @@ public class JSONExtraUtils {
      * @return
      */
     public static <T> T deepClone(Object object, Class<T> toJavaObject) {
-        //解析ob
-        Object ob = JSON.toJSON(object);
         //判空
-        if (ob == null) {
+        if (object == null) {
             //过
             return null;
         }
-        //如果不是Json(集合、特殊情况不做考虑,用steam一个个来)
-        if (ob instanceof JSONObject == false) {
-            //过
-            return null;
-        }
-        //强转一下
-        JSONObject json = (JSONObject) ob;
-        //再转化为实体
-        return json.toJavaObject(toJavaObject);
+        //先转为string再转为对应实体,如果转为json对象再转实体某些特殊情况会报错
+        return JSON.parseObject(JSON.toJSONString(object), toJavaObject);
     }
 
     /**
@@ -49,22 +40,13 @@ public class JSONExtraUtils {
      * @return
      */
     public static <T> List<T> deepCloneList(Object listOrArrObject, Class<T> toJavaObject) {
-        //解析ob
-        Object ob = JSON.toJSON(listOrArrObject);
         //判空
-        if (ob == null) {
+        if (listOrArrObject == null) {
             //过
             return new ArrayList<>();
         }
-        //如果不是JsonArray(JSON的用上面的)
-        if (ob instanceof JSONArray == false) {
-            //过
-            return new ArrayList<>();
-        }
-        //强转一下
-        JSONArray JsonArray = (JSONArray) ob;
-        //再转化为实体
-        return JsonArray.toJavaList(toJavaObject);
+        //先转为string再转为对应实体,如果转为json对象再转实体某些特殊情况会报错
+        return JSON.parseArray(JSON.toJSONString(listOrArrObject), toJavaObject);
     }
 
 }
