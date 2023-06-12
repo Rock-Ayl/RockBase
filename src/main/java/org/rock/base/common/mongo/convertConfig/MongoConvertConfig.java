@@ -28,6 +28,7 @@ public class MongoConvertConfig {
         List<Converter<?, ?>> converterList = new ArrayList<>();
         converterList.add(new BigDecimalToDecimal128Converter());
         converterList.add(new Decimal128ToBigDecimalConverter());
+        converterList.add(new Decimal128ToObjectConverter());
         return new MongoCustomConversions(converterList);
     }
 
