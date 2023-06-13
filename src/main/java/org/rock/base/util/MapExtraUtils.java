@@ -29,7 +29,7 @@ public class MapExtraUtils {
             //过
             return new ArrayList<>();
         }
-        //用list的分组工具包分组,并转化为map发N会
+        //用list的分组工具包分组,并转化为map返回
         return ListUtils.partition(new ArrayList<>(map.entrySet()), size)
                 .stream()
                 .map(p -> p
