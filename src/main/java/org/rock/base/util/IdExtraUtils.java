@@ -25,7 +25,7 @@ public class IdExtraUtils {
      * @return
      */
     public static String creatUserToken(String userId) {
-        return genGUID() + userId + System.currentTimeMillis();
+        return userId + ":" + System.currentTimeMillis() + ":" + genGUID();
     }
 
 }
