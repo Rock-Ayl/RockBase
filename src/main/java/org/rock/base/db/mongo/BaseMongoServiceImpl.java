@@ -3,6 +3,7 @@ package org.rock.base.db.mongo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
+import org.rock.base.util.ArrayExtraUtils;
 import org.rock.base.util.MongoExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -350,7 +351,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 //组装各种条件
                 andCriteriaList,
                 //限制返回字段
-                MongoExtraUtils.initDocumentByFields(param.getFields()),
+                ArrayExtraUtils.toArray(param.getFields()),
                 //分页,默认20
                 param.getPageNum() == null ? 1 : param.getPageNum(),
                 param.getPageSize() == null ? 20 : param.getPageSize(),

@@ -1,6 +1,5 @@
 package org.rock.base.util;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.List;
 
 /**
  * mongo 扩展工具包
@@ -30,20 +28,8 @@ public class MongoExtraUtils {
      * @param fields 限制参数 eg:   "id,state,sellerSku"
      */
     public static void setFields(Query query, String fields) {
-        //判空
-        if (query == null) {
-            //过
-            return;
-        }
-        //根据,分割
-        List<String> fieldList = ListExtraUtils.split(fields);
-        //判空
-        if (CollectionUtils.isEmpty(fieldList)) {
-            //过
-            return;
-        }
-        //组装
-        query.fields().include(fieldList.toArray(new String[]{}));
+        //实现
+        setFields(query, ArrayExtraUtils.toArray(fields));
     }
 
     /**
@@ -77,7 +63,7 @@ public class MongoExtraUtils {
             return;
         }
         //如果需要限制分页
-        if (pageSize != null && pageNum != null && pageNum != 0 && pageSize != 0) {
+        if (pageSize != null && pageNum != null && pageNum > 0 && pageSize > 0) {
             //限制分页
             query.limit(pageSize).skip((pageNum - 1L) * pageSize);
         }
@@ -136,17 +122,6 @@ public class MongoExtraUtils {
 
         //返回实体
         return update;
-    }
-
-    /**
-     * 根据要限制的字段,初始化一个 fieLdsArr
-     *
-     * @param fields eg id,productSku,developerList
-     * @return
-     */
-    public static String[] initDocumentByFields(String fields) {
-        //实现
-        return ListExtraUtils.split(fields).toArray(new String[]{});
     }
 
     /**

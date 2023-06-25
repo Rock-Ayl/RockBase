@@ -14,6 +14,17 @@ import java.util.stream.Collectors;
  */
 public class ArrayExtraUtils {
 
+    /**
+     * 将 string 转为 String[]
+     *
+     * @param fields eg id,productSku,developerList
+     * @return
+     */
+    public static String[] toArray(String fields) {
+        //实现
+        return ListExtraUtils.split(fields).toArray(new String[]{});
+    }
+
     //分组
     public Map<Integer, List<Integer>> groupList(int[] nums) {
         //判空
