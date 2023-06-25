@@ -17,7 +17,7 @@ public class ArrayExtraUtils {
     /**
      * 将 string 转为 String[]
      *
-     * @param fields eg id,productSku,developerList
+     * @param fields eg: id,productSku,developerList
      * @return
      */
     public static String[] toArray(String fields) {
@@ -25,7 +25,12 @@ public class ArrayExtraUtils {
         return ListExtraUtils.split(fields).toArray(new String[]{});
     }
 
-    //分组
+    /**
+     * 将 int[] 分组
+     *
+     * @param nums
+     * @return
+     */
     public Map<Integer, List<Integer>> groupList(int[] nums) {
         //判空
         if (nums == null) {
@@ -40,7 +45,12 @@ public class ArrayExtraUtils {
                 .collect(Collectors.groupingBy(p -> p));
     }
 
-    //分组并统计数量
+    /**
+     * 将 int[] 分组并统计数量
+     *
+     * @param nums
+     * @return
+     */
     public Map<Integer, Long> groupCount(int[] nums) {
         //判空
         if (nums == null) {
