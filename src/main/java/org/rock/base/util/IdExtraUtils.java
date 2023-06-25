@@ -1,5 +1,7 @@
 package org.rock.base.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.UUID;
 
 /**
@@ -25,6 +27,11 @@ public class IdExtraUtils {
      * @return
      */
     public static String creatUserToken(String userId) {
+        //判空
+        if (StringUtils.isBlank(userId)) {
+            //过
+            return "";
+        }
         return userId + ":" + System.currentTimeMillis() + ":" + genGUID();
     }
 

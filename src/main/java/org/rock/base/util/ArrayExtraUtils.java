@@ -1,6 +1,7 @@
 package org.rock.base.util;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,11 @@ public class ArrayExtraUtils {
 
     //分组
     public Map<Integer, List<Integer>> groupList(int[] nums) {
+        //判空
+        if (nums == null) {
+            //过
+            return new HashMap<>();
+        }
         //返回
         return Arrays.stream(nums)
                 //装箱
@@ -25,6 +31,11 @@ public class ArrayExtraUtils {
 
     //分组并统计数量
     public Map<Integer, Long> groupCount(int[] nums) {
+        //判空
+        if (nums == null) {
+            //过
+            return new HashMap<>();
+        }
         //返回
         return Arrays.stream(nums)
                 //装箱
