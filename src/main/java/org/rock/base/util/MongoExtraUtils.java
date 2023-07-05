@@ -160,6 +160,7 @@ public class MongoExtraUtils {
                     //一定不需要更新的
                     case "id":
                     case "serialVersionUID":
+                    case "createDate":
                         continue;
                         //其他过
                     default:
