@@ -204,7 +204,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
 
         //初始化响应对象
-        RollPageResult<T> result = new RollPageResult();
+        RollPageResult<T> result = new RollPageResult<>();
 
         //初始化条件
         Criteria criteria = new Criteria();
@@ -244,9 +244,9 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //日志
         LOG.info("Mongo RollPage Query:[{}]", query.toString());
         //查询数据
-        List<T> list = this.mongoTemplate.find(query, clazz);
+        List<T> docList = this.mongoTemplate.find(query, clazz);
         //组装数据
-        result.setList(list);
+        result.setList(docList);
         //返回
         return result;
     }
