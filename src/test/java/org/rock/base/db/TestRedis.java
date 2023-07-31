@@ -18,7 +18,7 @@ class TestRedis {
         //key
         String key = "rock@123";
         JSONObject json = new JSONObject();
-        json.put("name", "rock");
+        json.put("name", "rock2");
         baseRedisService.set(key, json.toJSONString());
         //搜索
         JSONObject o = baseRedisService.getJSONObject(key);
