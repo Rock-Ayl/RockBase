@@ -161,7 +161,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     class RollPageResult<T> {
 
         //总数
-        private long total;
+        private Long total;
 
         //数据
         private List<T> list;
