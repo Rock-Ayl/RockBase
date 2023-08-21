@@ -3,7 +3,6 @@ package org.rock.base.db.mongo;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseDocument;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.Collection;
@@ -86,73 +85,6 @@ public interface BaseMongoService<T extends BaseDocument> {
     boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList);
 
     /**
-     * 查询响应对象实体
-     *
-     * @param <T>
-     */
-    @Getter
-    @Setter
-    class RollPageResult<T> {
-
-        //总数
-        private long total;
-
-        //数据
-        private List<T> list;
-
-    }
-
-    /**
-     * 翻页查询
-     *
-     * @param clazz        实体
-     * @param criteriaList 条件列表
-     * @param pageNum      分页,页码
-     * @param pageSize     分页,每页数量
-     * @return
-     */
-    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, Integer pageNum, Integer pageSize);
-
-    /**
-     * 翻页查询
-     *
-     * @param clazz        实体
-     * @param criteriaList 条件列表
-     * @param fields       限制字段
-     * @param pageNum      分页,页码
-     * @param pageSize     分页,每页数量
-     * @return
-     */
-    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize);
-
-    /**
-     * 翻页查询
-     *
-     * @param clazz        实体
-     * @param criteriaList 条件列表
-     * @param fields       限制字段
-     * @param pageNum      分页,页码
-     * @param pageSize     分页,每页数量
-     * @param sort         排序
-     * @return
-     */
-    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort);
-
-    /**
-     * 翻页查询
-     *
-     * @param clazz        实体
-     * @param criteriaList 条件列表
-     * @param fields       限制字段
-     * @param pageNum      分页,页码
-     * @param pageSize     分页,每页数量
-     * @param sort         排序
-     * @param needCount    是否需要count(如果不需要,减少一次查询消耗)
-     * @return
-     */
-    RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount);
-
-    /**
      * Mongo常用模板查询参数
      */
 
@@ -208,6 +140,23 @@ public interface BaseMongoService<T extends BaseDocument> {
 
         //限制返回字段
         private String fields;
+
+    }
+
+    /**
+     * 查询响应对象实体
+     *
+     * @param <T>
+     */
+    @Getter
+    @Setter
+    class RollPageResult<T> {
+
+        //总数
+        private long total;
+
+        //数据
+        private List<T> list;
 
     }
 

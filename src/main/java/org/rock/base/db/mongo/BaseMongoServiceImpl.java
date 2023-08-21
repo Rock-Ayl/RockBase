@@ -185,23 +185,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return false;
     }
 
-    @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, Integer pageNum, Integer pageSize) {
-        return rollPage(clazz, criteriaList, null, pageNum, pageSize);
-    }
-
-    @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize) {
-        return rollPage(clazz, criteriaList, fields, pageNum, pageSize, null);
-    }
-
-    @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort) {
-        return rollPage(clazz, criteriaList, fields, pageNum, pageSize, sort, true);
-    }
-
-    @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
+    private RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
 
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult<>();

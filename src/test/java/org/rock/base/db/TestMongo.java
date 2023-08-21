@@ -7,7 +7,6 @@ import org.rock.base.serivce.test.TestMongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootTest
@@ -37,10 +36,6 @@ class TestMongo {
         update.setValue("测试12341231231231231");
         testMongoService.batchUpdateSkipNullById(TestDoc.class, Arrays.asList(update));
 
-        //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
-        System.out.println(123);
-
     }
 
     @Test
@@ -53,15 +48,6 @@ class TestMongo {
         //创建
         testMongoService.create(create);
         System.out.println();
-    }
-
-    @Test
-    void rollPageTypeOne() {
-
-        //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, new ArrayList<>(), null, null);
-        System.out.println();
-
     }
 
     @Test
