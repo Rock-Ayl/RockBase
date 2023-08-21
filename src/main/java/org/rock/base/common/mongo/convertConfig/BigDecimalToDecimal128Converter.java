@@ -17,7 +17,7 @@ public class BigDecimalToDecimal128Converter implements Converter<BigDecimal, De
 
     @Override
     public Decimal128 convert(BigDecimal bigDecimal) {
-        return new Decimal128(BigDecimal.valueOf(bigDecimal.doubleValue()));
+        return new Decimal128(bigDecimal);
     }
 
 }
