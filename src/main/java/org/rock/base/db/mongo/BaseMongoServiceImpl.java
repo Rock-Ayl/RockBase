@@ -70,12 +70,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public List<T> listByIdList(Class<T> clazz, List<String> idList) {
-        //查询
-        Query query = new Query(Criteria.where("_id").in(idList));
-        //日志
-        LOG.info("Mongo listByIdList query:[{}]", query.toString());
-        //查询
-        return this.mongoTemplate.find(query, clazz);
+        //根据id列表查询
+        return this.mongoTemplate.find(MongoExtraUtils.initQueryAndBase(idList), clazz);
     }
 
     @Override
@@ -86,7 +82,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             return false;
         }
         //根据id删除
-        return this.mongoTemplate.remove(new Query(Criteria.where("_id").is(id)), clazz).getDeletedCount() == 1L;
+        return this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(id), clazz).getDeletedCount() == 1L;
     }
 
     @Override
@@ -96,10 +92,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //过
             return false;
         }
-        //根据id删除
-        this.mongoTemplate.remove(new Query(Criteria.where("_id").in(idList)), clazz);
-        //成功
-        return true;
+        //根据id列表删除
+        return idList.size() == this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(idList), clazz).getDeletedCount();
     }
 
     @Override
@@ -125,9 +119,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
         //组装更新字段
         MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
-
-        //日志
-        LOG.info("Mongo updateSkipNull Query :{}", query.toString());
 
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
@@ -347,7 +338,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         MongoExtraUtils.setFields(query, fields);
 
         //日志
-        LOG.info("Mongo RollPage Query:[{}]", query.toString());
+        LOG.info("Mongo RollPage Query Execute:[{}]", query.toString());
 
         //查询数据
         List<T> docList = this.mongoTemplate.find(query, clazz);
