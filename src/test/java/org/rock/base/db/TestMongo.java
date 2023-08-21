@@ -30,7 +30,7 @@ class TestMongo {
         TestDoc update = new TestDoc();
         update.setId(oldDoc.getId());
         update.setValue("测试123");
-        testMongoService.updateSkipNullById(update);
+        testMongoService.updateSkipNullById(TestDoc.class, update);
 
         //批量更新
         update.setValue("测试12341231231231231");

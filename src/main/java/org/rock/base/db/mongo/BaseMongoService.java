@@ -36,7 +36,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * 根据id,查询单个
      *
      * @param clazz
-     * @param id
+     * @param id    id
      * @return
      */
     T getById(Class<T> clazz, String id);
@@ -45,7 +45,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * 根据id列表,查询多个
      *
      * @param clazz
-     * @param idList
+     * @param idList id列表
      * @return
      */
     List<T> listByIdList(Class<T> clazz, List<String> idList);
@@ -53,7 +53,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 根据id,真实删除
      *
-     * @param id
+     * @param id    id
      * @param clazz
      * @return
      */
@@ -71,15 +71,16 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 根据实体,使用id,更新单个实体,跳过NULL的字段
      *
-     * @param document
+     * @param document 实体
      * @return
      */
-    boolean updateSkipNullById(T document);
+    boolean updateSkipNullById(Class<T> clazz, T document);
 
     /**
      * 根据实体列表,使用id,批量更新多个实体,跳过NULL的字段
      *
-     * @param documentList
+     * @param clazz
+     * @param documentList 实体列表
      * @return
      */
     boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList);
@@ -88,7 +89,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * 根据实体列表,使用id,批量创建或更新多个实体,跳过NULL的字段
      *
      * @param clazz
-     * @param documentList
+     * @param documentList 实体列表
      */
     void batchCreateOrUpdateSkipNullById(Class<T> clazz, List<T> documentList);
 
@@ -171,7 +172,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 翻页查询
      *
-     * @param clazz 实体
+     * @param clazz 实体对象
      * @param param 模板参数
      * @return
      */
@@ -180,7 +181,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 翻页查询
      *
-     * @param clazz        实体
+     * @param clazz        实体对象
      * @param param        模板参数
      * @param criteriaList 除了模板参数,其他的限制条件
      * @return

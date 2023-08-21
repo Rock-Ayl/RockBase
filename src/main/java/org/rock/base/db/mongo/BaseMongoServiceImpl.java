@@ -97,7 +97,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean updateSkipNullById(T document) {
+    public boolean updateSkipNullById(Class<T> clazz, T document) {
 
         //判空
         if (document == null) {
@@ -121,7 +121,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
 
         //只更新一个
-        return this.mongoTemplate.updateFirst(query, update, document.getClass()).getModifiedCount() > 0L;
+        return this.mongoTemplate.updateFirst(query, update, clazz).getModifiedCount() > 0L;
     }
 
     @Override
