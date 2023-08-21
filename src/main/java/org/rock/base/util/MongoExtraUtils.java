@@ -189,9 +189,9 @@ public class MongoExtraUtils {
      */
     public static String escapeExprSpecialWord(String keyword) {
         //判空
-        if (StringUtils.isNotBlank(keyword)) {
-            //直接返回
-            return keyword;
+        if (keyword == null) {
+            //过
+            return null;
         }
         //一般特殊
         String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
