@@ -85,6 +85,14 @@ public interface BaseMongoService<T extends BaseDocument> {
     boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList);
 
     /**
+     * 根据实体列表,使用id,批量创建或更新多个实体,跳过NULL的字段
+     *
+     * @param clazz
+     * @param documentList
+     */
+    void batchCreateOrUpdateSkipNullById(Class<T> clazz, List<T> documentList);
+
+    /**
      * Mongo常用模板查询参数
      */
 

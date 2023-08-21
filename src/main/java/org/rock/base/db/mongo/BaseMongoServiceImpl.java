@@ -177,6 +177,77 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
+    public void batchCreateOrUpdateSkipNullById(Class<T> clazz, List<T> documentList) {
+
+        /**
+         * 判空
+         */
+
+        //判空
+        if (CollectionUtils.isEmpty(documentList)) {
+            //过
+            return;
+        }
+
+        /**
+         * 批量 创建或更新
+         */
+
+        //批量编辑
+        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, clazz);
+        //要处理的数量
+        int count = 0;
+        //循环
+        for (T document : documentList) {
+
+            /**
+             * 判空
+             */
+
+            //判空
+            if (document == null) {
+                //本轮过
+                continue;
+            }
+            //获取id
+            String id = document.getId();
+            //如果没有id
+            if (StringUtils.isBlank(id)) {
+                //本轮过
+                continue;
+            }
+
+            /**
+             * 查询
+             */
+
+            //限制条件
+            Query query = MongoExtraUtils.initQueryAndBase(id);
+
+            /**
+             * 创建或更新
+             */
+
+            //初始化更新及基类
+            Update update = MongoExtraUtils.initUpsertAndBase(id);
+
+            //更新字段
+            MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
+
+            //组装创建或更新
+            bulkOperations.upsert(query, update);
+            //+1
+            count++;
+        }
+        //判空
+        if (count > 0) {
+            //执行
+            bulkOperations.execute();
+        }
+
+    }
+
+    @Override
     public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param) {
         //实现
         return rollPage(clazz, param, null);
