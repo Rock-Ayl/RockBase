@@ -100,7 +100,7 @@ public interface BaseMongoService<T extends BaseDocument> {
         private Integer pageSize;
         private Integer pageNum;
 
-        //是否需要count(如果需要,多做一次查询,如果数据量非常大,会损耗很大的性能)
+        //是否需要count(尽量不用,能省则省)
         private Boolean needCount;
 
         /**
@@ -161,7 +161,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     }
 
     /**
-     * 模板翻页查询
+     * 翻页查询
      *
      * @param clazz 实体
      * @param param 模板参数
@@ -170,7 +170,7 @@ public interface BaseMongoService<T extends BaseDocument> {
     RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param);
 
     /**
-     * 模板翻页查询
+     * 翻页查询
      *
      * @param clazz        实体
      * @param param        模板参数

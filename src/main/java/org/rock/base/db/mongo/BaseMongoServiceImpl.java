@@ -185,56 +185,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         return false;
     }
 
-    private RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
-
-        //初始化响应对象
-        RollPageResult<T> result = new RollPageResult<>();
-
-        //初始化条件
-        Criteria criteria = new Criteria();
-        //如果存在条件列表
-        if (CollectionUtils.isNotEmpty(criteriaList)) {
-            //组装条件列表
-            criteria.andOperator(criteriaList.toArray(new Criteria[]{}));
-        }
-
-        //初始化查询
-        Query query = new Query(criteria);
-        //如果需要排序
-        if (sort != null) {
-            //按照规则
-            query.with(sort);
-        } else {
-            //默认排序,按照更新时间倒序
-            query.with(Sort.by(Sort.Order.desc("updateDate")));
-        }
-
-        //如果需要count
-        if (needCount) {
-            //查询count
-            long total = this.mongoTemplate.count(query, clazz);
-            //组装
-            result.setTotal(total);
-        } else {
-            //默认
-            result.setTotal(-1L);
-        }
-
-        //设置分页
-        MongoExtraUtils.setPage(query, pageNum, pageSize);
-        //限制返回字段
-        MongoExtraUtils.setFields(query, fields);
-
-        //日志
-        LOG.info("Mongo RollPage Query:[{}]", query.toString());
-        //查询数据
-        List<T> docList = this.mongoTemplate.find(query, clazz);
-        //组装数据
-        result.setList(docList);
-        //返回
-        return result;
-    }
-
     @Override
     public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param) {
         //实现
@@ -344,6 +294,67 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 //是否返回count
                 needCount
         );
+    }
+
+    /**
+     * 翻页查询 底层实现
+     *
+     * @param clazz        对应类
+     * @param criteriaList 参数条件列表
+     * @param fields       限制参数
+     * @param pageNum      分页
+     * @param pageSize     分页
+     * @param sort         排序
+     * @param needCount    是否需要count(额外一次count查询)
+     * @return
+     */
+    private RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
+
+        //初始化响应对象
+        RollPageResult<T> result = new RollPageResult<>();
+
+        //初始化条件
+        Criteria criteria = new Criteria();
+        //如果存在条件列表
+        if (CollectionUtils.isNotEmpty(criteriaList)) {
+            //组装条件列表
+            criteria.andOperator(criteriaList.toArray(new Criteria[]{}));
+        }
+
+        //初始化查询
+        Query query = new Query(criteria);
+
+        //如果需要count
+        if (needCount) {
+            //查询count
+            long total = this.mongoTemplate.count(query, clazz);
+            //组装
+            result.setTotal(total);
+        } else {
+            //默认
+            result.setTotal(-1L);
+        }
+
+        //如果需要排序
+        if (sort != null) {
+            //按照规则
+            query.with(sort);
+        }
+
+        //设置分页
+        MongoExtraUtils.setPage(query, pageNum, pageSize);
+        //限制返回字段
+        MongoExtraUtils.setFields(query, fields);
+
+        //日志
+        LOG.info("Mongo RollPage Query:[{}]", query.toString());
+
+        //查询数据
+        List<T> docList = this.mongoTemplate.find(query, clazz);
+        //组装数据
+        result.setList(docList);
+        //返回
+        return result;
     }
 
 }
