@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -79,6 +80,21 @@ public class MongoExtraUtils {
         //限制条件
         Query query = new Query(Criteria
                 .where("_id").is(id)
+        );
+        //返回
+        return query;
+    }
+
+    /**
+     * 为 mongo Query 操作 初始化一个关于基类的 {@link Query}
+     *
+     * @param idList 主键id列表
+     * @return
+     */
+    public static Query initQueryAndBase(Collection<String> idList) {
+        //限制条件
+        Query query = new Query(Criteria
+                .where("_id").in(idList)
         );
         //返回
         return query;
