@@ -1,9 +1,12 @@
 package org.rock.base.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -72,6 +75,51 @@ public class JSONExtraUtils {
         json.remove(oldName);
         //覆盖新名称
         json.put(newName, value);
+    }
+
+    /**
+     * 展开json的某个key(key必须为列表) (类似mongo的unwind操作,但保底留一条数据)
+     *
+     * @param json      被展开的对象
+     * @param unwindKey 被展开的数组
+     * @return
+     */
+    public static List<JSONObject> unwind(JSONObject json, String unwindKey) {
+        //判空
+        if (json == null || unwindKey == null) {
+            //默认
+            return new ArrayList<>();
+        }
+        //如果不存在
+        if (json.containsKey(unwindKey) == false) {
+            //保底自己深克隆一个
+            return new ArrayList<>(Collections.singletonList(deepClone(json, JSONObject.class)));
+        }
+        //如果不是列表
+        if (json.get(unwindKey) instanceof List == false) {
+            //保底自己深克隆一个
+            return new ArrayList<>(Collections.singletonList(deepClone(json, JSONObject.class)));
+        }
+        //获取unwind的数据列表
+        JSONArray jsonArray = json.getJSONArray(unwindKey);
+        //判空
+        if (CollectionUtils.isEmpty(jsonArray)) {
+            //保底自己深克隆一个
+            return new ArrayList<>(Collections.singletonList(deepClone(json, JSONObject.class)));
+        }
+        //初始化结果
+        List<JSONObject> result = new ArrayList<>();
+        //循环
+        for (Object o : jsonArray) {
+            //深克隆一个
+            JSONObject thisJson = deepClone(json, JSONObject.class);
+            //覆盖对应key
+            thisJson.put(unwindKey, o);
+            //组装
+            result.add(thisJson);
+        }
+        //返回
+        return result;
     }
 
 }
