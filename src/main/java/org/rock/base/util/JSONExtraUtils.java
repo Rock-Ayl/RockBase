@@ -104,8 +104,12 @@ public class JSONExtraUtils {
         JSONArray jsonArray = json.getJSONArray(unwindKey);
         //判空
         if (CollectionUtils.isEmpty(jsonArray)) {
-            //保底自己深克隆一个
-            return new ArrayList<>(Collections.singletonList(deepClone(json, JSONObject.class)));
+            //克隆出来一个新的
+            JSONObject cloneJson = deepClone(json, JSONObject.class);
+            //删除对应key
+            cloneJson.remove(unwindKey);
+            //转为列表结构
+            return new ArrayList<>(Collections.singletonList(cloneJson));
         }
         //初始化结果
         List<JSONObject> result = new ArrayList<>();
