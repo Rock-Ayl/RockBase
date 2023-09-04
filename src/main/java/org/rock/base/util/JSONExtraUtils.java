@@ -115,12 +115,18 @@ public class JSONExtraUtils {
         List<JSONObject> result = new ArrayList<>();
         //循环
         for (Object o : jsonArray) {
-            //深克隆一个
-            JSONObject thisJson = deepClone(json, JSONObject.class);
-            //覆盖对应key
-            thisJson.put(unwindKey, o);
+            //先深克隆一个
+            JSONObject cloneJson = deepClone(json, JSONObject.class);
+            //判空
+            if (o != null) {
+                //覆盖对应key
+                cloneJson.put(unwindKey, o);
+            } else {
+                //删除对应key
+                cloneJson.remove(unwindKey);
+            }
             //组装
-            result.add(thisJson);
+            result.add(cloneJson);
         }
         //返回
         return result;
