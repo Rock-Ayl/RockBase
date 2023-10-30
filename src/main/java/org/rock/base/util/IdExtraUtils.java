@@ -32,6 +32,7 @@ public class IdExtraUtils {
             //过
             return "";
         }
+        //组装并返回
         return userId + ":" + System.currentTimeMillis() + ":" + genGUID();
     }
 

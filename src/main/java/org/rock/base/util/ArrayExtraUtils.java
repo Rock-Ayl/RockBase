@@ -21,6 +21,11 @@ public class ArrayExtraUtils {
      * @return
      */
     public static String[] toArray(String fields) {
+        //判空
+        if (fields == null) {
+            //过
+            return new String[]{};
+        }
         //实现
         return ListExtraUtils.split(fields).toArray(new String[]{});
     }
