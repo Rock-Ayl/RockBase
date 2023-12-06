@@ -27,6 +27,11 @@ public class URLExtraUtils {
      * @return
      */
     public static String urlEncode(String url) {
+        //判空
+        if (url == null) {
+            //过
+            return null;
+        }
         try {
             Matcher matcher = CN_PATTERN.matcher(url);
             String tmp;
