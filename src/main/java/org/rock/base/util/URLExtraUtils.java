@@ -1,5 +1,8 @@
 package org.rock.base.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +14,8 @@ import java.util.regex.Pattern;
  * @Date 2023-11-04
  */
 public class URLExtraUtils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(URLExtraUtils.class);
 
     //中文正则
     private final static Pattern CN_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
@@ -30,8 +35,9 @@ public class URLExtraUtils {
                 url = url.replaceAll(tmp, URLEncoder.encode(tmp, "UTF-8"));
             }
         } catch (Exception e) {
-
+            LOG.error("URLExtraUtils urlEncode error", e);
         }
+        //最后替换空格
         return url.replace(" ", "%20");
     }
 
