@@ -1,5 +1,8 @@
 package org.rock.base.common.mongo.convertConfig;
 
+import org.rock.base.common.mongo.convertConfig.bigDecimal.BigDecimalToDecimal128Converter;
+import org.rock.base.common.mongo.convertConfig.bigDecimal.Decimal128ToBigDecimalConverter;
+import org.rock.base.common.mongo.convertConfig.bigDecimal.Decimal128ToObjectConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -25,10 +28,18 @@ public class MongoConvertConfig {
      */
     @Bean
     public MongoCustomConversions mongoCustomConversions() {
+
+        //初始化转换器
         List<Converter<?, ?>> converterList = new ArrayList<>();
+
+        /**
+         * {@link java.math.BigDecimal 的转换兼容}
+         */
+
         converterList.add(new BigDecimalToDecimal128Converter());
         converterList.add(new Decimal128ToBigDecimalConverter());
         converterList.add(new Decimal128ToObjectConverter());
+
         return new MongoCustomConversions(converterList);
     }
 
