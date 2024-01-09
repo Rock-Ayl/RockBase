@@ -1,5 +1,6 @@
 package org.rock.base.util;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * mongo 扩展工具包
@@ -36,17 +38,33 @@ public class MongoExtraUtils {
     /**
      * 为 mongo {@link Query} 对象组装限制返回参数
      *
-     * @param query  mongo query 对象
-     * @param fields 限制参数 eg:   "id,state,sellerSku"
+     * @param query     mongo query 对象
+     * @param fieldList 限制参数 eg:   ["id,state,sellerSku"]
      */
-    public static void setFields(Query query, String[] fields) {
+    public static void setFields(Query query, List<String> fieldList) {
         //判空
-        if (query == null || fields == null || fields.length < 1) {
+        if (CollectionUtils.isEmpty(fieldList)) {
+            //过
+            return;
+        }
+        //实现
+        setFields(query, fieldList.toArray(new String[]{}));
+    }
+
+    /**
+     * 为 mongo {@link Query} 对象组装限制返回参数
+     *
+     * @param query    mongo query 对象
+     * @param fieldArr 限制参数 eg:   "id,state,sellerSku"
+     */
+    public static void setFields(Query query, String[] fieldArr) {
+        //判空
+        if (query == null || fieldArr == null || fieldArr.length < 1) {
             //过
             return;
         }
         //组装
-        query.fields().include(fields);
+        query.fields().include(fieldArr);
     }
 
     /**
