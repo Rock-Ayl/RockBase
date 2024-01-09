@@ -45,22 +45,22 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         Type type = getClass().getGenericSuperclass();
         //如果不是
         if (type instanceof ParameterizedType == false) {
-            //过
-            return null;
+            //抛
+            throw new NullPointerException("mongo基类不是泛型类");
         }
         //强转,获取泛型的类
         Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
         //如果没有
         if (actualTypeArguments == null || actualTypeArguments.length < 1) {
-            //过
-            return null;
+            //抛
+            throw new NullPointerException("mongo基类泛型不存在");
         }
         //获取第一个
         Type actualTypeArgument = actualTypeArguments[0];
         //如果不是
         if (actualTypeArgument instanceof Class == false) {
-            //过
-            return null;
+            //抛
+            throw new NullPointerException("mongo基类泛型类型不正确");
         }
         //返回
         return (Class<T>) actualTypeArgument;
