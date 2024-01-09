@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,37 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    /**
+     * 用反射,获取当前服务的泛型
+     *
+     * @return
+     */
+    private Class<T> getEntityClass() {
+        //获取泛型类型
+        Type type = getClass().getGenericSuperclass();
+        //如果不是
+        if (type instanceof ParameterizedType == false) {
+            //过
+            return null;
+        }
+        //强转,获取泛型的类
+        Type[] actualTypeArguments = ((ParameterizedType) type).getActualTypeArguments();
+        //如果没有
+        if (actualTypeArguments == null || actualTypeArguments.length < 1) {
+            //过
+            return null;
+        }
+        //获取第一个
+        Type actualTypeArgument = actualTypeArguments[0];
+        //如果不是
+        if (actualTypeArgument instanceof Class == false) {
+            //过
+            return null;
+        }
+        //返回
+        return (Class<T>) actualTypeArgument;
+    }
 
     @Override
     public T create(T document) {
