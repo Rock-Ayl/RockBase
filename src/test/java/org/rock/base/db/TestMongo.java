@@ -24,17 +24,17 @@ class TestMongo {
         testMongoService.create(createDoc);
 
         //查询单个
-        TestDoc oldDoc = testMongoService.getById(TestDoc.class, createDoc.getId());
+        TestDoc oldDoc = testMongoService.getById(createDoc.getId());
 
         //更新单个
         TestDoc update = new TestDoc();
         update.setId(oldDoc.getId());
         update.setValue("测试123");
-        testMongoService.updateSkipNullById(TestDoc.class, update);
+        testMongoService.updateSkipNullById(update);
 
         //批量更新
         update.setValue("测试12341231231231231");
-        testMongoService.batchUpdateSkipNullById(TestDoc.class, Arrays.asList(update));
+        testMongoService.batchUpdateSkipNullById(Arrays.asList(update));
 
     }
 
@@ -68,7 +68,7 @@ class TestMongo {
         param.setNeedCount(true);
 
         //分页查询
-        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(TestDoc.class, param);
+        BaseMongoService.RollPageResult<TestDoc> find = testMongoService.rollPage(param);
 
         System.out.println();
 

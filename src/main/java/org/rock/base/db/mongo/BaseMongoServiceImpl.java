@@ -91,46 +91,46 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public T getById(Class<T> clazz, String id) {
+    public T getById(String id) {
         //判空
         if (StringUtils.isBlank(id)) {
             //过
             return null;
         }
         //实现
-        return this.mongoTemplate.findById(id, clazz);
+        return this.mongoTemplate.findById(id, getEntityClass());
     }
 
     @Override
-    public List<T> listByIdList(Class<T> clazz, List<String> idList) {
+    public List<T> listByIdList(List<String> idList) {
         //根据id列表查询
-        return this.mongoTemplate.find(MongoExtraUtils.initQueryAndBase(idList), clazz);
+        return this.mongoTemplate.find(MongoExtraUtils.initQueryAndBase(idList), getEntityClass());
     }
 
     @Override
-    public boolean deleteById(Class<T> clazz, String id) {
+    public boolean deleteById(String id) {
         //判空
         if (StringUtils.isBlank(id)) {
             //过
             return false;
         }
         //根据id删除
-        return this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(id), clazz).getDeletedCount() == 1L;
+        return this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(id), getEntityClass()).getDeletedCount() == 1L;
     }
 
     @Override
-    public boolean deleteByIdList(Class<T> clazz, List<String> idList) {
+    public boolean deleteByIdList(List<String> idList) {
         //判空
         if (CollectionUtils.isEmpty(idList)) {
             //过
             return false;
         }
         //根据id列表删除
-        return idList.size() == this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(idList), clazz).getDeletedCount();
+        return idList.size() == this.mongoTemplate.remove(MongoExtraUtils.initQueryAndBase(idList), getEntityClass()).getDeletedCount();
     }
 
     @Override
-    public boolean updateSkipNullById(Class<T> clazz, T document) {
+    public boolean updateSkipNullById(T document) {
 
         //判空
         if (document == null) {
@@ -154,11 +154,11 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
 
         //只更新一个
-        return this.mongoTemplate.updateFirst(query, update, clazz).getModifiedCount() > 0L;
+        return this.mongoTemplate.updateFirst(query, update, getEntityClass()).getModifiedCount() > 0L;
     }
 
     @Override
-    public boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList) {
+    public boolean batchUpdateSkipNullById(List<T> documentList) {
 
         //判空
         if (CollectionUtils.isEmpty(documentList)) {
@@ -169,7 +169,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //更新数量
         int count = 0;
         //批量update操作
-        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, clazz);
+        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, getEntityClass());
         //循环
         for (T document : documentList) {
 
@@ -210,7 +210,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public void batchCreateOrUpdateSkipNullById(Class<T> clazz, List<T> documentList) {
+    public void batchCreateOrUpdateSkipNullById(List<T> documentList) {
 
         /**
          * 判空
@@ -227,7 +227,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
          */
 
         //批量编辑
-        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, clazz);
+        BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, getEntityClass());
         //要处理的数量
         int count = 0;
         //循环
@@ -281,13 +281,13 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param) {
+    public RollPageResult<T> rollPage(MongoRollPageParam param) {
         //实现
-        return rollPage(clazz, param, null);
+        return rollPage(param, null);
     }
 
     @Override
-    public RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param, List<Criteria> criteriaList) {
+    public RollPageResult<T> rollPage(MongoRollPageParam param, List<Criteria> criteriaList) {
 
         /**
          * 初始化
@@ -375,8 +375,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
         //查询实现
         return rollPage(
-                //限制class
-                clazz,
                 //组装各种条件
                 andCriteriaList,
                 //限制返回字段
@@ -394,7 +392,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     /**
      * 翻页查询 底层实现
      *
-     * @param clazz        对应类
      * @param criteriaList 参数条件列表
      * @param fields       限制参数
      * @param pageNum      分页
@@ -403,7 +400,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
      * @param needCount    是否需要count(额外一次count查询)
      * @return
      */
-    private RollPageResult<T> rollPage(Class<T> clazz, List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
+    private RollPageResult<T> rollPage(List<Criteria> criteriaList, String[] fields, Integer pageNum, Integer pageSize, Sort sort, boolean needCount) {
 
         //初始化响应对象
         RollPageResult<T> result = new RollPageResult<>();
@@ -415,6 +412,9 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //组装条件列表
             criteria.andOperator(criteriaList.toArray(new Criteria[]{}));
         }
+
+        //获取当前泛型
+        Class<T> clazz = getEntityClass();
 
         //初始化查询
         Query query = new Query(criteria);

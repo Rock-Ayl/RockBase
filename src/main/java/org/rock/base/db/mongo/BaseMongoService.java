@@ -35,38 +35,34 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 根据id,查询单个
      *
-     * @param clazz
-     * @param id    id
+     * @param id id
      * @return
      */
-    T getById(Class<T> clazz, String id);
+    T getById(String id);
 
     /**
      * 根据id列表,查询多个
      *
-     * @param clazz
      * @param idList id列表
      * @return
      */
-    List<T> listByIdList(Class<T> clazz, List<String> idList);
+    List<T> listByIdList(List<String> idList);
 
     /**
      * 根据id,真实删除
      *
-     * @param id    id
-     * @param clazz
+     * @param id id
      * @return
      */
-    boolean deleteById(Class<T> clazz, String id);
+    boolean deleteById(String id);
 
     /**
      * 根据id列表,批量真实删除
      *
      * @param idList id列表
-     * @param clazz
      * @return
      */
-    boolean deleteByIdList(Class<T> clazz, List<String> idList);
+    boolean deleteByIdList(List<String> idList);
 
     /**
      * 根据实体,使用id,更新单个实体,跳过NULL的字段
@@ -74,24 +70,22 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param document 实体
      * @return
      */
-    boolean updateSkipNullById(Class<T> clazz, T document);
+    boolean updateSkipNullById(T document);
 
     /**
      * 根据实体列表,使用id,批量更新多个实体,跳过NULL的字段
      *
-     * @param clazz
      * @param documentList 实体列表
      * @return
      */
-    boolean batchUpdateSkipNullById(Class<T> clazz, List<T> documentList);
+    boolean batchUpdateSkipNullById(List<T> documentList);
 
     /**
      * 根据实体列表,使用id,批量创建或更新多个实体,跳过NULL的字段
      *
-     * @param clazz
      * @param documentList 实体列表
      */
-    void batchCreateOrUpdateSkipNullById(Class<T> clazz, List<T> documentList);
+    void batchCreateOrUpdateSkipNullById(List<T> documentList);
 
     /**
      * Mongo常用模板查询参数
@@ -172,20 +166,18 @@ public interface BaseMongoService<T extends BaseDocument> {
     /**
      * 翻页查询
      *
-     * @param clazz 实体对象
      * @param param 模板参数
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param);
+    RollPageResult<T> rollPage(MongoRollPageParam param);
 
     /**
      * 翻页查询
      *
-     * @param clazz        实体对象
      * @param param        模板参数
      * @param criteriaList 除了模板参数,其他的限制条件
      * @return
      */
-    RollPageResult<T> rollPage(Class<T> clazz, MongoRollPageParam param, List<Criteria> criteriaList);
+    RollPageResult<T> rollPage(MongoRollPageParam param, List<Criteria> criteriaList);
 
 }
