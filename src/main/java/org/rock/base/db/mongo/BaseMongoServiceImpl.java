@@ -108,6 +108,12 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
+    public List<T> listAll() {
+        //返回
+        return mongoTemplate.findAll(getEntityClass());
+    }
+
+    @Override
     public boolean deleteById(String id) {
         //判空
         if (StringUtils.isBlank(id)) {
