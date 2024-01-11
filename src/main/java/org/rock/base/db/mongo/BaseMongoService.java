@@ -1,7 +1,6 @@
 package org.rock.base.db.mongo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.rock.base.pojo.base.BaseDocument;
 import org.springframework.data.mongodb.core.query.Criteria;
 
@@ -98,8 +97,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * Mongo常用模板查询参数
      */
 
-    @Getter
-    @Setter
+    @Data
     public static class MongoRollPageParam {
 
         /**
@@ -158,8 +156,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      *
      * @param <T>
      */
-    @Getter
-    @Setter
+    @Data
     class RollPageResult<T> {
 
         //总数
