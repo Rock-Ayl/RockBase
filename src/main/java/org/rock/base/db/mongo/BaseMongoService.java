@@ -101,6 +101,15 @@ public interface BaseMongoService<T extends BaseDocument> {
     public static class MongoRollPageParam {
 
         /**
+         * id
+         */
+
+        //限制id 1
+        private String ids;
+        //限制id 2
+        private List<String> idList;
+
+        /**
          * 分页
          */
 

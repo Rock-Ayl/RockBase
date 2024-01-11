@@ -4,6 +4,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.pojo.base.BaseDocument;
 import org.rock.base.util.ArrayExtraUtils;
+import org.rock.base.util.ListExtraUtils;
 import org.rock.base.util.MongoExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -305,6 +306,23 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         if (CollectionUtils.isNotEmpty(criteriaList)) {
             //组装
             andCriteriaList.addAll(criteriaList);
+        }
+
+        /**
+         * id
+         */
+
+        //拆分id 1
+        List<String> idsList = ListExtraUtils.split(param.getIds());
+        //如果要限制id 1
+        if (CollectionUtils.isNotEmpty(idsList)) {
+            //限制id
+            criteriaList.add(Criteria.where("_id").in(idsList));
+        }
+        //如果要限制id 2
+        if (CollectionUtils.isNotEmpty(param.getIdList())) {
+            //限制id
+            criteriaList.add(Criteria.where("_id").in(param.getIdList()));
         }
 
         /**
