@@ -198,7 +198,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
 
             //组装批量修改
-            bulkOperations.updateMulti(query, update);
+            bulkOperations.updateOne(query, update);
             //+1
             count++;
 
