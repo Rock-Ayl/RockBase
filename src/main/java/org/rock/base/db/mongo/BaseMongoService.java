@@ -57,6 +57,15 @@ public interface BaseMongoService<T extends BaseDocument> {
     List<T> listByIdList(List<String> idList);
 
     /**
+     * 根据id列表,查询多个
+     *
+     * @param idList id列表
+     * @param fields 限制返回参数
+     * @return
+     */
+    List<T> listByIdList(List<String> idList, String fields);
+
+    /**
      * 获取所有
      *
      * @return

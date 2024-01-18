@@ -114,8 +114,23 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public List<T> listByIdList(List<String> idList) {
+        //实现
+        return listByIdList(idList, null);
+    }
+
+    @Override
+    public List<T> listByIdList(List<String> idList, String fields) {
+        //判空
+        if (CollectionUtils.isEmpty(idList)) {
+            //过
+            return new ArrayList<>();
+        }
+        //限制条件
+        Query query = MongoExtraUtils.initQueryAndBase(idList);
+        //限制返回参数
+        MongoExtraUtils.setFields(query, fields);
         //根据id列表查询
-        return this.mongoTemplate.find(MongoExtraUtils.initQueryAndBase(idList), getEntityClass());
+        return this.mongoTemplate.find(query, getEntityClass());
     }
 
     @Override
