@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
 class TestMongo {
@@ -72,6 +73,12 @@ class TestMongo {
 
         System.out.println();
 
+    }
+
+    @Test
+    void listAll() {
+        List<TestDoc> testDocs = testMongoService.listAll("id,number");
+        System.out.println();
     }
 
 }

@@ -135,8 +135,18 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public List<T> listAll() {
-        //返回
-        return mongoTemplate.findAll(getEntityClass());
+        //实现
+        return listAll(null);
+    }
+
+    @Override
+    public List<T> listAll(String fields) {
+        //初始化查询
+        Query query = new Query();
+        //限制
+        MongoExtraUtils.setFields(query, fields);
+        //实现
+        return mongoTemplate.find(query, getEntityClass());
     }
 
     @Override
