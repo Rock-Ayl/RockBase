@@ -70,6 +70,11 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public T create(T document) {
+        //判空
+        if (document == null) {
+            //过
+            return null;
+        }
         //创建前初始化
         BaseDocument.createBuild(document);
         //插入
@@ -83,13 +88,22 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //过
             return new ArrayList<>();
         }
+        //初始化插入列表
+        List<T> insertList = new ArrayList<>();
         //循环
         for (T document : documentList) {
+            //判空
+            if (document == null) {
+                //本轮过
+                continue;
+            }
             //创建前初始化
             BaseDocument.createBuild(document);
+            //记录
+            insertList.add(document);
         }
         //批量插入
-        return this.mongoTemplate.insertAll(documentList);
+        return this.mongoTemplate.insertAll(insertList);
     }
 
     @Override
