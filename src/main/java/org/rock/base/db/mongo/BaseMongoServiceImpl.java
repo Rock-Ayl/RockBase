@@ -93,13 +93,23 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public T getById(String id) {
+        //实现
+        return getById(id, null);
+    }
+
+    @Override
+    public T getById(String id, String fields) {
         //判空
         if (StringUtils.isBlank(id)) {
             //过
             return null;
         }
+        //初始化查询
+        Query query = MongoExtraUtils.initQueryAndBase(id);
+        //限制返回参数
+        MongoExtraUtils.setFields(query, fields);
         //实现
-        return this.mongoTemplate.findById(id, getEntityClass());
+        return this.mongoTemplate.findOne(query, getEntityClass());
     }
 
     @Override

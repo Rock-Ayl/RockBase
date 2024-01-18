@@ -40,6 +40,15 @@ public interface BaseMongoService<T extends BaseDocument> {
     T getById(String id);
 
     /**
+     * 根据id,查询单个,限制返回参数
+     *
+     * @param id     id
+     * @param fields 限制返回参数
+     * @return
+     */
+    T getById(String id, String fields);
+
+    /**
      * 根据id列表,查询多个
      *
      * @param idList id列表
