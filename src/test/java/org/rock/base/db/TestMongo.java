@@ -79,6 +79,9 @@ class TestMongo {
     void listAll() {
         List<TestDoc> testDocs = testMongoService.listAll("id,number");
         System.out.println();
+
+        List<String> idList = testMongoService.listAllId();
+        System.out.println();
     }
 
 }

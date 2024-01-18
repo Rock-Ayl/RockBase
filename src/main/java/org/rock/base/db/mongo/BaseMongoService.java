@@ -81,6 +81,13 @@ public interface BaseMongoService<T extends BaseDocument> {
     List<T> listAll(String fields);
 
     /**
+     * 获取所有id
+     *
+     * @return
+     */
+    List<String> listAllId();
+
+    /**
      * 根据id,真实删除
      *
      * @param id id

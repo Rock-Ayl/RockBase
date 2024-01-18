@@ -21,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * mongo 服务基底实现
@@ -147,6 +148,15 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         MongoExtraUtils.setFields(query, fields);
         //实现
         return mongoTemplate.find(query, getEntityClass());
+    }
+
+    @Override
+    public List<String> listAllId() {
+        //实现
+        return listAll("id")
+                .stream()
+                .map(BaseDocument::getId)
+                .collect(Collectors.toList());
     }
 
     @Override
