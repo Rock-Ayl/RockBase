@@ -197,7 +197,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     @Override
     public boolean updateSkipNullById(T document) {
-
         //判空
         if (document == null) {
             //过
@@ -210,35 +209,29 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //过
             return false;
         }
-
         //限制条件
         Query query = MongoExtraUtils.initQueryAndBase(id);
         //更新
         Update update = MongoExtraUtils.initUpDateAndBase();
-
         //组装更新字段
         MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
-
         //只更新一个
         return this.mongoTemplate.updateFirst(query, update, getEntityClass()).getModifiedCount() > 0L;
     }
 
     @Override
     public boolean batchUpdateSkipNullById(List<T> documentList) {
-
         //判空
         if (CollectionUtils.isEmpty(documentList)) {
             //过
             return false;
         }
-
         //更新数量
         int count = 0;
         //批量update操作
         BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, getEntityClass());
         //循环
         for (T document : documentList) {
-
             //获取id
             String id = Optional.ofNullable(document)
                     .map(BaseDocument::getId)
@@ -248,20 +241,16 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 //本轮过
                 continue;
             }
-
             //初始化查询
             Query query = MongoExtraUtils.initQueryAndBase(id);
             //初始化更新
             Update update = MongoExtraUtils.initUpDateAndBase();
-
             //组装批量更新
             MongoExtraUtils.updateSkipNullByDocumentNoExtends(update, document);
-
             //组装批量修改
             bulkOperations.updateOne(query, update);
             //+1
             count++;
-
         }
         //如果有更新
         if (count > 0) {
@@ -270,7 +259,6 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             //成功
             return true;
         }
-
         //默认失败
         return false;
     }
