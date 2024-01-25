@@ -21,21 +21,21 @@ import java.util.concurrent.Callable;
 public class JacksonExtraUtils {
 
     //单例
-    private final static ObjectMapper OBJECT_MAPPER;
+    private final static ObjectMapper DEFAULT_OBJECT_MAPPER;
 
     static {
         //初始化 mapper
-        OBJECT_MAPPER = new ObjectMapper();
+        DEFAULT_OBJECT_MAPPER = new ObjectMapper();
     }
 
     /**
-     * 获取基本mapper
+     * 获取 默认 mapper
      *
      * @return
      */
-    private static ObjectMapper getObjectMapper() {
+    private static ObjectMapper defaultMapperCreator() {
         //直接返回mapper
-        return OBJECT_MAPPER;
+        return DEFAULT_OBJECT_MAPPER;
     }
 
     /**
@@ -67,7 +67,7 @@ public class JacksonExtraUtils {
      */
     public static String toJSONString(Object object) {
         //使用默认 mapper 实现
-        return toJSONString(getObjectMapper(), object);
+        return toJSONString(defaultMapperCreator(), object);
     }
 
     /**
@@ -106,7 +106,7 @@ public class JacksonExtraUtils {
             return null;
         }
         //先转为string,再转为对应实体
-        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().readValue(toJSONString(object), toJavaObject));
+        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.defaultMapperCreator().readValue(toJSONString(object), toJavaObject));
     }
 
     /**
@@ -123,7 +123,7 @@ public class JacksonExtraUtils {
             return null;
         }
         //先转为string,再转为对应实体
-        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().readValue(toJSONString(object), getObjectMapper().getTypeFactory().constructCollectionType(ArrayList.class, toJavaObject)));
+        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.defaultMapperCreator().readValue(toJSONString(object), defaultMapperCreator().getTypeFactory().constructCollectionType(ArrayList.class, toJavaObject)));
     }
 
     /**
