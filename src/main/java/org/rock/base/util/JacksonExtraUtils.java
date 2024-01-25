@@ -126,16 +126,20 @@ public class JacksonExtraUtils {
         return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().readValue(toJSONString(object), getObjectMapper().getTypeFactory().constructCollectionType(ArrayList.class, toJavaObject)));
     }
 
+    /**
+     * 使用demo
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
+        //初始化一个实体
         UserDO userDO = new UserDO();
         userDO.setName("123");
-        userDO.setPwd("cojdoiiaosjo");
         userDO.setEmail("19482131@qq.com");
         userDO.setPhone("1238791791279");
         userDO.setRemark("我是备注");
         userDO.setCreateDate(new Date());
-        userDO.setUpdateDate(new Date());
 
         /**
          * 实体 -> string
@@ -151,21 +155,16 @@ public class JacksonExtraUtils {
                 userDO);
 
         /**
-         * string -> 实体
+         * string/object -> 实体
          */
 
         //转化为实体
-        UserDO user2 = deepClone(userDO, UserDO.class);
-        UserDO user3 = deepClone(jsonStr, UserDO.class);
+        UserDO user1 = deepClone(userDO, UserDO.class);
+        UserDO user2 = deepClone(jsonStr, UserDO.class);
+
         //转化为实体列表
-        List<UserDO> userDOS = deepCloneList(jsonListStr, UserDO.class);
-        List<UserDO> userDOS2 = deepCloneList(Collections.singletonList(userDO), UserDO.class);
-
-        System.out.println();
-
-        /**
-         * 特殊处理
-         */
+        List<UserDO> userList1 = deepCloneList(jsonListStr, UserDO.class);
+        List<UserDO> userList2 = deepCloneList(Collections.singletonList(userDO), UserDO.class);
 
         System.out.println();
 
