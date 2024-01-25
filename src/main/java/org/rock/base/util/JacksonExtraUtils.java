@@ -112,7 +112,11 @@ public class JacksonExtraUtils {
 
         String jsonStr = toJSONString(userDO);
         String jsonListStr = toJSONString(Arrays.asList(userDO));
-        System.out.println();
+
+        // 2.有特殊要求的json
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        String jsonStr2 = JacksonExtraUtils.tryParse(() -> objectMapper.writeValueAsString(userDO));
 
         /**
          * string -> 实体
@@ -128,10 +132,6 @@ public class JacksonExtraUtils {
          * 特殊处理
          */
 
-        // 2.有特殊要求的json
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-        String json = JacksonExtraUtils.tryParse(() -> objectMapper.writeValueAsString(new UserDO()));
         System.out.println();
 
     }
