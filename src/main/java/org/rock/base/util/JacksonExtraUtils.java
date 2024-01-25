@@ -6,8 +6,10 @@ import org.rock.base.pojo.mdo.UserDO;
 import org.springframework.boot.json.JsonParseException;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -107,6 +109,23 @@ public class JacksonExtraUtils {
         return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().readValue(toJSONString(object), toJavaObject));
     }
 
+    /**
+     * 深克隆单个对象,也可以将一个对象转化为另一个对象(当然,结构得基本一致或继承关系)
+     *
+     * @param object       源对象,比如父对象,不能是数组等结构
+     * @param toJavaObject 目标对象
+     * @return
+     */
+    public static <T> List<T> deepCloneList(Object object, Class<T> toJavaObject) {
+        //判空
+        if (object == null) {
+            //过
+            return null;
+        }
+        //先转为string,再转为对应实体
+        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().readValue(toJSONString(object), getObjectMapper().getTypeFactory().constructCollectionType(ArrayList.class, toJavaObject)));
+    }
+
     public static void main(String[] args) {
 
         UserDO userDO = new UserDO();
@@ -125,7 +144,7 @@ public class JacksonExtraUtils {
         //情况1. 对象转string
         String jsonStr = toJSONString(userDO);
         //情况2. string转实体
-        String jsonListStr = toJSONString(Arrays.asList(userDO));
+        String jsonListStr = toJSONString(Collections.singletonList(userDO));
         //清空3. 特殊要求的情况转string(时间格式)
         String jsonStr2 = toJSONString(
                 new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd")),
@@ -138,6 +157,9 @@ public class JacksonExtraUtils {
         //转化为实体
         UserDO user2 = deepClone(userDO, UserDO.class);
         UserDO user3 = deepClone(jsonStr, UserDO.class);
+        //转化为实体列表
+        List<UserDO> userDOS = deepCloneList(jsonListStr, UserDO.class);
+        List<UserDO> userDOS2 = deepCloneList(Collections.singletonList(userDO), UserDO.class);
 
         System.out.println();
 
