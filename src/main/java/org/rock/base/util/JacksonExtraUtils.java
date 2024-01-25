@@ -64,8 +64,20 @@ public class JacksonExtraUtils {
      * @return
      */
     public static String toJSONString(Object object) {
+        //使用默认 mapper 实现
+        return toJSONString(getObjectMapper(), object);
+    }
+
+    /**
+     * 对象转String {@link Object} -> {@link String}
+     *
+     * @param objectMapper 对应 mapper
+     * @param object       对象
+     * @return
+     */
+    public static String toJSONString(ObjectMapper objectMapper, Object object) {
         //判空
-        if (object == null) {
+        if (object == null || objectMapper == null) {
             //过
             return null;
         }
@@ -75,7 +87,7 @@ public class JacksonExtraUtils {
             return object.toString();
         }
         //实现
-        return JacksonExtraUtils.tryParse(() -> JacksonExtraUtils.getObjectMapper().writeValueAsString(object));
+        return JacksonExtraUtils.tryParse(() -> objectMapper.writeValueAsString(object));
     }
 
     /**
@@ -110,13 +122,14 @@ public class JacksonExtraUtils {
          * 实体 -> string
          */
 
+        //情况1. 对象转string
         String jsonStr = toJSONString(userDO);
+        //情况2. string转实体
         String jsonListStr = toJSONString(Arrays.asList(userDO));
-
-        // 2.有特殊要求的json
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-        String jsonStr2 = JacksonExtraUtils.tryParse(() -> objectMapper.writeValueAsString(userDO));
+        //清空3. 特殊要求的情况转string(时间格式)
+        String jsonStr2 = toJSONString(
+                new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd")),
+                userDO);
 
         /**
          * string -> 实体
