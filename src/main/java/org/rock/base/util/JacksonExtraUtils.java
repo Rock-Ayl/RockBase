@@ -1,7 +1,9 @@
 package org.rock.base.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.rock.base.pojo.mdo.UserDO;
 import org.springframework.boot.json.JsonParseException;
 
@@ -26,6 +28,12 @@ public class JacksonExtraUtils {
     static {
         //初始化 mapper
         DEFAULT_OBJECT_MAPPER = new ObjectMapper();
+        //不输出空值字段
+        DEFAULT_OBJECT_MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+        //空对象不出错
+        DEFAULT_OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //时间字段输出时间戳
+        DEFAULT_OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
     }
 
     /**
