@@ -1,6 +1,5 @@
 package org.rock.base.auth;
 
-import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +9,7 @@ import org.rock.base.constant.RedisKey;
 import org.rock.base.db.redis.BaseRedisService;
 import org.rock.base.enums.HttpStatusEnum;
 import org.rock.base.pojo.mdo.UserDO;
+import org.rock.base.util.JacksonExtraUtils;
 import org.rock.base.util.UserExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +91,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
             return false;
         }
         //获取用户信息
-        UserDO userDO = JSON.parseObject(userInfo, UserDO.class);
+        UserDO userDO = JacksonExtraUtils.deepClone(userInfo, UserDO.class);
         //用户实体脱敏
         UserExtraUtils.desensitization(userDO);
         //记录用户信息
@@ -152,7 +152,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
         errorResponseBody.setMessage(status.getMessage());
         errorResponseBody.setTimestamp(new Date());
         //写入
-        response.getWriter().write(JSON.toJSONString(errorResponseBody));
+        response.getWriter().write(JacksonExtraUtils.toJSONString(errorResponseBody));
     }
 
 }

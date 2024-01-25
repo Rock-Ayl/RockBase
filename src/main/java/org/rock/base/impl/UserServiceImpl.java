@@ -1,6 +1,5 @@
 package org.rock.base.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.rock.base.constant.RedisKey;
@@ -9,6 +8,7 @@ import org.rock.base.db.redis.BaseRedisService;
 import org.rock.base.pojo.mdo.UserDO;
 import org.rock.base.serivce.UserService;
 import org.rock.base.util.IdExtraUtils;
+import org.rock.base.util.JacksonExtraUtils;
 import org.rock.base.util.UserExtraUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +71,7 @@ public class UserServiceImpl extends BaseMysqlServiceImpl<UserDO> implements Use
         //用户实体脱敏
         UserExtraUtils.desensitization(userDO);
         //写入缓存
-        baseRedisService.setAndTime(RedisKey.USER_LOGIN_AUTH_SET + token, JSON.toJSONString(userDO), 7200);
+        baseRedisService.setAndTime(RedisKey.USER_LOGIN_AUTH_SET + token, JacksonExtraUtils.toJSONString(userDO), 7200);
         //返回
         return token;
     }

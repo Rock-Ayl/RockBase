@@ -1,7 +1,5 @@
 package org.rock.base.db.redis;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,19 +80,6 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
         }
         //查询返回
         return value.toString();
-    }
-
-    @Override
-    public JSONObject getJSONObject(String key) {
-        //获取string
-        String str = getString(key);
-        //如果不存在
-        if (StringUtils.isBlank(str)) {
-            //过
-            return null;
-        }
-        //解析并返回
-        return JSON.parseObject(str);
     }
 
     @Override

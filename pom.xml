@@ -114,13 +114,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- 阿里FastJson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.75</version>
-        </dependency>
-
         <!-- Mybatis-Plus -->
         <dependency>
             <groupId>com.baomidou</groupId>

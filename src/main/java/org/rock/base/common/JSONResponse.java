@@ -1,6 +1,9 @@
 package org.rock.base.common;
 
-import com.alibaba.fastjson.JSONObject;
+import org.rock.base.util.JacksonExtraUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.rock.base.constant.JSONConst.*;
 
@@ -13,12 +16,12 @@ import static org.rock.base.constant.JSONConst.*;
 public class JSONResponse {
 
     //该class本质是一个FastJson
-    private JSONObject fastJson;
+    private Map<String, Object> response;
 
     //私有化
     private JSONResponse() {
         //同时生成对应json
-        this.fastJson = new JSONObject();
+        this.response = new HashMap<>();
     }
 
     /**
@@ -30,7 +33,7 @@ public class JSONResponse {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装success
-        response.fastJson.put(KEY_CODE, VALUE_SUCCESS);
+        response.response.put(KEY_CODE, VALUE_SUCCESS);
         //返回
         return response;
     }
@@ -44,7 +47,7 @@ public class JSONResponse {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
-        response.fastJson.put(KEY_CODE, 500);
+        response.response.put(KEY_CODE, 500);
         //返回
         return response;
     }
@@ -59,8 +62,8 @@ public class JSONResponse {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
-        response.fastJson.put(KEY_CODE, 500);
-        response.fastJson.put(KEY_ERROR_MSG, errorMsg);
+        response.response.put(KEY_CODE, 500);
+        response.response.put(KEY_ERROR_MSG, errorMsg);
         //返回
         return response;
     }
@@ -73,7 +76,7 @@ public class JSONResponse {
      */
     public JSONResponse putResult(Object value) {
         //固定key
-        this.fastJson.put(KEY_RESULT, value);
+        this.response.put(KEY_RESULT, value);
         //返回
         return this;
     }
@@ -86,17 +89,8 @@ public class JSONResponse {
      * @return
      */
     public JSONResponse put(String key, Object value) {
-        this.fastJson.put(key, value);
+        this.response.put(key, value);
         return this;
-    }
-
-    /**
-     * 转变为FastJson
-     *
-     * @return
-     */
-    public JSONObject toJSONObject() {
-        return this.fastJson;
     }
 
     /**
@@ -106,7 +100,8 @@ public class JSONResponse {
      */
     @Override
     public String toString() {
-        return this.fastJson.toString();
+        //实现
+        return JacksonExtraUtils.toJSONString(this.response);
     }
 
 }

@@ -1,6 +1,5 @@
 package org.rock.base.db.elasticsearch;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.IdsQueryBuilder;
@@ -8,6 +7,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.rock.base.pojo.base.BaseIndex;
+import org.rock.base.util.JacksonExtraUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +102,7 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
             return;
         }
         //将实体解析为document
-        Document document = Document.parse(JSON.toJSONString(index));
+        Document document = Document.parse(JacksonExtraUtils.toJSONString(index));
         //初始化updateQuery
         UpdateQuery updateQuery = UpdateQuery.builder(id).withDocument(document).build();
         //更新
@@ -128,7 +128,7 @@ public class BaseElasticSearchServiceImpl<T extends BaseIndex> implements BaseEl
                 continue;
             }
             //将实体解析为document
-            Document document = Document.parse(JSON.toJSONString(index));
+            Document document = Document.parse(JacksonExtraUtils.toJSONString(index));
             //初始化updateQuery
             UpdateQuery updateQuery = UpdateQuery.builder(id).withDocument(document).build();
             //组装
