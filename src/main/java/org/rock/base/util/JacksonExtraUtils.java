@@ -46,14 +46,14 @@ public class JacksonExtraUtils {
     public static <T> T tryParse(Callable<T> parser) {
         try {
             return parser.call();
-        } catch (Exception ex) {
+        } catch (Exception e) {
             //如果是 jackson 的异常
-            if (JacksonException.class.isAssignableFrom(ex.getClass())) {
+            if (JacksonException.class.isAssignableFrom(e.getClass())) {
                 //抛出spring的
-                throw new JsonParseException(ex);
+                throw new JsonParseException(e);
             }
             //默认
-            throw new IllegalStateException(ex);
+            throw new IllegalStateException(e);
         }
     }
 
