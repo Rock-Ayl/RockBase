@@ -2,6 +2,7 @@ package org.rock.base.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.rock.base.pojo.mdo.UserDO;
@@ -26,14 +27,26 @@ public class JacksonExtraUtils {
     private final static ObjectMapper DEFAULT_OBJECT_MAPPER;
 
     static {
+
         //初始化 mapper
         DEFAULT_OBJECT_MAPPER = new ObjectMapper();
-        //不输出空值字段
-        DEFAULT_OBJECT_MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
-        //空对象不出错
+
+        /**
+         * {@link String} -> {@link Object} 配置
+         */
+
+        //如果string有某个key但实体没有,正常会抛异常,但这么配置会忽略
+        DEFAULT_OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        //如果没有任何属性,正常会抛出,但这么配置会忽略
         DEFAULT_OBJECT_MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //时间字段输出时间戳
-        DEFAULT_OBJECT_MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
+
+        /**
+         * {@link Object} -> {@link String} 配置
+         */
+
+        //如果对象key的值为空,正常会输出null,但这么配置会忽略
+        DEFAULT_OBJECT_MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+
     }
 
     /**
