@@ -23,12 +23,12 @@ import java.util.concurrent.Callable;
  */
 public class JacksonExtraUtils {
 
-    //单例
+    //默认 ObjectMapper 单例
     private final static ObjectMapper DEFAULT_OBJECT_MAPPER;
 
     static {
 
-        //初始化 mapper
+        //初始化 默认 ObjectMapper
         DEFAULT_OBJECT_MAPPER = new ObjectMapper();
 
         /**
@@ -50,12 +50,12 @@ public class JacksonExtraUtils {
     }
 
     /**
-     * 获取 默认 mapper
+     * 获取 默认 ObjectMapper
      *
      * @return
      */
     private static ObjectMapper defaultMapperCreator() {
-        //直接返回mapper
+        //直接返回
         return DEFAULT_OBJECT_MAPPER;
     }
 
