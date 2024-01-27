@@ -99,6 +99,13 @@
             <version>4.4</version>
         </dependency>
 
+        <!-- org Json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+
         <!-- google 工具包 -->
         <dependency>
             <groupId>com.google.guava</groupId>

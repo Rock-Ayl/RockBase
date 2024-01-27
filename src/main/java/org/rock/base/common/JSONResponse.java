@@ -1,9 +1,6 @@
 package org.rock.base.common;
 
-import org.rock.base.util.JacksonExtraUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONObject;
 
 import static org.rock.base.constant.JSONConst.*;
 
@@ -16,12 +13,12 @@ import static org.rock.base.constant.JSONConst.*;
 public class JSONResponse {
 
     //该class本质基本上是一个Json
-    private Map<String, Object> response;
+    private JSONObject response;
 
     //私有化
     private JSONResponse() {
         //同时生成对应json
-        this.response = new HashMap<>();
+        this.response = new JSONObject();
     }
 
     /**
@@ -101,7 +98,7 @@ public class JSONResponse {
     @Override
     public String toString() {
         //实现
-        return JacksonExtraUtils.toJSONString(this.response);
+        return this.response.toString();
     }
 
 }
