@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * jackson 额外工具包
+ * Jackson 扩展工具包
  *
  * @Author ayl
  * @Date 2024-01-25

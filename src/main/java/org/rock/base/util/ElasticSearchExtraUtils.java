@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Elastic Search 额外补充工具包
+ * Elastic Search 扩展工具包
  *
  * @Author ayl
  * @Date 2022-08-25

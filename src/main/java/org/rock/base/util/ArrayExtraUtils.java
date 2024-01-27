@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 数组额外扩展包
+ * 数组 扩展扩展包
  *
  * @Author ayl
  * @Date 2023-03-03
