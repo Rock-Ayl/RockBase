@@ -55,15 +55,15 @@ public class JSONResponse {
     /**
      * 失败+msg
      *
-     * @param errorMsg
+     * @param e
      * @return
      */
-    public static JSONResponse error(String errorMsg) {
+    public static JSONResponse error(Exception e) {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
         response.response.put(KEY_CODE, 500);
-        response.response.put(KEY_ERROR_MSG, errorMsg);
+        response.response.put(KEY_ERROR_MSG, e.getMessage());
         //返回
         return response;
     }

@@ -21,9 +21,9 @@ public class GlobalExHandler {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public Object exceptionHandler(Exception e) {
-        LOG.error("控制层全局异常捕获:", e);
-        //返回标准结构
-        return JSONResponse.error(e.getMessage());
+        LOG.error("exceptionHandler catch error:", e);
+        //返回统一异常返回
+        return JSONResponse.error(e);
     }
 
 }
