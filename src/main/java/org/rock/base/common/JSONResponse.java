@@ -8,14 +8,14 @@ import java.util.Map;
 import static org.rock.base.constant.JSONConst.*;
 
 /**
- * FastJson封装器,方便控制层组装返回,规范json结构
+ * 响应内容封装器,方便控制层组装返回
  *
  * @Author ayl
  * @Date 2022-03-09
  */
 public class JSONResponse {
 
-    //该class本质是一个FastJson
+    //该class本质基本上是一个Json
     private Map<String, Object> response;
 
     //私有化
