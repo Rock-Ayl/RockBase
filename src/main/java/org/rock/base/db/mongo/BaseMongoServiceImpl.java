@@ -334,26 +334,13 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     }
 
-    @Override
-    public RollPageResult<T> rollPage(MongoRollPageParam param) {
-        //实现
-        return rollPage(param, null);
-    }
-
-    @Override
-    public RollPageResult<T> rollPage(MongoRollPageParam param, List<Criteria> criteriaList) {
-
-        /**
-         * 初始化
-         */
-
-        //and条件列表
-        List<Criteria> andCriteriaList = new ArrayList<>();
-        //如果有额外的条件
-        if (CollectionUtils.isNotEmpty(criteriaList)) {
-            //组装
-            andCriteriaList.addAll(criteriaList);
-        }
+    /**
+     * 构建通用查询参数
+     *
+     * @param param        参数
+     * @param criteriaList 要放入的列表
+     */
+    private void buildRollPageParam(MongoRollPageParam param, List<Criteria> criteriaList) {
 
         /**
          * id
@@ -364,12 +351,12 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //如果要限制id 1
         if (CollectionUtils.isNotEmpty(idsList)) {
             //限制id
-            andCriteriaList.add(Criteria.where("_id").in(idsList));
+            criteriaList.add(Criteria.where("_id").in(idsList));
         }
         //如果要限制id 2
         if (CollectionUtils.isNotEmpty(param.getIdList())) {
             //限制id
-            andCriteriaList.add(Criteria.where("_id").in(param.getIdList()));
+            criteriaList.add(Criteria.where("_id").in(param.getIdList()));
         }
 
         /**
@@ -379,7 +366,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
         //如果要限制时间范围
         if (StringUtils.isNotBlank(param.getTimeType()) && param.getStartTime() != null && param.getEndTime() != null) {
             //限制时间范围
-            andCriteriaList.add(Criteria.where(param.getTimeType()).gte(new Date(param.getStartTime())).lte(new Date(param.getEndTime())));
+            criteriaList.add(Criteria.where(param.getTimeType()).gte(new Date(param.getStartTime())).lte(new Date(param.getEndTime())));
         }
 
         /**
@@ -403,20 +390,45 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
                 //精确
                 case "exact":
                     //支持多关键词
-                    andCriteriaList.add(Criteria.where(keywordType).in(keywordList));
+                    criteriaList.add(Criteria.where(keywordType).in(keywordList));
                     break;
                 //简单模糊查询(适用90%情况)
                 case "dim":
                     //模糊查不支持多关键词
-                    andCriteriaList.add(Criteria.where(keywordType).regex(keywordList.stream().findFirst().get()));
+                    criteriaList.add(Criteria.where(keywordType).regex(keywordList.stream().findFirst().get()));
                     break;
                 //复杂模糊查询(消耗性能但是模糊准确,忽略大小写并适配特殊字符)
                 case "complexDim":
                     //模糊查不支持多关键词
-                    andCriteriaList.add(Criteria.where(keywordType).regex(Pattern.compile("^.*" + MongoExtraUtils.escapeExprSpecialWord(keywordList.stream().findFirst().get()) + ".*$", Pattern.CASE_INSENSITIVE)));
+                    criteriaList.add(Criteria.where(keywordType).regex(Pattern.compile("^.*" + MongoExtraUtils.escapeExprSpecialWord(keywordList.stream().findFirst().get()) + ".*$", Pattern.CASE_INSENSITIVE)));
                     break;
             }
         }
+
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(MongoRollPageParam param) {
+        //实现
+        return rollPage(param, null);
+    }
+
+    @Override
+    public RollPageResult<T> rollPage(MongoRollPageParam param, List<Criteria> criteriaList) {
+
+        /**
+         * 初始化
+         */
+
+        //and条件列表
+        List<Criteria> andCriteriaList = new ArrayList<>();
+        //如果有额外的条件
+        if (CollectionUtils.isNotEmpty(criteriaList)) {
+            //组装
+            andCriteriaList.addAll(criteriaList);
+        }
+        //构建通用查询参数
+        buildRollPageParam(param, andCriteriaList);
 
         /**
          * 排序
