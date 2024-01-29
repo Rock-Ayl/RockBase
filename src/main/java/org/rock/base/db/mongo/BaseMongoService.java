@@ -199,7 +199,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param <T>
      */
     @Data
-    class RollPageResult<T> {
+    public static class RollPageResult<T> {
 
         //总数
         private Long total;
