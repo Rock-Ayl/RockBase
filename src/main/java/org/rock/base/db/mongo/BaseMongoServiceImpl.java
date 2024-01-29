@@ -82,7 +82,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public Collection<T> create(Collection<T> documentList) {
+    public List<T> create(Collection<T> documentList) {
         //判空
         if (CollectionUtils.isEmpty(documentList)) {
             //过
@@ -103,7 +103,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             insertList.add(document);
         }
         //批量插入
-        return this.mongoTemplate.insertAll(insertList);
+        return new ArrayList<>(this.mongoTemplate.insertAll(insertList));
     }
 
     @Override

@@ -29,7 +29,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param documentList
      * @return
      */
-    Collection<T> create(Collection<T> documentList);
+    List<T> create(Collection<T> documentList);
 
     /**
      * 根据id,查询单个
