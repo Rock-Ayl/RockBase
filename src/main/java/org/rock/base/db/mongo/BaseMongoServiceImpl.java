@@ -82,7 +82,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public Collection<T> create(List<T> documentList) {
+    public Collection<T> create(Collection<T> documentList) {
         //判空
         if (CollectionUtils.isEmpty(documentList)) {
             //过
@@ -128,13 +128,13 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public List<T> listByIdList(List<String> idList) {
+    public List<T> listByIdList(Collection<String> idList) {
         //实现
         return listByIdList(idList, null);
     }
 
     @Override
-    public List<T> listByIdList(List<String> idList, String fields) {
+    public List<T> listByIdList(Collection<String> idList, String fields) {
         //判空
         if (CollectionUtils.isEmpty(idList)) {
             //过
@@ -185,7 +185,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean deleteByIdList(List<String> idList) {
+    public boolean deleteByIdList(Collection<String> idList) {
         //判空
         if (CollectionUtils.isEmpty(idList)) {
             //过
@@ -220,7 +220,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public boolean batchUpdateSkipNullById(List<T> documentList) {
+    public boolean batchUpdateSkipNullById(Collection<T> documentList) {
         //判空
         if (CollectionUtils.isEmpty(documentList)) {
             //过
@@ -264,7 +264,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
     }
 
     @Override
-    public void batchCreateOrUpdateSkipNullById(List<T> documentList) {
+    public void batchCreateOrUpdateSkipNullById(Collection<T> documentList) {
 
         /**
          * 判空

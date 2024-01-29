@@ -29,7 +29,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param documentList
      * @return
      */
-    Collection<T> create(List<T> documentList);
+    Collection<T> create(Collection<T> documentList);
 
     /**
      * 根据id,查询单个
@@ -54,7 +54,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param idList id列表
      * @return
      */
-    List<T> listByIdList(List<String> idList);
+    List<T> listByIdList(Collection<String> idList);
 
     /**
      * 根据id列表,查询多个,限制返回参数
@@ -63,7 +63,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param fields 限制返回参数
      * @return
      */
-    List<T> listByIdList(List<String> idList, String fields);
+    List<T> listByIdList(Collection<String> idList, String fields);
 
     /**
      * 获取所有
@@ -101,7 +101,7 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param idList id列表
      * @return
      */
-    boolean deleteByIdList(List<String> idList);
+    boolean deleteByIdList(Collection<String> idList);
 
     /**
      * 根据实体,使用id,更新单个实体,跳过NULL的字段
@@ -117,14 +117,14 @@ public interface BaseMongoService<T extends BaseDocument> {
      * @param documentList 实体列表
      * @return
      */
-    boolean batchUpdateSkipNullById(List<T> documentList);
+    boolean batchUpdateSkipNullById(Collection<T> documentList);
 
     /**
      * 根据实体列表,使用id,批量创建或更新多个实体,跳过NULL的字段
      *
      * @param documentList 实体列表
      */
-    void batchCreateOrUpdateSkipNullById(List<T> documentList);
+    void batchCreateOrUpdateSkipNullById(Collection<T> documentList);
 
     /**
      * Mongo常用模板查询参数
