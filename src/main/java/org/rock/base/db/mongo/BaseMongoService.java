@@ -143,26 +143,6 @@ public interface BaseMongoService<T extends BaseDocument> {
         private List<String> idList;
 
         /**
-         * 分页
-         */
-
-        //分页
-        private Integer pageSize;
-        private Integer pageNum;
-
-        //是否需要count(尽量不用,能省则省)
-        private Boolean needCount;
-
-        /**
-         * 排序
-         */
-
-        //排序字段
-        private String sortKey;
-        //正序还是倒叙
-        private String sortOrder;
-
-        /**
          * 限制时间区间
          */
 
@@ -183,6 +163,26 @@ public interface BaseMongoService<T extends BaseDocument> {
         private String keywordType;
         //关键字列表
         private List<String> keywordList;
+
+        /**
+         * 分页
+         */
+
+        //分页
+        private Integer pageSize;
+        private Integer pageNum;
+
+        //是否需要count(尽量不用,能省则省)
+        private Boolean needCount;
+
+        /**
+         * 排序
+         */
+
+        //排序字段
+        private String sortKey;
+        //正序还是倒叙
+        private String sortOrder;
 
         /**
          * 限制返回字段
