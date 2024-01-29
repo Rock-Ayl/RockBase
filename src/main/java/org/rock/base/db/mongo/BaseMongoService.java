@@ -210,6 +210,14 @@ public interface BaseMongoService<T extends BaseDocument> {
     }
 
     /**
+     * 构建通用查询参数,某些情况下会用到
+     *
+     * @param param        参数
+     * @param criteriaList 要放入的列表
+     */
+    void rollPageParamBuilder(MongoRollPageParam param, List<Criteria> criteriaList);
+
+    /**
      * 翻页查询
      *
      * @param param 模板参数

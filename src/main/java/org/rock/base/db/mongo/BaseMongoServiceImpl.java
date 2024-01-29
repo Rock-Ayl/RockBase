@@ -334,13 +334,8 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
 
     }
 
-    /**
-     * 构建通用查询参数
-     *
-     * @param param        参数
-     * @param criteriaList 要放入的列表
-     */
-    private void buildRollPageParam(MongoRollPageParam param, List<Criteria> criteriaList) {
+    @Override
+    public void rollPageParamBuilder(MongoRollPageParam param, List<Criteria> criteriaList) {
 
         /**
          * id
@@ -428,7 +423,7 @@ public class BaseMongoServiceImpl<T extends BaseDocument> implements BaseMongoSe
             andCriteriaList.addAll(criteriaList);
         }
         //构建通用查询参数
-        buildRollPageParam(param, andCriteriaList);
+        rollPageParamBuilder(param, andCriteriaList);
 
         /**
          * 排序
