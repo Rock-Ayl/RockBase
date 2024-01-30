@@ -21,7 +21,7 @@ public class LambdaParseFieldNameExtraUtils {
     private static final Logger LOG = LoggerFactory.getLogger(LambdaParseFieldNameExtraUtils.class);
 
     @FunctionalInterface
-    private interface MFunction<T, R> extends Function<T, R>, Serializable {
+    public interface MFunction<T, R> extends Function<T, R>, Serializable {
 
     }
 
@@ -67,9 +67,8 @@ public class LambdaParseFieldNameExtraUtils {
             return getColumn(getSerializedLambda(func));
         } catch (Exception e) {
             LOG.error("LambdaParseFieldNameExtraUtils getColumn error", e);
+            throw new RuntimeException("解析实体字段名称报错");
         }
-        //默认
-        return null;
     }
 
     /**
@@ -86,9 +85,8 @@ public class LambdaParseFieldNameExtraUtils {
             return getSerializedLambda(func).getImplMethodName();
         } catch (Exception e) {
             LOG.error("LambdaParseFieldNameExtraUtils getMethodName error", e);
+            throw new RuntimeException("解析实体方法名称报错");
         }
-        //默认
-        return null;
     }
 
 }
