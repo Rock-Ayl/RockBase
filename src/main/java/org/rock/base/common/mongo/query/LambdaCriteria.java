@@ -70,7 +70,7 @@ public class LambdaCriteria {
                 //装箱
                 .stream(mongoLambdaCriteria)
                 //拆出对应Criteria
-                .map(LambdaCriteria::toCriteria)
+                .map(LambdaCriteria::getCriteria)
                 //转化为列表
                 .collect(Collectors.toList())
                 //然后转数组
@@ -123,7 +123,7 @@ public class LambdaCriteria {
      *
      * @return
      */
-    public Criteria toCriteria() {
+    public Criteria getCriteria() {
         //返回
         return this.criteria;
     }
