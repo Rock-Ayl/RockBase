@@ -1,5 +1,6 @@
 package org.rock.base.common.mongo.query;
 
+import org.rock.base.util.LambdaParseFieldNameExtraUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.Collection;
@@ -29,9 +30,9 @@ public class MongoLambdaCriteria {
      * @param key key
      * @return
      */
-    public MongoLambdaCriteria where(String key) {
-        //重新初始化一个
-        this.criteria = Criteria.where(key);
+    public <T, R> MongoLambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+        //解析key、并重新初始化一个
+        this.criteria = Criteria.where(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
         //返回
         return this;
     }
@@ -42,22 +43,9 @@ public class MongoLambdaCriteria {
      * @param key key
      * @return
      */
-    public MongoLambdaCriteria and(String key) {
-        //实现
-        this.criteria.and(key);
-        //返回
-        return this;
-    }
-
-    /**
-     * 实现 and
-     *
-     * @param criteria Criteria 数组
-     * @return
-     */
-    public MongoLambdaCriteria andOperator(Criteria... criteria) {
-        //实现
-        this.criteria.andOperator(criteria);
+    public <T, R> MongoLambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+        //解析key、并实现
+        this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
         //返回
         return this;
     }
