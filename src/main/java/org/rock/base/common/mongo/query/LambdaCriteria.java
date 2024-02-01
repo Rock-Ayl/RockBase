@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @Author ayl
  * @Date 2024-01-30
  */
-public class MongoLambdaCriteria {
+public class LambdaCriteria {
 
     //被封装的
     private Criteria criteria;
@@ -21,7 +21,7 @@ public class MongoLambdaCriteria {
     /**
      * 重写初始化
      */
-    public MongoLambdaCriteria() {
+    public LambdaCriteria() {
         //初始化默认
         this.criteria = new Criteria();
     }
@@ -29,7 +29,7 @@ public class MongoLambdaCriteria {
     /**
      * 重写初始化
      */
-    public <T, R> MongoLambdaCriteria(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+    public <T, R> LambdaCriteria(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
         //初始化默认
         this.criteria = Criteria.where(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
     }
@@ -40,9 +40,9 @@ public class MongoLambdaCriteria {
      * @param key key
      * @return
      */
-    public static <T, R> MongoLambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+    public static <T, R> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
         //实现
-        return new MongoLambdaCriteria(key);
+        return new LambdaCriteria(key);
     }
 
     /**
@@ -51,7 +51,7 @@ public class MongoLambdaCriteria {
      * @param key key
      * @return
      */
-    public <T, R> MongoLambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+    public <T, R> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
         //解析key、并实现
         this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
         //返回
@@ -64,13 +64,13 @@ public class MongoLambdaCriteria {
      * @param mongoLambdaCriteria
      * @return
      */
-    public MongoLambdaCriteria andOperator(MongoLambdaCriteria... mongoLambdaCriteria) {
+    public LambdaCriteria andOperator(LambdaCriteria... mongoLambdaCriteria) {
         //实现
         this.criteria.andOperator(Arrays
                 //装箱
                 .stream(mongoLambdaCriteria)
                 //拆出对应Criteria
-                .map(MongoLambdaCriteria::toCriteria)
+                .map(LambdaCriteria::toCriteria)
                 //转化为列表
                 .collect(Collectors.toList())
                 //然后转数组
@@ -85,7 +85,7 @@ public class MongoLambdaCriteria {
      * @param value value
      * @return
      */
-    public MongoLambdaCriteria is(Object value) {
+    public LambdaCriteria is(Object value) {
         //实现
         this.criteria.is(value);
         //返回
@@ -98,7 +98,7 @@ public class MongoLambdaCriteria {
      * @param values values
      * @return
      */
-    public MongoLambdaCriteria in(Collection<?> values) {
+    public LambdaCriteria in(Collection<?> values) {
         //实现
         this.criteria.in(values);
         //返回
@@ -111,7 +111,7 @@ public class MongoLambdaCriteria {
      * @param values values
      * @return
      */
-    public MongoLambdaCriteria in(Object... values) {
+    public LambdaCriteria in(Object... values) {
         //实现
         this.criteria.in(values);
         //返回
