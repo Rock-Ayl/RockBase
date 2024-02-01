@@ -72,6 +72,30 @@ public class LambdaParseFieldNameExtraUtils {
     }
 
     /**
+     * 根据Lambda表达式,获取 字段 名称,为Mongo特化处理
+     *
+     * @param func 函数式接口，例：User::getId()
+     * @param <T>  泛型T
+     * @param <R>  泛型R
+     * @return 字段名
+     */
+    public static <T, R> String getMongoColumn(MFunction<T, R> func) {
+        //实现
+        String column = getColumn(func);
+        //针对特殊字段特殊处理
+        switch (column) {
+            //如果是id
+            case "id":
+                //统一用 _id
+                return "_id";
+            //默认
+            default:
+                //直接返回
+                return column;
+        }
+    }
+
+    /**
      * 根据Lambda表达式,获取 方法 名称
      *
      * @param func 函数式接口
