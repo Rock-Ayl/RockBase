@@ -48,6 +48,19 @@ public class MongoLambdaCriteria {
     }
 
     /**
+     * 实现 and
+     *
+     * @param criteria Criteria 数组
+     * @return
+     */
+    public MongoLambdaCriteria andOperator(Criteria... criteria) {
+        //实现
+        this.criteria.andOperator(criteria);
+        //返回
+        return this;
+    }
+
+    /**
      * 实现 is
      *
      * @param value value
