@@ -2,6 +2,8 @@ package org.rock.base.common.mongo.query;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 
+import java.util.Collection;
+
 /**
  * 使用 Lambda表达式 构建 {@link Criteria}
  *
@@ -69,6 +71,32 @@ public class MongoLambdaCriteria {
     public MongoLambdaCriteria is(Object value) {
         //实现
         this.criteria.is(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 in
+     *
+     * @param values values
+     * @return
+     */
+    public MongoLambdaCriteria in(Collection<?> values) {
+        //实现
+        this.criteria.in(values);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 in
+     *
+     * @param values values
+     * @return
+     */
+    public MongoLambdaCriteria in(Object... values) {
+        //实现
+        this.criteria.in(values);
         //返回
         return this;
     }
