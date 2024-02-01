@@ -22,8 +22,16 @@ public class MongoLambdaCriteria {
      * 重写初始化
      */
     public MongoLambdaCriteria() {
-        //默认初始化一个
+        //初始化默认
         this.criteria = new Criteria();
+    }
+
+    /**
+     * 重写初始化
+     */
+    public <T, R> MongoLambdaCriteria(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+        //初始化默认
+        this.criteria = Criteria.where(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
     }
 
     /**
@@ -33,12 +41,8 @@ public class MongoLambdaCriteria {
      * @return
      */
     public static <T, R> MongoLambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
-        //初始化
-        MongoLambdaCriteria mongoLambdaCriteria = new MongoLambdaCriteria();
-        //默认一个and
-        mongoLambdaCriteria.and(key);
-        //返回
-        return mongoLambdaCriteria;
+        //实现
+        return new MongoLambdaCriteria(key);
     }
 
     /**
