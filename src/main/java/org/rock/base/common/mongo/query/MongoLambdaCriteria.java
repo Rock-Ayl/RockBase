@@ -62,7 +62,15 @@ public class MongoLambdaCriteria {
      */
     public MongoLambdaCriteria andOperator(MongoLambdaCriteria... mongoLambdaCriteria) {
         //实现
-        this.criteria.andOperator(Arrays.stream(mongoLambdaCriteria).map(MongoLambdaCriteria::toCriteria).collect(Collectors.toList()).toArray(new Criteria[]{}));
+        this.criteria.andOperator(Arrays
+                //装箱
+                .stream(mongoLambdaCriteria)
+                //拆出对应Criteria
+                .map(MongoLambdaCriteria::toCriteria)
+                //转化为列表
+                .collect(Collectors.toList())
+                //然后转数组
+                .toArray(new Criteria[]{}));
         //返回
         return this;
     }
