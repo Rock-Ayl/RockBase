@@ -159,6 +159,39 @@ public class MongoExtraUtils {
     }
 
     /**
+     * Lambda表达式 设置更新字段
+     *
+     * @param update   更新实体
+     * @param function Lambda表达式
+     * @param value    任意对象
+     */
+    public static <T, R> void updateSet(Update update, LambdaParseFieldNameExtraUtils.MFunction<T, R> function, Object value) {
+        //判空
+        if (update == null) {
+            //过
+            return;
+        }
+        //实现
+        update.set(LambdaParseFieldNameExtraUtils.getColumn(function), value);
+    }
+
+    /**
+     * Lambda表达式 设置 unset 字段
+     *
+     * @param update   更新实体
+     * @param function Lambda表达式
+     */
+    public static <T, R> void updateUnset(Update update, LambdaParseFieldNameExtraUtils.MFunction<T, R> function) {
+        //判空
+        if (update == null) {
+            //过
+            return;
+        }
+        //实现
+        update.unset(LambdaParseFieldNameExtraUtils.getColumn(function));
+    }
+
+    /**
      * 根据实体,为 mongo {@link Update} set 该实体所有不为空的字段
      * 注意:不包含继承对象的参数
      *
