@@ -172,7 +172,7 @@ public class MongoExtraUtils {
             return;
         }
         //实现
-        update.set(LambdaParseFieldNameExtraUtils.getColumn(function), value);
+        update.set(LambdaParseFieldNameExtraUtils.getMongoColumn(function), value);
     }
 
     /**
@@ -188,7 +188,7 @@ public class MongoExtraUtils {
             return;
         }
         //实现
-        update.unset(LambdaParseFieldNameExtraUtils.getColumn(function));
+        update.unset(LambdaParseFieldNameExtraUtils.getMongoColumn(function));
     }
 
     /**

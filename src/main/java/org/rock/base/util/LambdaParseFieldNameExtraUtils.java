@@ -72,7 +72,7 @@ public class LambdaParseFieldNameExtraUtils {
     }
 
     /**
-     * 根据Lambda表达式,获取 字段 名称,为Mongo特化处理
+     * 根据Lambda表达式,获取 字段 名称,为 Mongo 特化处理
      *
      * @param func 函数式接口，例：User::getId()
      * @param <T>  泛型T
