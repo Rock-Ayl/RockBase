@@ -3,7 +3,9 @@ package org.rock.base.common.mongo.query;
 import org.rock.base.util.LambdaParseFieldNameExtraUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * 使用 Lambda表达式 构建 {@link Criteria}
@@ -30,11 +32,13 @@ public class MongoLambdaCriteria {
      * @param key key
      * @return
      */
-    public <T, R> MongoLambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
-        //解析key、并重新初始化一个
-        this.criteria = Criteria.where(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
+    public static <T, R> MongoLambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+        //初始化
+        MongoLambdaCriteria mongoLambdaCriteria = new MongoLambdaCriteria();
+        //默认一个and
+        mongoLambdaCriteria.and(key);
         //返回
-        return this;
+        return mongoLambdaCriteria;
     }
 
     /**
@@ -46,6 +50,19 @@ public class MongoLambdaCriteria {
     public <T, R> MongoLambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
         //解析key、并实现
         this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 andOperator
+     *
+     * @param mongoLambdaCriteria
+     * @return
+     */
+    public MongoLambdaCriteria andOperator(MongoLambdaCriteria... mongoLambdaCriteria) {
+        //实现
+        this.criteria.andOperator(Arrays.stream(mongoLambdaCriteria).map(MongoLambdaCriteria::toCriteria).collect(Collectors.toList()).toArray(new Criteria[]{}));
         //返回
         return this;
     }
