@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class LambdaCriteria {
 
-    //被封装的
+    //被封装的,链路中最新的,每一个操作后,和之前的都不会是一个对象
     private Criteria criteria;
 
     /**
