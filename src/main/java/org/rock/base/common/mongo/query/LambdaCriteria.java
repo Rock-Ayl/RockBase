@@ -53,7 +53,7 @@ public class LambdaCriteria {
      */
     public <T, R> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
         //解析key、并实现
-        this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
+        this.criteria = this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
         //返回
         return this;
     }
@@ -66,7 +66,7 @@ public class LambdaCriteria {
      */
     public LambdaCriteria andOperator(LambdaCriteria... mongoLambdaCriteria) {
         //实现
-        this.criteria.andOperator(Arrays
+        this.criteria = this.criteria.andOperator(Arrays
                 //装箱
                 .stream(mongoLambdaCriteria)
                 //拆出对应Criteria
@@ -87,7 +87,7 @@ public class LambdaCriteria {
      */
     public LambdaCriteria is(Object value) {
         //实现
-        this.criteria.is(value);
+        this.criteria = this.criteria.is(value);
         //返回
         return this;
     }
@@ -100,7 +100,7 @@ public class LambdaCriteria {
      */
     public LambdaCriteria in(Collection<?> values) {
         //实现
-        this.criteria.in(values);
+        this.criteria = this.criteria.in(values);
         //返回
         return this;
     }
@@ -113,7 +113,7 @@ public class LambdaCriteria {
      */
     public LambdaCriteria in(Object... values) {
         //实现
-        this.criteria.in(values);
+        this.criteria = this.criteria.in(values);
         //返回
         return this;
     }

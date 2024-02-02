@@ -1,11 +1,15 @@
 package org.rock.base.db;
 
 import org.junit.jupiter.api.Test;
+import org.rock.base.common.mongo.query.LambdaCriteria;
 import org.rock.base.db.mongo.BaseMongoService;
 import org.rock.base.pojo.doc.TestDoc;
 import org.rock.base.serivce.test.TestMongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +19,9 @@ class TestMongo {
 
     @Autowired
     private TestMongoService testMongoService;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Test
     void allTest() {
@@ -81,6 +88,17 @@ class TestMongo {
         System.out.println();
 
         List<String> idList = testMongoService.listAllId();
+        System.out.println();
+    }
+
+    @Test
+    void lambdaQuery() {
+        Criteria criteria = LambdaCriteria
+                .where(TestDoc::getNumber).is("编号123")
+                .and(TestDoc::getValue).in(Arrays.asList("测试123", "测试12341231231231231"))
+                .getCriteria();
+        Query query = new Query(criteria);
+        List<TestDoc> testDocs = mongoTemplate.find(query, TestDoc.class);
         System.out.println();
     }
 
