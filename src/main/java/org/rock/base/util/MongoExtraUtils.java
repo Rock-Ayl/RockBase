@@ -10,9 +10,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * mongo 扩展工具包
@@ -49,6 +51,21 @@ public class MongoExtraUtils {
         }
         //实现
         setFields(query, fieldList.toArray(new String[]{}));
+    }
+
+    /**
+     * 为 mongo {@link Query} 对象组装限制返回参数
+     *
+     * @param query     mongo query 对象
+     * @param functions 限制返回参数 Lambda表达式格式
+     */
+    public static <T, R> void setFieldsLambda(Query query, LambdaParseFieldNameExtraUtils.MFunction<T, R>... functions) {
+        //转化为对应字段列表
+        List<String> fields = Arrays.stream(functions)
+                .map(LambdaParseFieldNameExtraUtils::getMongoColumn)
+                .collect(Collectors.toList());
+        //实现
+        setFields(query, fields);
     }
 
     /**
