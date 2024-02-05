@@ -38,7 +38,7 @@ public class LambdaCriteria {
     }
 
     /**
-     * 实现 where 一级的情况 eg: name
+     * 实现 where 一级的情况 eg: sku
      *
      * @param key1 第一级key
      * @return
@@ -60,6 +60,20 @@ public class LambdaCriteria {
     public static <T1, R1, T2, R2> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1, LambdaParseFieldNameExtraUtils.MFunction<T2, R2> key2) {
         //生成对应路径
         String path = String.format("%s.%s", LambdaParseFieldNameExtraUtils.getMongoColumn(key1), LambdaParseFieldNameExtraUtils.getMongoColumn(key2));
+        //实现
+        return new LambdaCriteria(path);
+    }
+
+    /**
+     * 实现 where 三级的情况 eg: productList.cat.sku
+     *
+     * @param key1 第一级key
+     * @param key2 第二级key
+     * @return
+     */
+    public static <T1, R1, T2, R2, T3, R3> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1, LambdaParseFieldNameExtraUtils.MFunction<T2, R2> key2, LambdaParseFieldNameExtraUtils.MFunction<T3, R3> key3) {
+        //生成对应路径
+        String path = String.format("%s.%s.%s", LambdaParseFieldNameExtraUtils.getMongoColumn(key1), LambdaParseFieldNameExtraUtils.getMongoColumn(key2), LambdaParseFieldNameExtraUtils.getMongoColumn(key3));
         //实现
         return new LambdaCriteria(path);
     }
