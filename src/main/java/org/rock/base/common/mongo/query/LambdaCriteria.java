@@ -79,14 +79,48 @@ public class LambdaCriteria {
     }
 
     /**
-     * 实现 and
+     * 实现 and 一级的情况 eg: sku
      *
-     * @param key key
+     * @param key1 第一级key
      * @return
      */
-    public <T, R> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
-        //解析key、并实现
-        this.criteria = this.criteria.and(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
+    public <T1, R1> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1) {
+        //生成对应路径
+        String path = LambdaParseFieldNameExtraUtils.getMongoColumn(key1);
+        //实现
+        this.criteria = this.criteria.and(path);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 and 两级的情况 eg: productList.sku
+     *
+     * @param key1 第一级key
+     * @param key2 第二级key
+     * @return
+     */
+    public <T1, R1, T2, R2> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1, LambdaParseFieldNameExtraUtils.MFunction<T2, R2> key2) {
+        //生成对应路径
+        String path = String.format("%s.%s", LambdaParseFieldNameExtraUtils.getMongoColumn(key1), LambdaParseFieldNameExtraUtils.getMongoColumn(key2));
+        //实现
+        this.criteria = this.criteria.and(path);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 and 三级的情况 eg: productList.cat.sku
+     *
+     * @param key1 第一级key
+     * @param key2 第二级key
+     * @return
+     */
+    public <T1, R1, T2, R2, T3, R3> LambdaCriteria and(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1, LambdaParseFieldNameExtraUtils.MFunction<T2, R2> key2, LambdaParseFieldNameExtraUtils.MFunction<T3, R3> key3) {
+        //生成对应路径
+        String path = String.format("%s.%s.%s", LambdaParseFieldNameExtraUtils.getMongoColumn(key1), LambdaParseFieldNameExtraUtils.getMongoColumn(key2), LambdaParseFieldNameExtraUtils.getMongoColumn(key3));
+        //实现
+        this.criteria = this.criteria.and(path);
         //返回
         return this;
     }
