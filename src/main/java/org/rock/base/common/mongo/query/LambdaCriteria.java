@@ -28,22 +28,40 @@ public class LambdaCriteria {
     }
 
     /**
-     * 重写初始化
+     * 重写初始化,这里私有化
+     *
+     * @param key 字段key
      */
-    public <T, R> LambdaCriteria(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+    private <T, R> LambdaCriteria(String key) {
         //初始化默认
-        this.criteria = Criteria.where(LambdaParseFieldNameExtraUtils.getMongoColumn(key));
+        this.criteria = Criteria.where(key);
     }
 
     /**
-     * 实现 where
+     * 实现 where 一级的情况 eg: name
      *
-     * @param key key
+     * @param key1 第一级key
      * @return
      */
-    public static <T, R> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T, R> key) {
+    public static <T1, R1> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1) {
+        //生成对应路径
+        String path = LambdaParseFieldNameExtraUtils.getMongoColumn(key1);
         //实现
-        return new LambdaCriteria(key);
+        return new LambdaCriteria(path);
+    }
+
+    /**
+     * 实现 where 两级的情况 eg: productList.sku
+     *
+     * @param key1 第一级key
+     * @param key2 第二级key
+     * @return
+     */
+    public static <T1, R1, T2, R2> LambdaCriteria where(LambdaParseFieldNameExtraUtils.MFunction<T1, R1> key1, LambdaParseFieldNameExtraUtils.MFunction<T2, R2> key2) {
+        //生成对应路径
+        String path = String.format("%s.%s", LambdaParseFieldNameExtraUtils.getMongoColumn(key1), LambdaParseFieldNameExtraUtils.getMongoColumn(key2));
+        //实现
+        return new LambdaCriteria(path);
     }
 
     /**
