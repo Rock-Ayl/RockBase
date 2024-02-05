@@ -32,7 +32,7 @@ public class LambdaCriteria {
      *
      * @param key 字段key
      */
-    private <T, R> LambdaCriteria(String key) {
+    private LambdaCriteria(String key) {
         //初始化默认
         this.criteria = Criteria.where(key);
     }
