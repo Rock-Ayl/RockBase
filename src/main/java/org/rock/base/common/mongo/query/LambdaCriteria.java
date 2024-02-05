@@ -222,6 +222,19 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 exists
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria exists(boolean value) {
+        //实现
+        this.criteria = this.criteria.exists(value);
+        //返回
+        return this;
+    }
+
+    /**
      * 返回内部 {@link Criteria}
      *
      * @return
