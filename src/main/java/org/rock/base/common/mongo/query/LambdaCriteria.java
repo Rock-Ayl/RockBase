@@ -119,6 +119,18 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 not
+     *
+     * @return
+     */
+    public LambdaCriteria not() {
+        //实现
+        this.criteria = this.criteria.not();
+        //返回
+        return this;
+    }
+
+    /**
      * 实现 ne
      *
      * @param value value
@@ -153,6 +165,58 @@ public class LambdaCriteria {
     public LambdaCriteria nin(Object... values) {
         //实现
         this.criteria = this.criteria.nin(values);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 gt
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria gt(Object value) {
+        //实现
+        this.criteria = this.criteria.gt(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 gte
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria gte(Object value) {
+        //实现
+        this.criteria = this.criteria.gte(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 lt
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria lt(Object value) {
+        //实现
+        this.criteria = this.criteria.lt(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 lte
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria lte(Object value) {
+        //实现
+        this.criteria = this.criteria.lte(value);
         //返回
         return this;
     }
