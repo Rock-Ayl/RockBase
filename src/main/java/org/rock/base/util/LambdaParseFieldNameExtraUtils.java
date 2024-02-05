@@ -45,12 +45,12 @@ public class LambdaParseFieldNameExtraUtils {
      * @return SerializedLambda
      */
     private static <T, R> SerializedLambda getSerializedLambda(Function<T, R> func) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        // 直接调用writeReplace
+        //直接调用writeReplace
         Method writeReplace = func.getClass().getDeclaredMethod("writeReplace");
+        //设置可以访问私有方法
         writeReplace.setAccessible(true);
         //反射调用
-        Object sl = writeReplace.invoke(func);
-        return (java.lang.invoke.SerializedLambda) sl;
+        return (java.lang.invoke.SerializedLambda) writeReplace.invoke(func);
     }
 
     /**
