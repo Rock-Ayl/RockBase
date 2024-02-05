@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -230,6 +231,46 @@ public class LambdaCriteria {
     public LambdaCriteria exists(boolean value) {
         //实现
         this.criteria = this.criteria.exists(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 regex
+     *
+     * @param regex 值
+     * @return
+     */
+    public LambdaCriteria regex(String regex) {
+        //实现
+        this.criteria = this.criteria.regex(regex);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 regex
+     *
+     * @param regex   值
+     * @param options 可选操作
+     * @return
+     */
+    public LambdaCriteria regex(String regex, String options) {
+        //实现
+        this.criteria = this.criteria.regex(regex, options);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 regex
+     *
+     * @param pattern 正则
+     * @return
+     */
+    public LambdaCriteria regex(Pattern pattern) {
+        //实现
+        this.criteria = this.criteria.regex(pattern);
         //返回
         return this;
     }
