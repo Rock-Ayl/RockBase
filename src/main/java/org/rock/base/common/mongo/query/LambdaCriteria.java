@@ -119,6 +119,45 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 ne
+     *
+     * @param value value
+     * @return
+     */
+    public LambdaCriteria ne(Object value) {
+        //实现
+        this.criteria = this.criteria.ne(value);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 nin
+     *
+     * @param values values
+     * @return
+     */
+    public LambdaCriteria nin(Collection<?> values) {
+        //实现
+        this.criteria = this.criteria.nin(values);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 nin
+     *
+     * @param values values
+     * @return
+     */
+    public LambdaCriteria nin(Object... values) {
+        //实现
+        this.criteria = this.criteria.nin(values);
+        //返回
+        return this;
+    }
+
+    /**
      * 返回内部 {@link Criteria}
      *
      * @return
