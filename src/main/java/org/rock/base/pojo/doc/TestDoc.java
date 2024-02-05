@@ -1,10 +1,13 @@
 package org.rock.base.pojo.doc;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.rock.base.pojo.base.BaseDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 /**
  * mongo 测试实体
@@ -24,5 +27,19 @@ public class TestDoc extends BaseDocument {
 
     @ApiModelProperty("值")
     private String value;
+
+    @ApiModelProperty("类目列表")
+    private List<Cat> catList;
+
+    @Data
+    public static class Cat {
+
+        @ApiModelProperty("id")
+        private String id;
+
+        @ApiModelProperty("名称1")
+        private String name;
+
+    }
 
 }

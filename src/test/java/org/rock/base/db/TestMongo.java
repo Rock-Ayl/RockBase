@@ -96,6 +96,7 @@ class TestMongo {
         Criteria criteria = LambdaCriteria
                 .where(TestDoc::getNumber).is("编号123")
                 .and(TestDoc::getValue).in(Arrays.asList("测试123", "测试12341231231231231"))
+                .and(TestDoc::getCatList, TestDoc.Cat::getName).exists(false)
                 .getCriteria();
         Query query = new Query(criteria);
         List<TestDoc> testDocs = mongoTemplate.find(query, TestDoc.class);
