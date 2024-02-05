@@ -24,7 +24,7 @@ import java.util.List;
 @Api(tags = "用户模块")
 @RestController
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserApiController {
 
     @Autowired
     private UserService userService;

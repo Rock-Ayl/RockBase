@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "文件模块")
 @RestController
 @RequestMapping(value = "/file")
-public class FileController {
+public class FileApiController {
 
     @Autowired
     private TestElasticSearchService testElasticSearchService;
