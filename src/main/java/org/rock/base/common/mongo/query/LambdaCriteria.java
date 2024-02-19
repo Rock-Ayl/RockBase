@@ -342,6 +342,19 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 elemMatch
+     *
+     * @param lambdaCriteria 嵌套对象
+     * @return
+     */
+    public LambdaCriteria elemMatch(LambdaCriteria lambdaCriteria) {
+        //实现
+        this.criteria = this.criteria.elemMatch(lambdaCriteria.getCriteria());
+        //返回
+        return this;
+    }
+
+    /**
      * 返回内部 {@link Criteria}
      *
      * @return
