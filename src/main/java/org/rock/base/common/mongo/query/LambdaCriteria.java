@@ -186,6 +186,32 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 all
+     *
+     * @param values values
+     * @return
+     */
+    public LambdaCriteria all(Collection<?> values) {
+        //实现
+        this.criteria = this.criteria.all(values);
+        //返回
+        return this;
+    }
+
+    /**
+     * 实现 all
+     *
+     * @param values values
+     * @return
+     */
+    public LambdaCriteria all(Object... values) {
+        //实现
+        this.criteria = this.criteria.all(values);
+        //返回
+        return this;
+    }
+
+    /**
      * 实现 not
      *
      * @return
