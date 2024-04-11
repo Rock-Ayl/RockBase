@@ -148,6 +148,27 @@ public class LambdaCriteria {
     }
 
     /**
+     * 实现 orOperator
+     *
+     * @param mongoLambdaCriteria
+     * @return
+     */
+    public LambdaCriteria orOperator(LambdaCriteria... mongoLambdaCriteria) {
+        //实现
+        this.criteria = this.criteria.orOperator(Arrays
+                //装箱
+                .stream(mongoLambdaCriteria)
+                //拆出对应Criteria
+                .map(LambdaCriteria::getCriteria)
+                //转化为列表
+                .collect(Collectors.toList())
+                //然后转数组
+                .toArray(new Criteria[]{}));
+        //返回
+        return this;
+    }
+
+    /**
      * 实现 is
      *
      * @param value value
