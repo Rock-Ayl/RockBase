@@ -24,6 +24,12 @@ class TestMongo {
     private MongoTemplate mongoTemplate;
 
     @Test
+    void query() {
+        List<TestDoc> docList = mongoTemplate.find(LambdaCriteria.where(TestDoc::getNumber).is("编号123").getQuery(), TestDoc.class);
+        System.out.println();
+    }
+
+    @Test
     void allTest() {
 
         //创建

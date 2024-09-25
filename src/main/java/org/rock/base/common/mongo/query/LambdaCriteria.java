@@ -2,6 +2,7 @@ package org.rock.base.common.mongo.query;
 
 import org.rock.base.util.LambdaParseFieldNameExtraUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -410,6 +411,16 @@ public class LambdaCriteria {
     public Criteria getCriteria() {
         //返回
         return this.criteria;
+    }
+
+    /**
+     * 返回内部 {@link Query}
+     *
+     * @return
+     */
+    public Query getQuery() {
+        //返回
+        return new Query(this.criteria);
     }
 
     @Override
