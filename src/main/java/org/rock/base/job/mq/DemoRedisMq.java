@@ -29,20 +29,22 @@ public class DemoRedisMq {
      */
     @Scheduled(cron = "0/1 * *  * * ?")
     public void consumer() {
-        //如果存在可消费队列
-        if (baseRedisService.containsKey(RedisKey.DEMO_MQ_ONE)) {
-            //从队列左端获取一个消息
-            String value = baseRedisService.listLeftPop(RedisKey.DEMO_MQ_ONE);
-            //如果存在可消费的内容
-            if (StringUtils.isNotBlank(value)) {
-                //日志
-                logger.info("消费了一个内容[{}]", value);
-                //过
-                return;
-            }
+        //如果不存在可消费队列
+        if (baseRedisService.containsKey(RedisKey.DEMO_MQ_ONE) == false) {
+            //默认日志
+            logger.info("无可消费内容,跳过!");
+            //过
+            return;
         }
-        //默认日志
-        logger.info("无可消费内容,跳过!");
+        //从队列左端获取一个消息
+        String value = baseRedisService.listLeftPop(RedisKey.DEMO_MQ_ONE);
+        //如果存在可消费的内容
+        if (StringUtils.isNotBlank(value)) {
+            //日志
+            logger.info("消费了一个内容[{}]", value);
+            //过
+            return;
+        }
     }
 
     /**
