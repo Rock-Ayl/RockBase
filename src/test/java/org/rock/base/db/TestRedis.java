@@ -22,4 +22,11 @@ class TestRedis {
         System.out.println(123);
     }
 
+    @Test
+    void testLock() {
+        String key2 = "rock@test_lock_one";
+        boolean lock = baseRedisService.lock(key2, 13000);
+        System.out.println(lock);
+    }
+
 }

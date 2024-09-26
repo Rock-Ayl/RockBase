@@ -103,6 +103,21 @@ public final class BaseRedisServiceImpl implements BaseRedisService {
     }
 
     @Override
+    public boolean lock(String key, long time) {
+        //锁是否成功,默认不成功
+        boolean lock = false;
+        try {
+            //尝试设置值,如果没有值,才能设置成功,否则设置失败,如果成功,说明获取锁
+            lock = redisTemplate.opsForValue().setIfAbsent(key, String.format("我是分布式锁,过期时间:%s秒", time), time, TimeUnit.SECONDS);
+        } catch (Exception e) {
+
+        }
+        //返回结果
+        return lock;
+    }
+
+
+    @Override
     public long incr(String key, long delta) {
         if (delta < 0L) {
             throw new RuntimeException("递增因子必须大于0");

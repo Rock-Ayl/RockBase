@@ -69,6 +69,15 @@ public interface BaseRedisService {
     boolean setAndTime(String key, Object value, long time);
 
     /**
+     * 分布式锁
+     *
+     * @param key  键
+     * @param time 时间(秒) time要大于0 如果time小于等于0 将设置永久锁
+     * @return
+     */
+    boolean lock(String key, long time);
+
+    /**
      * 递增
      *
      * @param key   键
