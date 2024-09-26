@@ -16,9 +16,9 @@ class TestRedis {
     void test() {
 
         String key2 = "rock@4444";
-        long count = baseRedisService.incr(key2, 1, 100);
+        long count = baseRedisService.incr(key2, 1);
         System.out.println(123);
-        long count2 = baseRedisService.incr(key2, 2, 500);
+        long count2 = baseRedisService.incr(key2, 2);
         System.out.println(123);
     }
 
