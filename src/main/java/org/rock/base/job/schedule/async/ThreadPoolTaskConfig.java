@@ -33,12 +33,15 @@ public class ThreadPoolTaskConfig {
          * 基本配置
          */
 
+        //获取处理器核心数
+        int coreCount = Runtime.getRuntime().availableProcessors();
+
         //核心线程数(默认线程数)
-        executor.setCorePoolSize(20);
+        executor.setCorePoolSize(coreCount * 2);
         //最大线程数
-        executor.setMaxPoolSize(100);
+        executor.setMaxPoolSize(coreCount * 10);
         //缓冲队列大小
-        executor.setQueueCapacity(200);
+        executor.setQueueCapacity(coreCount * 20);
         //允许线程空闲时间(单位:秒)
         executor.setKeepAliveSeconds(10);
         //线程池名前缀(日志打印)
