@@ -43,7 +43,7 @@ public class ThreadPoolTaskConfig {
         //缓冲队列大小
         executor.setQueueCapacity(coreCount * 20);
         //允许线程空闲时间(单位:秒)
-        executor.setKeepAliveSeconds(10);
+        executor.setKeepAliveSeconds(60);
         //线程池名前缀(日志打印)
         executor.setThreadNamePrefix("Async-Job-");
 
