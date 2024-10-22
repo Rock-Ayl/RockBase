@@ -53,8 +53,7 @@ public class ThreadPoolTaskConfig {
         //在强制关闭线程池时等待剩余任务完成的最长时间
         executor.setAwaitTerminationSeconds(60);
 
-        //线程池对拒绝任务的处理策略
-        //CallerRunsPolicy:由调用线程(提交任务的线程)处理该任务
+        //修改拒绝策略为使用当前线程执行
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 
         /**
