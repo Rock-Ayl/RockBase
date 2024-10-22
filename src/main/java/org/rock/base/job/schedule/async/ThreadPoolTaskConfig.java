@@ -2,7 +2,6 @@ package org.rock.base.job.schedule.async;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
@@ -17,8 +16,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Author ayl
  * @Date 2022-03-14
  */
-//开启异步定时任务,并初始化异步线程池配置
-@EnableAsync
 @Configuration
 public class ThreadPoolTaskConfig {
 
