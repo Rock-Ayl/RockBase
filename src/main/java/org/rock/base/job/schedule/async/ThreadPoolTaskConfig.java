@@ -19,35 +19,48 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class ThreadPoolTaskConfig {
 
-    //核心线程数（默认线程数）
-    private static final int CORE_POOL_SIZE = 20;
-    //最大线程数
-    private static final int MAX_POOL_SIZE = 100;
-    //缓冲队列大小
-    private static final int QUEUE_CAPACITY = 200;
-
-    //允许线程空闲时间（单位：默认为秒）
-    private static final int KEEP_ALIVE_TIME = 10;
-    //线程池名前缀
-    private static final String THREAD_NAME_PREFIX = "Async-Job-";
-
     //本配置的bean名名称
     public static final String SYNC_TASK_POOL_EXECUTOR = "syncTaskPoolExecutor";
 
     //bean的名称,默认为首字母小写的方法名
     @Bean(SYNC_TASK_POOL_EXECUTOR)
     public ThreadPoolTaskExecutor syncTaskPoolExecutor() {
+
         //线程池对象
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        //组装配置
-        executor.setCorePoolSize(CORE_POOL_SIZE);
-        executor.setMaxPoolSize(MAX_POOL_SIZE);
-        executor.setQueueCapacity(QUEUE_CAPACITY);
-        executor.setKeepAliveSeconds(KEEP_ALIVE_TIME);
-        executor.setThreadNamePrefix(THREAD_NAME_PREFIX);
+
+        /**
+         * 基本配置
+         */
+
+        //核心线程数(默认线程数)
+        executor.setCorePoolSize(20);
+        //最大线程数
+        executor.setMaxPoolSize(100);
+        //缓冲队列大小
+        executor.setQueueCapacity(200);
+        //允许线程空闲时间(单位:秒)
+        executor.setKeepAliveSeconds(10);
+        //线程池名前缀(日志打印)
+        executor.setThreadNamePrefix("Async-Job-");
+
+        /**
+         * 其他配置
+         */
+
+        //线程池会等待所有任务执行完成后再关闭
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        //在强制关闭线程池时等待剩余任务完成的最长时间
+        executor.setAwaitTerminationSeconds(60);
+
         //线程池对拒绝任务的处理策略
         //CallerRunsPolicy:由调用线程(提交任务的线程)处理该任务
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+
+        /**
+         * 初始化
+         */
+
         //初始化
         executor.initialize();
         return executor;
