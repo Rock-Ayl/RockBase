@@ -29,6 +29,9 @@ public class TestJSON {
         @ApiModelProperty("abc")
         private String abc;
 
+        @ApiModelProperty("测试1")
+        private String test;
+
     }
 
     public static void main(String[] args) {
