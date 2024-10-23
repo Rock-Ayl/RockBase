@@ -29,7 +29,7 @@ public class TestJSON {
         @ApiModelProperty("abc")
         private String abc;
 
-        @ApiModelProperty("测试2")
+        @ApiModelProperty("测试3")
         private String test;
 
     }
