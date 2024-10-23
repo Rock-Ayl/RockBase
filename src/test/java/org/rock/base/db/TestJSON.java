@@ -26,6 +26,9 @@ public class TestJSON {
         @ApiModelProperty("密码")
         private String pwd;
 
+        @ApiModelProperty("abc")
+        private String abc;
+
     }
 
     public static void main(String[] args) {
