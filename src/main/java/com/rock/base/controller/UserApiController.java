@@ -1,15 +1,15 @@
 package com.rock.base.controller;
 
 import com.rock.base.auth.LoginAuth;
+import com.rock.base.common.JSONResponse;
+import com.rock.base.constant.HttpConst;
+import com.rock.base.pojo.mdo.UserDO;
+import com.rock.base.serivce.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
-import com.rock.base.common.JSONResponse;
-import com.rock.base.constant.HttpConst;
-import com.rock.base.pojo.mdo.UserDO;
-import com.rock.base.serivce.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +29,7 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
+    @LoginAuth
     @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "/listUser", produces = HttpConst.RESPONSE_HEADERS_CONTENT_TYPE_APPLICATION_JSON)
     public String listUser() {
