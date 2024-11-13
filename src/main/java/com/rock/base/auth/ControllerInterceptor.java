@@ -1,9 +1,5 @@
 package com.rock.base.auth;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import com.rock.base.constant.HttpConst;
 import com.rock.base.constant.RedisKey;
 import com.rock.base.db.redis.BaseRedisService;
@@ -11,6 +7,10 @@ import com.rock.base.enums.HttpStatusEnum;
 import com.rock.base.pojo.mdo.UserDO;
 import com.rock.base.util.JacksonExtraUtils;
 import com.rock.base.util.UserExtraUtils;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +107,14 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+
         //todo 清理资源,记录日志
+
+        /**
+         * 清理自定义线程内垃圾,防止线程万一被复用导致的问题.
+         */
+        LoginAuth.USER.remove();
+
     }
 
     /**
