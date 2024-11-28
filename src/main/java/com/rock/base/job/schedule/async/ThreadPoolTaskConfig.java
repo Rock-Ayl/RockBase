@@ -39,7 +39,7 @@ public class ThreadPoolTaskConfig {
         //核心线程数(默认线程数)
         executor.setCorePoolSize(coreCount + 1);
         //最大线程数
-        executor.setMaxPoolSize(coreCount * 5 + 1);
+        executor.setMaxPoolSize(coreCount * 4 + 1);
         //缓冲队列大小
         executor.setQueueCapacity(coreCount * 10);
         //允许线程空闲时间(单位:秒)
