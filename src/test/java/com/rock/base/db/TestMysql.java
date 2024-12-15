@@ -2,8 +2,9 @@ package com.rock.base.db;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rock.base.pojo.mdo.UserDO;
-import org.junit.jupiter.api.Test;
 import com.rock.base.serivce.test.TestMySqlService;
+import com.rock.base.util.FastJsonExtraUtils;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -33,6 +34,8 @@ class TestMysql {
     void search() {
 
         List<UserDO> userDOS = testMySqlService.listAll();
+
+        String str = FastJsonExtraUtils.toJSONString(userDOS);
         System.out.println();
 
         UserDO one = testMySqlService.get("1");
