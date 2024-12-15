@@ -32,6 +32,9 @@ class TestMysql {
     @Test
     void search() {
 
+        List<UserDO> userDOS = testMySqlService.listAll();
+        System.out.println();
+
         UserDO one = testMySqlService.get("1");
 
         List<UserDO> list = testMySqlService.list(Arrays.asList("1", "2"));
