@@ -119,6 +119,7 @@ class TestMongo {
      * 实现一个事务(注意,要保证当前mongo支持事务)
      */
     @Transactional(transactionManager = "mongoTransactionManager")
+    @Test
     void transactional() {
 
         //初始化一个实体
