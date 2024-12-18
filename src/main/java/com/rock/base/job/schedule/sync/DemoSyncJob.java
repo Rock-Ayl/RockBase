@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 同步定时任务模板
+ * 注：默认情况下，所有{@link Scheduled} 注解，只会由一个线程去执行。
+ * 所以如果某个定时任务执行时间太久，不要用这个方式实现，而要用{@link com.rock.base.job.schedule.async.DemoAsyncJob} 方式实现。
  *
  * @Author ayl
  * @Date 2022-03-09
