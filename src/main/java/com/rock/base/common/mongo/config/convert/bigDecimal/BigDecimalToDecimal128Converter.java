@@ -1,4 +1,4 @@
-package com.rock.base.common.mongo.convertConfig.bigDecimal;
+package com.rock.base.common.mongo.config.convert.bigDecimal;
 
 import org.bson.types.Decimal128;
 import org.springframework.core.convert.converter.Converter;

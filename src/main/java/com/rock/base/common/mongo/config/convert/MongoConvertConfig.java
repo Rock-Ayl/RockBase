@@ -1,8 +1,8 @@
-package com.rock.base.common.mongo.convertConfig;
+package com.rock.base.common.mongo.config.convert;
 
-import com.rock.base.common.mongo.convertConfig.bigDecimal.Decimal128ToBigDecimalConverter;
-import com.rock.base.common.mongo.convertConfig.bigDecimal.BigDecimalToDecimal128Converter;
-import com.rock.base.common.mongo.convertConfig.bigDecimal.Decimal128ToObjectConverter;
+import com.rock.base.common.mongo.config.convert.bigDecimal.Decimal128ToBigDecimalConverter;
+import com.rock.base.common.mongo.config.convert.bigDecimal.BigDecimalToDecimal128Converter;
+import com.rock.base.common.mongo.config.convert.bigDecimal.Decimal128ToObjectConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;

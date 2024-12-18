@@ -1,4 +1,4 @@
-package com.rock.base.common.mongo;
+package com.rock.base.common.mongo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
