@@ -1,15 +1,16 @@
 package com.rock.base.db;
 
+import com.rock.base.common.mongo.query.LambdaCriteria;
+import com.rock.base.db.mongo.BaseMongoService;
 import com.rock.base.pojo.doc.TestDoc;
 import com.rock.base.serivce.test.TestMongoService;
 import org.junit.jupiter.api.Test;
-import com.rock.base.common.mongo.query.LambdaCriteria;
-import com.rock.base.db.mongo.BaseMongoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -112,6 +113,28 @@ class TestMongo {
         Query query = new Query(criteria);
         List<TestDoc> testDocs = mongoTemplate.find(query, TestDoc.class);
         System.out.println();
+    }
+
+    /**
+     * 实现一个事务(注意,要保证当前mongo支持事务)
+     */
+    @Transactional(transactionManager = "mongoTransactionManager")
+    void transactional() {
+
+        //初始化一个实体
+        TestDoc create = new TestDoc();
+        create.setNumber("事务测试实体1");
+
+        //初始化一个实体
+        TestDoc create2 = new TestDoc();
+        create2.setNumber("事务测试实体2");
+
+        //创建
+        testMongoService.create(create);
+        testMongoService.create(create2);
+
+        System.out.println();
+
     }
 
 }
