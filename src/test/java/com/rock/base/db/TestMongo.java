@@ -118,6 +118,7 @@ class TestMongo {
 
     /**
      * 实现一个事务(注意,要保证当前mongo支持事务)
+     * 注：可以将某个字段设为唯一，创建相同字段测试事务成功失败
      */
     @Transactional(transactionManager = "mongoTransactionManager")
     @Test
@@ -127,17 +128,17 @@ class TestMongo {
 
         //初始化一个实体
         TestDoc create = new TestDoc();
-        create.setNumber("事务测试实体3");
+        create.setNumber("事务测试实体7");
 
         //初始化一个实体
         TestDoc create2 = new TestDoc();
-        create2.setNumber("事务测试实体4");
+        create2.setNumber("事务测试实体7");
 
         //创建
         testMongoService.create(create);
         testMongoService.create(create2);
 
-        System.out.println();
+        System.out.println("张三");
 
     }
 
