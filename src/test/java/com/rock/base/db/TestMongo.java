@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -120,15 +121,17 @@ class TestMongo {
      */
     @Transactional(transactionManager = "mongoTransactionManager")
     @Test
+    //防止该单元测试之后回滚
+    @Rollback(false)
     void transactional() {
 
         //初始化一个实体
         TestDoc create = new TestDoc();
-        create.setNumber("事务测试实体1");
+        create.setNumber("事务测试实体3");
 
         //初始化一个实体
         TestDoc create2 = new TestDoc();
-        create2.setNumber("事务测试实体2");
+        create2.setNumber("事务测试实体4");
 
         //创建
         testMongoService.create(create);
