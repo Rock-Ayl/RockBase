@@ -120,7 +120,7 @@ class TestMongo {
      * 实现一个事务(注意,要保证当前mongo支持事务)
      * 注：可以将某个字段设为唯一，创建相同字段测试事务成功失败
      */
-    @Transactional(transactionManager = "mongoTransactionManager")
+    @Transactional(rollbackFor = Exception.class, transactionManager = "mongoTransactionManager")
     @Test
     //防止该单元测试之后回滚
     @Rollback(false)
