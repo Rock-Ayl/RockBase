@@ -19,20 +19,27 @@ public class ControllerAspect {
 
     private static final Logger LOG = LoggerFactory.getLogger(ControllerAspect.class);
 
+    /**
+     * 控制层指针
+     */
+    @Pointcut("execution(* com.rock.base.controller.*.*(..))")
+    public void controllerPointcut() {
+    }
+
     //前置通知
-    @Before("execution(* com.rock.base.controller.*.*(..))")
+    @Before("controllerPointcut()")
     public void doBefore() {
         LOG.info("ControllerAspect do before...");
     }
 
     //后置通知
-    @After("execution(* com.rock.base.controller.*.*(..))")
+    @After("controllerPointcut()")
     public void doAfter() {
         LOG.info("ControllerAspect do after...");
     }
 
     //环绕通知
-    @Around("execution(* com.rock.base.controller.*.*(..))")
+    @Around("controllerPointcut()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         LOG.info("ControllerAspect do around before...");
         Object result = null;
@@ -46,13 +53,13 @@ public class ControllerAspect {
     }
 
     //返回后通知
-    @AfterReturning("execution(* com.rock.base.controller.*.*(..))")
+    @AfterReturning("controllerPointcut()")
     public void doAfterReturning() {
         LOG.info("ControllerAspect do AfterReturning...");
     }
 
     //抛出异常后通知
-    @AfterThrowing("execution(* com.rock.base.controller.*.*(..))")
+    @AfterThrowing("controllerPointcut()")
     public void doAfterThrowing() {
         LOG.info("ControllerAspect do AfterThrowing...");
     }
