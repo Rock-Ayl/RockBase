@@ -7,7 +7,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import com.rock.base.common.JSONResponse;
+import com.rock.base.common.api.JSONResponse;
 import com.rock.base.constant.HttpConst;
 import com.rock.base.db.elasticsearch.BaseElasticSearchService;
 import com.rock.base.pojo.index.FileIndex;

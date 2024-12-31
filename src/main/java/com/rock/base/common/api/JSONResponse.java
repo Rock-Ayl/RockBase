@@ -1,4 +1,4 @@
-package com.rock.base.common;
+package com.rock.base.common.api;
 
 import com.rock.base.util.JacksonExtraUtils;
 
