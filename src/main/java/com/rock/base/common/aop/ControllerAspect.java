@@ -27,6 +27,9 @@ public class ControllerAspect {
 
     /**
      * 控制层指针
+     * 目前是 基于 方法执行 的切点
+     * 还有一种: @Pointcut(value = "@annotation(org.springframework.scheduling.annotation.Scheduled)")
+     * 这种是 基于注解 的切点，用于检测注解修饰的方法
      */
     @Pointcut("execution(* com.rock.base.controller.*.*(..))")
     public void controllerPointcut() {
