@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * 控制层 aop
+ * 默认执行顺序:
+ * 1. 环绕通知-调用前 {@link org.aspectj.lang.annotation.Around}
+ * 2. 前置通知 {@link org.aspectj.lang.annotation.Before}
+ * 3. 返回后通知 {@link org.aspectj.lang.annotation.AfterReturning}
+ * 4. 后置通知 {@link org.aspectj.lang.annotation.After}
+ * 5. 环绕通知-调用后 {@link org.aspectj.lang.annotation.Around}
  *
  * @Author ayl
  * @Date 2024-12-29
