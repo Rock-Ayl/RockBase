@@ -1,4 +1,4 @@
-package com.rock.base.auth;
+package com.rock.base.common.auth;
 
 import com.rock.base.constant.HttpConst;
 import com.rock.base.constant.RedisKey;

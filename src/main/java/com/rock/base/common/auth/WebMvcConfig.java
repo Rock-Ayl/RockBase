@@ -1,4 +1,4 @@
-package com.rock.base.auth;
+package com.rock.base.common.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

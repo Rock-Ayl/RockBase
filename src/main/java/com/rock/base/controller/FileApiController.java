@@ -1,6 +1,6 @@
 package com.rock.base.controller;
 
-import com.rock.base.auth.LoginAuth;
+import com.rock.base.common.auth.LoginAuth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.elasticsearch.index.query.BoolQueryBuilder;

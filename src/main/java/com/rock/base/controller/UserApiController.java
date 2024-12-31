@@ -1,6 +1,6 @@
 package com.rock.base.controller;
 
-import com.rock.base.auth.LoginAuth;
+import com.rock.base.common.auth.LoginAuth;
 import com.rock.base.common.JSONResponse;
 import com.rock.base.constant.HttpConst;
 import com.rock.base.pojo.mdo.UserDO;
