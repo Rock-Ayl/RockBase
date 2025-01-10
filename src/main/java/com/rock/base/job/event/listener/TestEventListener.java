@@ -22,7 +22,7 @@ public class TestEventListener {
     public void handleTestEvent(TestEvent event) {
         //获取值
         String value = event.getValue();
-        // 发送邮件的逻辑
+        //发送邮件的逻辑
         System.out.println(String.format("[测试][Spring Event][监听]实现,线程=[%s],value=%s",
                 Thread.currentThread().getName(),
                 value)
