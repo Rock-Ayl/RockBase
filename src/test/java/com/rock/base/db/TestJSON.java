@@ -1,6 +1,7 @@
 package com.rock.base.db;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.rock.base.util.JacksonExtraUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,13 +13,14 @@ import lombok.Setter;
 public class TestJSON {
 
     /**
-     * 登录参数
+     * Jackson 序列化、序列化设置
+     * 1. ignoreUnknown = true：反序列化过程中，忽略JSON中存在但Java类中不存在的属性
+     * 2. value = {"abc"}：序列化、反序列化过程中，忽略名为"owd"的属性
      */
+    @JsonIgnoreProperties(ignoreUnknown = true, value = {"pwd"})
     @Setter
     @Getter
-    //反序列化过程中忽略JSON中存在但Java类中不存在的属性 and 忽略名为"pwd"的属性
-    @JsonIgnoreProperties(ignoreUnknown = true, value = {"pwd"})
-    public static class LoginParam {
+    private static class TestParam {
 
         @ApiModelProperty("手机号")
         private String phone;
@@ -36,8 +38,20 @@ public class TestJSON {
 
     public static void main(String[] args) {
 
-        System.out.println();
+        //初始化
+        TestParam param = new TestParam();
+        //设置参数
+        param.setAbc("abc");
+        param.setTest("测试");
+        param.setPwd("我是密码");
+        param.setPhone("15591391203");
 
+        //序列化
+        String str = JacksonExtraUtils.toJSONString(param);
+        System.out.println(str);
+
+        //反序列化
+        TestParam newObject = JacksonExtraUtils.deepClone(str, TestParam.class);
         System.out.println();
 
     }
