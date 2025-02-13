@@ -21,9 +21,9 @@ import org.springframework.stereotype.Component;
 @Component
 //切面注解,指定改类为切面类
 @Aspect
-public class ControllerAspect {
+public class ControllerAOPAspect {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ControllerAspect.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ControllerAOPAspect.class);
 
     /**
      * 控制层指针
