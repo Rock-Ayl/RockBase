@@ -26,7 +26,7 @@ public class ThreadPoolTaskConfig {
     @Bean(SYNC_TASK_POOL_EXECUTOR)
     public ThreadPoolTaskExecutor syncTaskPoolExecutor() {
 
-        //线程池对象
+        //Spring 线程池对象
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
         /**
