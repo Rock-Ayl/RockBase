@@ -94,28 +94,15 @@ public class ControllerInterceptor implements HandlerInterceptor {
         }
         //获取token
         String token = request.getHeader(HttpConst.REQUEST_HEADERS_TOKEN);
-        //如果不存在
-        if (StringUtils.isBlank(token)) {
-            //过滤请求
+        //获取用户信息
+        UserDO userDO = getUserFromCache(token);
+        //如果拿不到用户信息
+        if (userDO == null) {
+            //未知请求直接过滤
             sendError(response, HttpStatusEnum.UNAUTHORIZED);
-            //返回
+            //不过
             return false;
         }
-        //组装redis key
-        String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
-        //获取用户信息
-        String userInfo = baseRedisService.getString(redisUserTokenKey);
-        //如果不存在
-        if (StringUtils.isBlank(userInfo)) {
-            //过滤请求
-            sendError(response, HttpStatusEnum.UNAUTHORIZED);
-            //返回
-            return false;
-        }
-        //获取用户信息
-        UserDO userDO = JacksonExtraUtils.deepClone(userInfo, UserDO.class);
-        //用户实体脱敏
-        UserExtraUtils.desensitization(userDO);
         //记录用户信息
         LoginAuth.USER.set(userDO);
 
@@ -125,6 +112,35 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
         //通过
         return true;
+    }
+
+    /**
+     * 从 Redis 缓存 拿 用户信息
+     *
+     * @param token Token
+     * @return
+     */
+    private UserDO getUserFromCache(String token) {
+        //判空
+        if (StringUtils.isBlank(token)) {
+            //过
+            return null;
+        }
+        //组装redis key
+        String redisUserTokenKey = RedisKey.USER_LOGIN_AUTH_SET + token;
+        //获取用户信息
+        String userInfo = baseRedisService.getString(redisUserTokenKey);
+        //如果存在
+        if (StringUtils.isBlank(userInfo)) {
+            //过
+            return null;
+        }
+        //获取用户信息
+        UserDO userDO = JacksonExtraUtils.deepClone(userInfo, UserDO.class);
+        //用户实体脱敏
+        UserExtraUtils.desensitization(userDO);
+        //返回
+        return userDO;
     }
 
     /**
