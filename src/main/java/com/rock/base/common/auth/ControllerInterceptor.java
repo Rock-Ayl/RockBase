@@ -40,8 +40,25 @@ public class ControllerInterceptor implements HandlerInterceptor {
     @Autowired
     private BaseRedisService baseRedisService;
 
+    /**
+     * 在 Controller 方法执行之前被调用
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+
+        /**
+         * 前置
+         */
+
+        //清理session
+        ClearLoginSessionExecutor.clear();
+
+        //todo 记录请求信息日志
+
+        /**
+         * 决定是否继续执行后续流程
+         */
+
         //如果是 静态资源请求
         if (handler instanceof ResourceHttpRequestHandler) {
             //静态资源请求默认过
@@ -63,6 +80,11 @@ public class ControllerInterceptor implements HandlerInterceptor {
             //返回
             return false;
         }
+
+        /**
+         * 登录信息
+         */
+
         //获取该请求上的登录注解
         LoginAuth loginAuth = handlerMethod.getMethod().getAnnotation(LoginAuth.class);
         //如果不存在注解,可直接登录
@@ -96,24 +118,39 @@ public class ControllerInterceptor implements HandlerInterceptor {
         UserExtraUtils.desensitization(userDO);
         //记录用户信息
         LoginAuth.USER.set(userDO);
-        //标准请求默认通过
+
+        /**
+         * 默认通过请求
+         */
+
+        //通过
         return true;
     }
 
+    /**
+     * 在 Controller 方法执行之后，视图（View）渲染之前被调用
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
+        //todo 记录 Controller 的执行结果日志
+
+        /**
+         * 清理登录信息
+         */
+
+        //清理session
+        ClearLoginSessionExecutor.clear();
+
     }
 
+    /**
+     * 在整个请求处理完成之后被调用（视图渲染完成后）
+     */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
         //todo 清理资源,记录日志
-
-        /**
-         * 清理自定义线程内垃圾,防止线程万一被复用导致的问题.
-         */
-        LoginAuth.USER.remove();
 
     }
 

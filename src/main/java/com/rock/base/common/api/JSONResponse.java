@@ -58,7 +58,7 @@ public class JSONResponse {
      * @param e
      * @return
      */
-    public static JSONResponse error(Exception e) {
+    public static JSONResponse error(Throwable e) {
         //初始化
         JSONResponse response = new JSONResponse();
         //组装error
