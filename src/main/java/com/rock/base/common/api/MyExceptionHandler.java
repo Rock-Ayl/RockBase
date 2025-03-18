@@ -24,7 +24,7 @@ public class MyExceptionHandler {
         try {
             LOG.error("exceptionHandler catch error:", e);
             //返回统一异常返回
-            return JSONResponse.error(e);
+            return JSONResponse.error(e).toString();
         } finally {
             //清理session
             ClearLoginSessionExecutor.clear();
