@@ -1,7 +1,6 @@
 package com.rock.base.common.api;
 
 import com.rock.base.common.auth.ClearLoginSessionExecutor;
-import com.rock.base.db.mongo.BaseMongoServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class MyExceptionHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BaseMongoServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MyExceptionHandler.class);
 
     @ResponseBody
     @ExceptionHandler(value = Throwable.class)
