@@ -61,11 +61,13 @@ public class JSONResponse {
     public static JSONResponse error(Throwable e) {
         //初始化
         JSONResponse response = new JSONResponse();
-        //组装error
+        //组装状态
         response.response.put(KEY_CODE, 500);
-        response.response.put(KEY_ERROR_MSG, e.getMessage());
-        response.response.put(KEY_ERROR_LOCAL_MSG, e.getLocalizedMessage());
-        response.response.put(KEY_ERROR_MSG_STRING, e.toString());
+        //判空
+        if (e != null) {
+            //组装
+            response.response.put(KEY_ERROR_MSG, e.getMessage());
+        }
         //返回
         return response;
     }
